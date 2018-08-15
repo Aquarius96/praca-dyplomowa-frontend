@@ -1,6 +1,6 @@
 export function simpleAction() {
-    return {
-        type: 'SIMPLE_ACTION',
-        payload: 'akcja'
-    }
+  return {
+    type: 'SIMPLE_ACTION',
+    payload: 'akcja'
+  }
 }

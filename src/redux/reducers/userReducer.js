@@ -1,12 +1,14 @@
-export default function userReducer(state = { result: '' }, action) {
-    switch (action.type) {
-     case 'SIMPLE_ACTION':
-        console.log('dzialam');
+export default function userReducer(state = {
+  result: ''
+}, action) {
+  switch (action.type) {
+    case 'SIMPLE_ACTION':
+      console.log('dzialam');
       return {
-          ...state,
-       result: action.payload
+        ...state,
+        result: action.payload
       }
-     default:
+    default:
       return state
-    }
-   }
+  }
+}
