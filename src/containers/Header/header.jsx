@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { AppBar, Button, Toolbar, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import './header.css';
 
 export default class Header extends Component {
@@ -8,10 +9,12 @@ export default class Header extends Component {
       <div className="header">
         <AppBar position="static" color="default">
           <Toolbar>
-            <Typography variant="title" color="inherit">
-              Photos
-          </Typography>
-          <Button color="inherit">Login</Button>
+            <Typography>
+              <Link to="/">Strona główna</Link>
+            </Typography>
+            <Link to="/ksiazki">Baza książek</Link>
+            <Link to="/autorzy">Baza autorów</Link>
+            <Link to="/profil">Mój profil</Link>          
           </Toolbar>
         </AppBar>
       </div>
