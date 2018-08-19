@@ -12,7 +12,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Typography variant="display1" align="center" gutterBottom>Praca dyplomowa frontend</Typography>
+        <Typography variant="display1" align="center" gutterBottom>Praca dyplomowa frontend</Typography>        
       </div>
     );
   }
