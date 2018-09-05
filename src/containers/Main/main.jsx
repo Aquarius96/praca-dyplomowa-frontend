@@ -2,32 +2,49 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { simpleAction } from '../../redux/actions/simpleAction';
+import { register } from '../../redux/actions/user';
+
+const user = {
+  firstname: 'user',
+  lastname: 'z frontu',
+  password: 'tajne',
+  emailAddress: 'fajny',
+  username: 'fajniejszy'
+}
 
 class Main extends Component {
+  
+  static propTypes = {
+    message: PropTypes.string,
+    error: PropTypes.string,
+    register: PropTypes.func.isRequired
+  };
+
   componentDidMount() {
-    this.props.simpleAction();
+    
+  }
+
+  register = (user) => {
+    this.props.register(user);
   }
 
   render() {
     return (
       <div>
-        <Typography variant="display1" align="center" gutterBottom>Praca dyplomowa frontend</Typography>        
+        <Typography variant="display1" align="center" gutterBottom>Praca dyplomowa frontend</Typography>
+        <button onClick={() => this.register(user)}>Zarejestruj użytkownika</button>        
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  result: state.userReducer.result,
+  message: state.userReducer.message,
+  error: state.userReducer.error,
 });
 
 const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction()),
+  register: user => dispatch(register(user))
 });
-
-Main.propTypes = {
-  simpleAction: PropTypes.func,
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
