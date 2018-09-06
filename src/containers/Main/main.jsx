@@ -8,6 +8,9 @@ import {
   fetchUser,
   deleteUser
 } from "../../redux/actions/user";
+import {
+  addAuthor, fetchAuthors
+} from '../../redux/actions/author';
 
 const user = {
   firstname: "user",
@@ -27,6 +30,7 @@ class Main extends Component {
   componentDidMount() {
     this.props.fetchUsers();
     this.props.fetchUser("aquarius96@wp.pl");
+    this.props.fetchAuthors();
   }
 
   register = user => {
@@ -38,7 +42,7 @@ class Main extends Component {
   };
 
   render() {
-    if (this.props.loading) {
+    if (this.props.userLoading || this.props.authorLoading) {
       return <div>Loading...</div>;
     }
     return (
@@ -49,7 +53,7 @@ class Main extends Component {
         <button onClick={() => this.register(user)}>
           Zarejestruj użytkownika
         </button>
-        <button onClick={() => this.deleteUser("fajnyv4")}>
+        <button onClick={() => this.deleteUser("fajnyv3")}>
           Usuń użytkownika
         </button>
         {this.props.users &&
@@ -58,6 +62,10 @@ class Main extends Component {
           })}
         {this.props.user &&
           "Oto nasz pojedynczy user " + this.props.user.firstname}
+          {this.props.authors &&
+          this.props.authors.map(author => {
+            return "Author " + author.firstname;
+          })}
       </div>
     );
   }
@@ -68,14 +76,18 @@ const mapStateToProps = state => ({
   error: state.userReducer.error,
   users: state.userReducer.data,
   user: state.userReducer.entity,
-  loading: state.userReducer.loading
+  userLoading: state.userReducer.loading,
+  authorLoading: state.authorReducer.loading,
+  authors: state.authorReducer.data
 });
 
 const mapDispatchToProps = dispatch => ({
   register: user => dispatch(register(user)),
   fetchUsers: () => dispatch(fetchUsers()),
   fetchUser: id => dispatch(fetchUser(id)),
-  deleteUser: email => dispatch(deleteUser(email))
+  deleteUser: email => dispatch(deleteUser(email)),
+  addAuthor: author => dispatch(addAuthor(author)),
+  fetchAuthors: () => dispatch(fetchAuthors())
 });
 
 export default connect(

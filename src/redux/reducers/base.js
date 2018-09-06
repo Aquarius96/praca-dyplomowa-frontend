@@ -47,7 +47,7 @@ const baseReducer = (name = '') => {
         return {
           ...state,
           loading: false,
-          data: state.data.filter(entity => entity.id != action.payload.id)
+          data: state.data.filter(entity => entity.id !== action.payload.id)
         }
       default:
         return state;
@@ -56,3 +56,7 @@ const baseReducer = (name = '') => {
 }
 
 export const baseUserReducer = baseReducer('USER');
+export const baseAuthorReducer = baseReducer('AUTHOR');
+export const baseBookReducer = baseReducer('BOOK');
+export const baseGenreReducer = baseReducer('GENRE');
+export const baseRoleReducer = baseReducer('ROLE');

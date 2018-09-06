@@ -11,17 +11,6 @@ const initialState = {
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
-    case types.DELETE_USER_BEGIN:
-      return {
-        ...state,
-        loading: true
-      }
-    case types.DELETE_USER_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload.error
-      }
     case types.DELETE_USER_SUCCESS:
       return {
         ...state,
