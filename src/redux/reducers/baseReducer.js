@@ -40,4 +40,4 @@ const baseReducer = (name = '') => {
   }
 }
 
-export const userReducer2 = baseReducer('USERS');
+export const baseUserReducer = baseReducer('USERS');

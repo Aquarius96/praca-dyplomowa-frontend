@@ -2,9 +2,8 @@ import {
   combineReducers
 } from 'redux';
 import userReducer from './userReducer';
-import { userReducer2 } from './baseReducer';
+import { baseUserReducer } from './baseReducer';
 
 export default combineReducers({
-  userReducer,
-  userReducer2
+  userReducer: userReducer.merge(baseUserReducer),  
 });

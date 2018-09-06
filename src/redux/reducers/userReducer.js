@@ -1,4 +1,5 @@
 import * as types from '../constants/user';
+import mergeable from 'redux-merge-reducers';
 
 const initialState = {
   loading: false,
@@ -6,7 +7,7 @@ const initialState = {
   message: null
 }
 
-export default function userReducer(state = initialState, action) {
+function userReducer(state = initialState, action) {
   switch (action.type) {
     case types.REGISTER_BEGIN:      
       return {
@@ -23,9 +24,11 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        message: action.payload.message
+        message: 'dziala'
       }
     default:
       return state
   }
 }
+
+export default mergeable(userReducer);

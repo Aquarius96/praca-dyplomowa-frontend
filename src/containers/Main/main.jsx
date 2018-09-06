@@ -8,7 +8,7 @@ const user = {
   firstname: 'user',
   lastname: 'z frontu',
   password: 'tajne',
-  emailAddress: 'fajny',
+  emailAddress: 'fajnyv3',
   username: 'fajniejszy'
 }
 
