@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Typography from '@material-ui/core/Typography';
-import { register } from '../../redux/actions/user';
+import { register, fetchUsers, fetchUser } from '../../redux/actions/user';
 
 const user = {
   firstname: 'user',
@@ -21,7 +21,8 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    
+    this.props.fetchUsers();
+    this.props.fetchUser('aquarius96@wp.pl');
   }
 
   register = (user) => {
@@ -29,10 +30,17 @@ class Main extends Component {
   }
 
   render() {
+    if(this.props.loading) {
+      return <div>Loading...</div>
+    }
     return (
       <div>
         <Typography variant="display1" align="center" gutterBottom>Praca dyplomowa frontend</Typography>
-        <button onClick={() => this.register(user)}>Zarejestruj użytkownika</button>        
+        <button onClick={() => this.register(user)}>Zarejestruj użytkownika</button>
+        {this.props.users && this.props.users.map(user => {
+          return 'User ' + user.firstname
+        })}
+        {this.props.user && 'Oto nasz pojedynczy user ' + this.props.user.firstname}
       </div>
     );
   }
@@ -41,10 +49,15 @@ class Main extends Component {
 const mapStateToProps = state => ({
   message: state.userReducer.message,
   error: state.userReducer.error,
+  users: state.userReducer.data,
+  user: state.userReducer.entity,
+  loading: state.userReducer.loading
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: user => dispatch(register(user))
+  register: user => dispatch(register(user)),
+  fetchUsers: () => dispatch(fetchUsers()),
+  fetchUser: (id) => dispatch(fetchUser(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

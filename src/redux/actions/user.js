@@ -1,4 +1,5 @@
 import * as types from '../constants/user';
+import { actionFactory, actionBuilder } from './base';
 import axios from 'axios';
 
 export function registerBegin() {
@@ -26,13 +27,19 @@ export function register(user) {
     dispatch(registerBegin());
 
     return axios.post('http://localhost:8000/api/user/register', user)
-    .then(response => {
-      console.log('Pomyślnie zarejestrowano!');
+    .then(response => {      
       dispatch(registerSuccess(response.data));
     })
-    .catch(error => {
-      console.log(error.message);
+    .catch(error => {      
       dispatch(registerFailure(error.message));
     })
   }
 }
+
+export const fetchUsers = actionFactory('USERS', 'FETCH_ALL', () => {
+    return axios.get('http://localhost:8000/api/user')
+  });
+
+export const fetchUser = body => actionFactory('USERS', 'FETCH_ONE', () => {
+  return axios.get('http://localhost:8000/api/user/' + body);
+})()
