@@ -2,7 +2,7 @@ import {
   actionBuilder
 } from './base';
 
-const userActions = actionBuilder('USER', 'http://localhost:8000/api/user/');
+const userActions = actionBuilder('USER');
 
 export const fetchUsers = userActions.FETCH_ALL;
 export const fetchUser = email => userActions.FETCH_ONE(email)();

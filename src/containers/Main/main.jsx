@@ -8,9 +8,7 @@ import {
   fetchUser,
   deleteUser
 } from "../../redux/actions/user";
-import {
-  addAuthor, fetchAuthors
-} from '../../redux/actions/author';
+import { addAuthor, fetchAuthors, addAuthorRate } from "../../redux/actions/author";
 
 const user = {
   firstname: "user",
@@ -41,6 +39,10 @@ class Main extends Component {
     this.props.deleteUser(email);
   };
 
+  addAuthorRate = () => {
+    this.props.addAuthorRate(1, {userEmailAddress: 'aquarius96@wp.pl', value: 5});
+  }
+
   render() {
     if (this.props.userLoading || this.props.authorLoading) {
       return <div>Loading...</div>;
@@ -50,19 +52,24 @@ class Main extends Component {
         <Typography variant="display1" align="center" gutterBottom>
           Praca dyplomowa frontend
         </Typography>
+
         <button onClick={() => this.register(user)}>
           Zarejestruj użytkownika
         </button>
-        <button onClick={() => this.deleteUser("fajnyv3")}>
+        <button onClick={() => this.deleteUser("fajnyv4")}>
           Usuń użytkownika
         </button>
+        <button onClick={this.addAuthorRate}>
+          Dodaj ocenę autorowi
+        </button>
+
         {this.props.users &&
           this.props.users.map(user => {
             return "User " + user.firstname;
           })}
         {this.props.user &&
           "Oto nasz pojedynczy user " + this.props.user.firstname}
-          {this.props.authors &&
+        {this.props.authors &&
           this.props.authors.map(author => {
             return "Author " + author.firstname;
           })}
@@ -87,7 +94,8 @@ const mapDispatchToProps = dispatch => ({
   fetchUser: id => dispatch(fetchUser(id)),
   deleteUser: email => dispatch(deleteUser(email)),
   addAuthor: author => dispatch(addAuthor(author)),
-  fetchAuthors: () => dispatch(fetchAuthors())
+  fetchAuthors: () => dispatch(fetchAuthors()),
+  addAuthorRate: (id, rate) => dispatch(addAuthorRate(id, rate))
 });
 
 export default connect(

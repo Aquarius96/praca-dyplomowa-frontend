@@ -55,8 +55,37 @@ const baseReducer = (name = '') => {
   }
 }
 
+const baseRateReducer = (name = '') => {
+  return (state = initialState, action) => {
+    switch (action.type) {
+      case `ADD_${name}_RATE_BEGIN`:
+        return {
+          ...state,
+          loading: true
+        }
+      case `ADD_${name}_RATE_ERROR`:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload.error
+        }
+      case `ADD_${name}_RATE_SUCCESS`:
+        return {
+          ...state,
+          loading: false,
+          data: state.data.map(entity => {
+            return entity.id !== action.payload.id ? entity : {...entity, rating: {value: (entity.rating.value * entity.rating.votesAmount + action.payload.value) / (entity.rating.votesAmount + 1), votesAmount: entity.votesAmount + 1}}
+          })
+        }      
+      default: return state
+    }
+  }
+}
+
 export const baseUserReducer = baseReducer('USER');
 export const baseAuthorReducer = baseReducer('AUTHOR');
 export const baseBookReducer = baseReducer('BOOK');
 export const baseGenreReducer = baseReducer('GENRE');
 export const baseRoleReducer = baseReducer('ROLE');
+
+export const baseAuthorRateReducer = baseRateReducer('AUTHOR');
