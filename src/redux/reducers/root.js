@@ -15,13 +15,17 @@ import {
   baseBookReducer,
   baseGenreReducer,
   baseRoleReducer,
-  baseAuthorRateReducer
+  baseReviewReducer,
+  baseAuthorRateReducer,
+  baseBookRateReducer,
+  baseReviewRateReducer
 } from './base';
 
 export default combineReducers({
   userReducer: userReducer.merge(baseUserReducer),
-  authorReducer: authorReducer.merge(baseAuthorReducer),
-  bookReducer: bookReducer.merge(baseBookReducer),
+  authorReducer: mergeable(authorReducer.merge(baseAuthorReducer)).merge(baseAuthorRateReducer),
+  bookReducer: mergeable(bookReducer.merge(baseBookReducer)).merge(baseBookRateReducer),
   genreReducer: genreReducer.merge(baseGenreReducer),
-  roleReducer: mergeable(roleReducer.merge(baseRoleReducer)).merge(baseAuthorRateReducer)
+  roleReducer: roleReducer.merge(baseRoleReducer),
+  reviewReducer: mergeable(baseReviewReducer).merge(baseReviewRateReducer)
 });

@@ -9,6 +9,8 @@ import {
   deleteUser
 } from "../../redux/actions/user";
 import { addAuthor, fetchAuthors, addAuthorRate } from "../../redux/actions/author";
+import { addReview, fetchReviews, addReviewRate } from "../../redux/actions/review";
+import { addBook, fetchBooks, addBookRate } from "../../redux/actions/book";
 
 const user = {
   firstname: "user",
@@ -17,6 +19,27 @@ const user = {
   emailAddress: "fajnyv4",
   username: "fajniejszy"
 };
+
+const book = {
+  "title": "string",
+  "originalTitle": "string",
+  "description": "string",
+  "pagesCount": 100,
+  "released": "2018-09-11T13:47:04.104Z",
+  "genreIds": [
+    1
+  ],
+  "authorIds": [
+    1
+  ]
+}
+
+const review = {
+  "userEmailAddress": "string",
+  "title": "kolejna",
+  "content": "string",
+  "bookId": 1
+}
 
 class Main extends Component {
   static propTypes = {
@@ -29,18 +52,42 @@ class Main extends Component {
     this.props.fetchUsers();
     this.props.fetchUser("aquarius96@wp.pl");
     this.props.fetchAuthors();
+    this.props.fetchBooks();
+    this.props.fetchReviews();
   }
 
   register = user => {
     this.props.register(user);
   };
 
+  addBook = () => {
+    this.props.addBook(book);
+  }
+
+  addReview = () => {
+    this.props.addReview(review);
+  }
+
   deleteUser = email => {
     this.props.deleteUser(email);
   };
 
   addAuthorRate = () => {
-    this.props.addAuthorRate(1, {userEmailAddress: 'aquarius96@wp.pl', value: 5});
+    this.props.addAuthorRate(1, {userEmailAddress: 'aquarius96@wp.pl', value: Math.floor((Math.random() * 100) + 1)});
+  }
+
+  addBookRate = () => {
+    this.props.addBookRate(1, {
+      userEmailAddress: 'aquarius96@wp.pl',
+      value: Math.floor((Math.random() * 100) + 1)
+    })
+  }
+
+  addReviewRate = () => {
+    this.props.addReviewRate(1, {
+      userEmailAddress: 'aquarius96@wp.pl',
+      value: false
+    })
   }
 
   render() {
@@ -56,23 +103,43 @@ class Main extends Component {
         <button onClick={() => this.register(user)}>
           Zarejestruj użytkownika
         </button>
+        <button onClick={this.addBook}>
+          Dodaj ksiazke
+        </button>
+        <button onClick={this.addReview}>
+          Dodaj recenzje
+        </button>
         <button onClick={() => this.deleteUser("fajnyv4")}>
           Usuń użytkownika
         </button>
         <button onClick={this.addAuthorRate}>
           Dodaj ocenę autorowi
         </button>
+        <button onClick={this.addBookRate}>
+          Dodaj ocenę książce
+        </button>
+        <button onClick={this.addReviewRate}>
+          Dodaj ocenę recenzji
+        </button>
 
         {this.props.users &&
           this.props.users.map(user => {
-            return "User " + user.firstname;
+            return <p>User {user.firstname}</p>
           })}
         {this.props.user &&
           "Oto nasz pojedynczy user " + this.props.user.firstname}
         {this.props.authors &&
           this.props.authors.map(author => {
-            return "Author " + author.firstname;
+            return <p>Author {author.firstname} {author.rating.value}</p>
           })}
+        {this.props.books &&
+        this.props.books.map(book => {
+          return <p>Book {book.title} {book.rating.value}</p>
+        })}
+        {this.props.reviews &&
+        this.props.reviews.map(review => {
+          return <p>review {review.title} {review.rating.value}</p>
+        })}
       </div>
     );
   }
@@ -85,7 +152,9 @@ const mapStateToProps = state => ({
   user: state.userReducer.entity,
   userLoading: state.userReducer.loading,
   authorLoading: state.authorReducer.loading,
-  authors: state.authorReducer.data
+  authors: state.authorReducer.data,
+  books: state.bookReducer.data,
+  reviews: state.reviewReducer.data
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -95,7 +164,13 @@ const mapDispatchToProps = dispatch => ({
   deleteUser: email => dispatch(deleteUser(email)),
   addAuthor: author => dispatch(addAuthor(author)),
   fetchAuthors: () => dispatch(fetchAuthors()),
-  addAuthorRate: (id, rate) => dispatch(addAuthorRate(id, rate))
+  addAuthorRate: (id, rate) => dispatch(addAuthorRate(id, rate)),
+  addReview: review => dispatch(addReview(review)),
+  fetchReviews: () => dispatch(fetchReviews()),
+  addReviewRate: (id, rate) => dispatch(addReviewRate(id, rate)),
+  addBook: book => dispatch(addBook(book)),
+  fetchBooks: () => dispatch(fetchBooks()),
+  addBookRate: (id, rate) => dispatch(addBookRate(id, rate))
 });
 
 export default connect(

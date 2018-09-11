@@ -17,9 +17,12 @@ export const actionFactory = (name, action, thunk, unit) => () => {
     switch (action) {
       case actionTypes.ADD:
         return dispatch(thunk)
-          .then(() => {
+          .then((response) => {
             dispatch({
-              type: `${action}_${name}_SUCCESS`
+              type: `${action}_${name}_SUCCESS`,
+              payload: {
+                entity: response.data
+              }
             })
           })
           .catch(error => {
@@ -89,20 +92,24 @@ export const actionBuilder = (name) => {
   return actions;
 }
 
-export const rateActionFactory = (name, action, thunk, id, value = null) => () => {
+export const rateActionFactory = (name, action, thunk, id) => () => {
   return dispatch => {
     dispatch({
       type: `${action}_${name}_RATE_BEGIN`
     });
 
     switch (action) {
-      case actionTypes.ADD:
+      case actionTypes.ADD:  
+        console.log('no dodaje');      
         return dispatch(thunk)
-          .then(() => {
+          .then(rating => {
+            console.log('action rating value: ', rating);
             dispatch({
               type: `${action}_${name}_RATE_SUCCESS`,
-              id: id,
-              value: value
+              payload: {
+                id: id,
+                rating: rating.data
+              }
             })
           })
           .catch(error => {
@@ -133,15 +140,4 @@ export const rateActionFactory = (name, action, thunk, id, value = null) => () =
           });
     }
   }
-}
-
-export const rateActionBuilder = (name, url) => {
-  const actions = {    
-    ADD: (id, rate) => actionFactory(name + "_RATE", actionTypes.ADD, () => {
-      console.log('xd', rate);
-      return axios.post(url + id + "/rate/", rate);
-    })    
-  }
-
-  return actions;
 }
