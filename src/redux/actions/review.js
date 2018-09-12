@@ -1,6 +1,6 @@
 import {
   actionBuilder,
-  rateActionFactory
+  subActionFactory
 } from './base';
 import axios from 'axios';
 
@@ -11,6 +11,6 @@ export const fetchReview = id => reviewActions.FETCH_ONE(id)();
 export const addReview = review => reviewActions.ADD(review)();
 export const deleteReview = id => reviewActions.DELETE(id)();
 
-export const addReviewRate = (id, rate) => rateActionFactory('REVIEW', 'ADD', () => {
+export const addReviewRate = (id, rate) => subActionFactory('REVIEW', 'ADD', 'RATE', () => {
   return axios.post('http://localhost:8000/api/review/' + id + '/rate/', rate);
 }, id)();

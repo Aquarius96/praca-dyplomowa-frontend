@@ -8,9 +8,9 @@ import {
   fetchUser,
   deleteUser
 } from "../../redux/actions/user";
-import { addAuthor, fetchAuthors, addAuthorRate } from "../../redux/actions/author";
+import { addAuthor, fetchAuthors, addAuthorRate, addAuthorComment, deleteAuthorComment } from "../../redux/actions/author";
 import { addReview, fetchReviews, addReviewRate } from "../../redux/actions/review";
-import { addBook, fetchBooks, addBookRate } from "../../redux/actions/book";
+import { addBook, fetchBooks, addBookRate, addBookComment, deleteBookComment } from "../../redux/actions/book";
 
 const user = {
   firstname: "user",
@@ -90,6 +90,22 @@ class Main extends Component {
     })
   }
 
+  addAuthorComment = () => {
+    this.props.addAuthorComment(1, {content: 'dobry komentarz', userEmailAddress: 'aquarius96@wp.pl'});
+  }
+
+  deleteAuthorComment = () => {
+    this.props.deleteAuthorComment(6);
+  }
+
+  addBookComment = () => {
+    this.props.addBookComment(1, {content: 'dobry komentarz', userEmailAddress: 'aquarius96@wp.pl'});
+  }
+
+  deleteBookComment = () => {
+    this.props.deleteBookComment(6);
+  }
+
   render() {
     if (this.props.userLoading || this.props.authorLoading) {
       return <div>Loading...</div>;
@@ -120,6 +136,18 @@ class Main extends Component {
         </button>
         <button onClick={this.addReviewRate}>
           Dodaj ocenę recenzji
+        </button>
+        <button onClick={this.addAuthorComment}>
+          Dodaj komentarz autorowi
+        </button>
+        <button onClick={this.deleteAuthorComment}>
+          Usuń komentarz autorowi
+        </button>
+        <button onClick={this.addBookComment}>
+          Dodaj komentarz książce
+        </button>
+        <button onClick={this.deleteBookComment}>
+          Usuń komentarz książce
         </button>
 
         {this.props.users &&
@@ -170,7 +198,11 @@ const mapDispatchToProps = dispatch => ({
   addReviewRate: (id, rate) => dispatch(addReviewRate(id, rate)),
   addBook: book => dispatch(addBook(book)),
   fetchBooks: () => dispatch(fetchBooks()),
-  addBookRate: (id, rate) => dispatch(addBookRate(id, rate))
+  addBookRate: (id, rate) => dispatch(addBookRate(id, rate)),
+  addAuthorComment: (id, comment) => dispatch(addAuthorComment(id, comment)),
+  deleteAuthorComment: id => dispatch(deleteAuthorComment(id)),
+  addBookComment: (id, comment) => dispatch(addBookComment(id, comment)),
+  deleteBookComment: id => dispatch(deleteBookComment(id))
 });
 
 export default connect(

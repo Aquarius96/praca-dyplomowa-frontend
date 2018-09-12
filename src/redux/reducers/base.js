@@ -56,9 +56,9 @@ const baseReducer = (name = '') => {
   }
 }
 
-const baseRateReducer = (name = '') => {  
+const baseRateReducer = (name = '') => {
   return (state = initialState, action) => {
-    switch (action.type) {      
+    switch (action.type) {
       case `ADD_${name}_RATE_BEGIN`:
         return {
           ...state,
@@ -70,15 +70,60 @@ const baseRateReducer = (name = '') => {
           loading: false,
           error: action.payload.error
         }
-      case `ADD_${name}_RATE_SUCCESS`:        
+      case `ADD_${name}_RATE_SUCCESS`:
         return {
           ...state,
           loading: false,
           data: state.data.map(entity => {
-            return entity.id !== action.payload.id ? entity : {...entity, rating: action.payload.rating}
+            return entity.id !== action.payload.id ? entity : { ...entity,
+              rating: action.payload.data
+            }
           })
-        }      
-      default: return state
+        }
+      default:
+        return state
+    }
+  }
+}
+
+const baseCommentReducer = (name = '') => {
+  return (state = initialState, action) => {
+    switch (action.type) {
+      case `ADD_${name}_COMMENT_BEGIN`:
+      case `DELETE_${name}_COMMENT_BEGIN`:
+        return {
+          ...state,
+          loading: true
+        }
+      case `ADD_${name}_COMMENT_ERROR`:
+      case `DELETE_${name}_COMMENT_ERROR`:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload.error
+        }
+      case `ADD_${name}_COMMENT_SUCCESS`:
+        return {
+          ...state,
+          loading: false,
+          data: state.data.map(entity => {
+            return entity.id !== action.payload.id ? entity : { ...entity,
+              comments: [...entity.comments, action.payload.data]
+            }
+          })
+        }
+      case `DELETE_${name}_COMMENT_SUCCESS`:
+        return {
+          ...state,
+          loading: false,
+          data: state.data.map(entity => {            
+            return { ...entity,
+              comments: entity.comments.filter(comment => comment.id !== action.payload.id)
+            }
+          })
+        }
+      default:
+        return state
     }
   }
 }
@@ -93,3 +138,6 @@ export const baseReviewReducer = baseReducer('REVIEW');
 export const baseAuthorRateReducer = baseRateReducer('AUTHOR');
 export const baseBookRateReducer = baseRateReducer('BOOK');
 export const baseReviewRateReducer = baseRateReducer('REVIEW');
+
+export const baseAuthorCommentReducer = baseCommentReducer('AUTHOR');
+export const baseBookCommentReducer = baseCommentReducer('BOOK');

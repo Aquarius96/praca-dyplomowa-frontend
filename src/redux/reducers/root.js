@@ -4,8 +4,6 @@ import {
   combineReducers
 } from 'redux';
 import userReducer from './user';
-import authorReducer from './author';
-import bookReducer from './book';
 import genreReducer from './genre';
 import roleReducer from './role';
 
@@ -18,13 +16,15 @@ import {
   baseReviewReducer,
   baseAuthorRateReducer,
   baseBookRateReducer,
-  baseReviewRateReducer
+  baseReviewRateReducer,
+  baseAuthorCommentReducer,
+  baseBookCommentReducer
 } from './base';
 
 export default combineReducers({
   userReducer: userReducer.merge(baseUserReducer),
-  authorReducer: mergeable(authorReducer.merge(baseAuthorReducer)).merge(baseAuthorRateReducer),
-  bookReducer: mergeable(bookReducer.merge(baseBookReducer)).merge(baseBookRateReducer),
+  authorReducer: mergeable(baseAuthorCommentReducer).merge(mergeable(baseAuthorReducer).merge(baseAuthorRateReducer)),
+  bookReducer: mergeable(baseBookCommentReducer).merge( mergeable(baseBookReducer).merge(baseBookRateReducer)),
   genreReducer: genreReducer.merge(baseGenreReducer),
   roleReducer: roleReducer.merge(baseRoleReducer),
   reviewReducer: mergeable(baseReviewReducer).merge(baseReviewRateReducer)
