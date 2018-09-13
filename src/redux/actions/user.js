@@ -3,6 +3,7 @@ import {
 } from './base';
 import axios from 'axios';
 import * as config from '../../utils/axios-config';
+import decode from 'jwt-decode';
 
 const userActions = actionBuilder('USER');
 
@@ -21,7 +22,10 @@ export const login = (model) => () => {
       .then(response => {
         localStorage.setItem('token', response.data);
         dispatch({
-          type: 'LOGIN_SUCCESS'
+          type: 'LOGIN_SUCCESS',
+          payload: {
+            user: decode(response.data)
+          }
         })
       })
       .catch(error => {
@@ -37,8 +41,20 @@ export const login = (model) => () => {
 
 export const logout = () => {
   return dispatch => {
+    localStorage.removeItem('token');
     dispatch({
       type: 'LOGOUT'
-    })
+    });    
+  }
+}
+
+export const saveUser = (user) => {
+  return dispatch => {
+    dispatch({
+      type: 'SAVE_USER',
+      payload: {
+        user
+      }
+    });
   }
 }

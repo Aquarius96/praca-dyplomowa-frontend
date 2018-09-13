@@ -7,19 +7,17 @@ const initialState = {
   data: [],
   entity: null,
   query: null,
-  logged: false
+  user: null
 }
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGIN_BEGIN':
-    case 'LOGOUT_BEGIN':
+    case 'LOGIN_BEGIN':    
       return {
         ...state,
         loading: true        
       }
-    case 'LOGIN_ERROR':
-    case 'LOGOUT_ERROR':
+    case 'LOGIN_ERROR':    
       return {
         ...state,
         loading: false,
@@ -29,12 +27,17 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        logged: true
+        user: action.payload.user
       }
-    case 'LOGOUT_SUCCESS':
+    case 'LOGOUT':
+      return {
+        ...state,        
+        user: null
+      }
+    case 'SAVE_USER':
       return {
         ...state,
-        loading: false
+        user: action.payload.user
       }
     case types.DELETE_USER_SUCCESS:
       return {
