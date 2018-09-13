@@ -140,3 +140,54 @@ export const subActionFactory = (name, action, subName, thunk, id) => () => {
     }
   }
 }
+
+export const libraryActionFactory = (name, action, thunk, email, id) => () => {
+  return dispatch => {
+    dispatch({
+      type: `${action}_${name}_BEGIN`
+    });
+
+    switch (action) {
+      case actionTypes.ADD:
+        return dispatch(thunk)
+          .then(response => {
+            dispatch({
+              type: `${action}_${name}_SUCCESS`,
+              payload: {
+                email: email,
+                id: id,
+                data: response.data
+              }
+            })
+          })
+          .catch(error => {
+            dispatch({
+              type: `${action}_${name}_ERROR`,
+              payload: {
+                error: error.message
+              }
+            })
+          });
+      case actionTypes.DELETE:
+      default:
+        return dispatch(thunk)
+          .then(() => {
+            dispatch({
+              type: `${action}_${name}_SUCCESS`,
+              payload: {                
+                email: email,
+                id: id
+              }
+            })
+          })
+          .catch(error => {
+            dispatch({
+              type: `${action}_${name}_ERROR`,
+              payload: {
+                error: error.message
+              }
+            })
+          });
+    }
+  }
+}

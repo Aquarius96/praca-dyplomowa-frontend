@@ -6,6 +6,7 @@ import {
 import userReducer from './user';
 import genreReducer from './genre';
 import roleReducer from './role';
+import libraryReducer from './library';
 
 import {
   baseUserReducer,
@@ -27,5 +28,6 @@ export default combineReducers({
   bookReducer: mergeable(baseBookCommentReducer).merge( mergeable(baseBookReducer).merge(baseBookRateReducer)),
   genreReducer: genreReducer.merge(baseGenreReducer),
   roleReducer: roleReducer.merge(baseRoleReducer),
-  reviewReducer: mergeable(baseReviewReducer).merge(baseReviewRateReducer)
+  reviewReducer: mergeable(baseReviewReducer).merge(baseReviewRateReducer),
+  libraryReducer: libraryReducer
 });
