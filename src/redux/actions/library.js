@@ -13,19 +13,19 @@ export const fetchLibrary = (userEmailAddress) => () => {
     return axios.get(config.URL + "library/" + userEmailAddress)
       .then(response => {
         dispatch({
-            type: 'FETCH_LIBRARY_SUCCESS',
-            payload: {
-              data: response.data
-            }
-          })
-          .catch(error => {
-            dispatch({
-              type: 'FETCH_LIBRARY_ERROR',
-              payload: {
-                error: error.message
-              }
-            })
-          })
+          type: 'FETCH_LIBRARY_SUCCESS',
+          payload: {
+            data: response.data
+          }
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: 'FETCH_LIBRARY_ERROR',
+          payload: {
+            error: error.message
+          }
+        })
       })
   }
 }

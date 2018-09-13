@@ -6,7 +6,8 @@ import {
   register,
   fetchUsers,
   fetchUser,
-  deleteUser
+  deleteUser,
+  login
 } from "../../redux/actions/user";
 import {
   addAuthor,
@@ -184,6 +185,10 @@ class Main extends Component {
     this.props.deleteWantedBook("aquarius96@wp.pl", 2);
   };
 
+  login = () => {
+    this.props.login({ emailAddress: "aquarius96@wp.pl", password: "string" });
+  };
+
   render() {
     if (this.props.userLoading || this.props.authorLoading) {
       return <div>Loading...</div>;
@@ -235,6 +240,7 @@ class Main extends Component {
         <button onClick={this.deleteWantedBook}>
           Usuń książkę z listy życzeń
         </button>
+        <button onClick={this.login}>Zaloguj się</button>
 
         {this.props.users &&
           this.props.users.map(user => {
@@ -314,7 +320,8 @@ const mapDispatchToProps = dispatch => ({
   addReadBook: (email, model) => dispatch(addReadBook(email, model)()),
   deleteReadBook: (email, id) => dispatch(deleteReadBook(email, id)),
   addWantedBook: (email, id) => dispatch(addWantedBook(email, id)),
-  deleteWantedBook: (email, id) => dispatch(deleteWantedBook(email, id))
+  deleteWantedBook: (email, id) => dispatch(deleteWantedBook(email, id)),
+  login: user => dispatch(login(user)())
 });
 
 export default connect(
