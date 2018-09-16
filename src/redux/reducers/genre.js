@@ -1,4 +1,3 @@
-import * as types from '../constants/genre';
 import mergeable from 'redux-merge-reducers';
 
 const initialState = {

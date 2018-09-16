@@ -1,4 +1,3 @@
-import * as types from '../constants/role';
 import mergeable from 'redux-merge-reducers';
 
 const initialState = {
