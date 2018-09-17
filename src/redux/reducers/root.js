@@ -23,11 +23,11 @@ import {
 } from './base';
 
 export default combineReducers({
-  userReducer: userReducer.merge(baseUserReducer),
-  authorReducer: mergeable(baseAuthorCommentReducer).merge(mergeable(baseAuthorReducer).merge(baseAuthorRateReducer)),
-  bookReducer: mergeable(baseBookCommentReducer).merge( mergeable(baseBookReducer).merge(baseBookRateReducer)),
-  genreReducer: genreReducer.merge(baseGenreReducer),
-  roleReducer: roleReducer.merge(baseRoleReducer),
-  reviewReducer: mergeable(baseReviewReducer).merge(baseReviewRateReducer),
-  libraryReducer: libraryReducer
+  users: userReducer.merge(baseUserReducer),
+  authors: mergeable(baseAuthorCommentReducer).merge(mergeable(baseAuthorReducer).merge(baseAuthorRateReducer)),
+  books: mergeable(baseBookCommentReducer).merge( mergeable(baseBookReducer).merge(baseBookRateReducer)),
+  genres: genreReducer.merge(baseGenreReducer),
+  roles: roleReducer.merge(baseRoleReducer),
+  reviews: mergeable(baseReviewReducer).merge(baseReviewRateReducer),
+  library: libraryReducer
 });

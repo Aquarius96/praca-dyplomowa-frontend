@@ -87,7 +87,7 @@ class LoginPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.userReducer.error
+  error: state.users.error
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -14,10 +14,10 @@ class Header extends Component {
   componentDidMount() {
     const token = localStorage.getItem("token");
 
-    if(token !== null) {
-      const user = decode(token);      
+    if (token !== null) {
+      const user = decode(token);
       this.props.saveUser(user);
-    }      
+    }
   }
 
   render() {
@@ -31,11 +31,11 @@ class Header extends Component {
             <Link to="/ksiazki">Baza książek</Link>
             <Link to="/autorzy">Baza autorów</Link>
             <Link to="/profil">Mój profil</Link>
-            {!this.props.user && <Link to="/login">Zaloguj się</Link>}
-            {this.props.user && this.props.user.email}
-            {this.props.user && (
+            {!this.props.user && <Link to="/login">Logowanie</Link>}           
+            {this.props.user && [
+              this.props.user.email,
               <button onClick={this.props.logout}>Wyloguj się</button>
-            )}
+            ]}
           </Toolbar>
         </AppBar>
       </div>
@@ -44,7 +44,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.userReducer.user
+  user: state.users.user
 });
 
 const mapDispatchToProps = dispatch => ({

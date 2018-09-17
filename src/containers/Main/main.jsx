@@ -272,15 +272,15 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => ({
-  message: state.userReducer.message,
-  error: state.userReducer.error,
-  users: state.userReducer.data,
-  user: state.userReducer.entity,
-  userLoading: state.userReducer.loading,
-  authorLoading: state.authorReducer.loading,
-  authors: state.authorReducer.data,
-  books: state.bookReducer.data,
-  reviews: state.reviewReducer.data
+  message: state.users.message,
+  error: state.users.error,
+  users: state.users.data,
+  user: state.users.entity,
+  userLoading: state.users.loading,
+  authorLoading: state.authors.loading,
+  authors: state.authors.data,
+  books: state.books.data,
+  reviews: state.reviews.data
 });
 
 const mapDispatchToProps = dispatch => ({
