@@ -8,7 +8,7 @@ import {
   addReadBook,
   addWantedBook
 } from "../../redux/actions/library";
-import Book from "./Book";
+import BookPartialView from "./Views/partial";
 
 export class BooksPage extends Component {
   static propTypes = {};
@@ -40,7 +40,7 @@ export class BooksPage extends Component {
         ) : (
           this.props.books.map(book => {
             return (
-              <Book
+              <BookPartialView
                 key={book.id}
                 book={book}
                 user={this.props.user}

@@ -78,7 +78,10 @@ const baseRateReducer = (name = '') => {
             return entity.id !== action.payload.id ? entity : { ...entity,
               rating: action.payload.data
             }
-          })
+          }),
+          entity: { ...state.entity,
+            rating: action.payload.data
+          }
         }
       default:
         return state
@@ -110,13 +113,14 @@ const baseCommentReducer = (name = '') => {
             return entity.id !== action.payload.id ? entity : { ...entity,
               comments: [...entity.comments, action.payload.data]
             }
-          })
+          }),
+          entity: {...state.entity, comments: [...state.entity.comments, action.payload.data]}
         }
       case `DELETE_${name}_COMMENT_SUCCESS`:
         return {
           ...state,
           loading: false,
-          data: state.data.map(entity => {            
+          data: state.data.map(entity => {
             return { ...entity,
               comments: entity.comments.filter(comment => comment.id !== action.payload.id)
             }
