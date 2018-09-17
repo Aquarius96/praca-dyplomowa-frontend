@@ -73,10 +73,20 @@ export const actionFactory = (name, action, thunk, unit) => () => {
   }
 }
 
+const initialParams = {
+  pageNumber: 1,
+  pageSize: 10,
+  searchQuery: '',
+  sortField: null,
+  sortAscending: true
+}
+
 export const actionBuilder = (name) => {
   const actions = {
-    FETCH_ALL: actionFactory(name, actionTypes.FETCH_ALL, () => {
-      return axios.get(config.URL + name);
+    FETCH_ALL: (params) => actionFactory(name, actionTypes.FETCH_ALL, () => {      
+      return axios.get(config.URL + name, {
+        params: {...initialParams, ...params}
+      });
     }),
     FETCH_ONE: param => actionFactory(name, actionTypes.FETCH_ONE, () => {
       return axios.get(config.URL + name + "/" + param);
@@ -174,7 +184,7 @@ export const libraryActionFactory = (name, action, thunk, email, id) => () => {
           .then(() => {
             dispatch({
               type: `${action}_${name}_SUCCESS`,
-              payload: {                
+              payload: {
                 email: email,
                 id: id
               }

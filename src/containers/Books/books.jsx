@@ -11,30 +11,48 @@ import {
 import Book from "./Book";
 
 export class BooksPage extends Component {
-  static propTypes = {
-    prop: PropTypes
-  };
+  static propTypes = {};
 
   componentDidMount = () => {
     this.props.fetchBooks();
   };
 
+  handleSearchChange = e => {
+    if (e.target.value.length > 2) {
+      this.props.fetchBooks({
+        searchQuery: e.target.value
+      });
+    } else {
+      this.props.fetchBooks();
+    }
+  };
+
   render() {
     return (
       <div>
-        {this.props.books.map(book => {
-          return (
-            <Book
-              book={book}
-              user={this.props.user}
-              addCurrentlyReadBook={this.props.addCurrentlyReadBook}
-              addFavoriteBook={this.props.addFavoriteBook}
-              addReadBook={this.props.addReadBook}
-              addWantedBook={this.props.addWantedBook}
-              addBookRate={this.props.addBookRate}
-            />
-          );
-        })}
+        <input
+          type="text"
+          placeholder="szukajka"
+          onChange={this.handleSearchChange}
+        />
+        {this.props.loading ? (
+          <div>Loading...</div>
+        ) : (
+          this.props.books.map(book => {
+            return (
+              <Book
+                key={book.id}
+                book={book}
+                user={this.props.user}
+                addCurrentlyReadBook={this.props.addCurrentlyReadBook}
+                addFavoriteBook={this.props.addFavoriteBook}
+                addReadBook={this.props.addReadBook}
+                addWantedBook={this.props.addWantedBook}
+                addBookRate={this.props.addBookRate}
+              />
+            );
+          })
+        )}
       </div>
     );
   }
@@ -42,11 +60,12 @@ export class BooksPage extends Component {
 
 const mapStateToProps = state => ({
   books: state.books.data,
-  user: state.users.user
+  user: state.users.user,
+  loading: state.books.loading
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchBooks: () => dispatch(fetchBooks()),
+  fetchBooks: params => dispatch(fetchBooks(params)),
   addCurrentlyReadBook: (userEmailAddress, id) =>
     dispatch(addCurrentlyReadBook(userEmailAddress, id)),
   addFavoriteBook: (userEmailAddress, id) =>

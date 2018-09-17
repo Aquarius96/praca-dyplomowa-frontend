@@ -16,10 +16,10 @@ const Book = props => {
       <p>
         {book.title},{" "}
         {book.authors.map(author => {
-          return <div>{author.authorName}</div>;
+          return <span key={author.id}>{author.authorName}</span>;
         })}
         {book.genres.map(genre => {
-          return <div>{genre.genreName}</div>;
+          return <span key={genre.id}>{genre.genreName}</span>;
         })}
       </p>
       <p>
@@ -63,13 +63,13 @@ const Book = props => {
           5
         </button>
       </p>
-      {user && [
+      {user && <span>
         <button onClick={() => addCurrentlyReadBook(user.email, book.id)}>
           Właśnie czytam
-        </button>,
+        </button>
         <button onClick={() => addFavoriteBook(user.email, book.id)}>
           Dodaj do ulubionych
-        </button>,
+        </button>
         <button
           onClick={() =>
             addReadBook(user.email, {
@@ -79,11 +79,11 @@ const Book = props => {
           }
         >
           Przeczytałem
-        </button>,
+        </button>
         <button onClick={() => addWantedBook(user.email, book.id)}>
           Chcę tą książkę
-        </button>
-      ]}
+        </button></span>
+      }
     </div>
   );
 };

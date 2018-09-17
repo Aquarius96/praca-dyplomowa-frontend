@@ -32,10 +32,9 @@ class Header extends Component {
             <Link to="/autorzy">Baza autorów</Link>
             <Link to="/profil">Mój profil</Link>
             {!this.props.user && <Link to="/login">Logowanie</Link>}           
-            {this.props.user && [
-              this.props.user.email,
+            {this.props.user &&               
               <button onClick={this.props.logout}>Wyloguj się</button>
-            ]}
+            }
           </Toolbar>
         </AppBar>
       </div>
