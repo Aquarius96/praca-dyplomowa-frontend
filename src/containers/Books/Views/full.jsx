@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import BookRating from "./rating";
+import RatingView from "../../../views/rating";
 import CommentsList from "../../../views/comments";
 
 const BookFullView = props => {
@@ -30,7 +30,7 @@ const BookFullView = props => {
             })}
           </p>
           <p>{book.description}</p>
-          <BookRating book={book} user={user} addBookRate={addBookRate} />
+          <RatingView entity={book} user={user} addRate={addBookRate} />
         </span>
       )}
       {user && (

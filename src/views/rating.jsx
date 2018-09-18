@@ -1,16 +1,16 @@
 import React from "react";
 
-const BookRating = props => {
-  const { book, user, addBookRate } = props;
+const RatingView = props => {
+  const { entity, user, addRate } = props;
   return (
     <div>
-      Ocena: {book.rating.value}, Liczba głosów: {book.rating.votesAmount}
+      Ocena: {entity.rating.value}, Liczba głosów: {entity.rating.votesAmount}
       {[1, 2, 3, 4, 5].map(value => {
         return (
           <button
             key={value}
             onClick={() =>
-              addBookRate(book.id, {
+              addRate(entity.id, {
                 userEmailAddress: user.email,
                 value
               })
@@ -24,4 +24,4 @@ const BookRating = props => {
   );
 };
 
-export default BookRating;
+export default RatingView;

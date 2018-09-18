@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import BookRating from "./rating";
+import RatingView from "../../../views/rating";
 
 const BookPartialView = props => {
   const {
@@ -27,7 +27,7 @@ const BookPartialView = props => {
       <p>
         {book.description}, Liczba stron: {book.pagesCount}
       </p>
-      <BookRating book={book} user={user} addBookRate={addBookRate} />
+      <RatingView entity={book} user={user} addRate={addBookRate} />
       {user && (
         <span>
           <button onClick={() => addCurrentlyReadBook(user.email, book.id)}>
