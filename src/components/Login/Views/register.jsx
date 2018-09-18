@@ -1,6 +1,6 @@
 import React from "react";
 
-const RegisterForm = props => {
+const RegisterFormView = props => {
   const {
     data,
     handleChange,
@@ -48,4 +48,4 @@ const RegisterForm = props => {
   );
 };
 
-export default RegisterForm;
+export default RegisterFormView;

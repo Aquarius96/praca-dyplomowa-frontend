@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Main from "./containers/Main/main";
-import Header from "./containers/Header/header";
-import BooksPage from "./containers/Books/books";
-import BookPage from "./containers/Books/book";
-import AuthorsPage from "./containers/Authors/authors";
-import AuthorPage from "./containers/Authors/author";
-import Profile from "./containers/Profile/profile";
-import Login from "./containers/Login";
+import Main from "./components/Main/main";
+import Header from "./components/Header/header";
+import BooksPage from "./components/Books/books";
+import BookPage from "./components/Books/book";
+import AuthorsPage from "./components/Authors/authors";
+import AuthorPage from "./components/Authors/author";
+import Profile from "./components/Profile/profile";
+import Login from "./components/Login";
 
 class Routes extends Component {
   render() {

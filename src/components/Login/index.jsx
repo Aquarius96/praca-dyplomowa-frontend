@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import LoginForm from "./Form/login";
+import LoginFormView from "./Views/login";
 import { login, register } from "../../redux/actions/user";
-import RegisterForm from "./Form/register";
+import RegisterFormView from "./Views/register";
 
 class LoginPage extends Component {
   state = {
@@ -62,7 +62,7 @@ class LoginPage extends Component {
       <div>
         {this.state.registerVisible
           ? [
-              <RegisterForm
+              <RegisterFormView
                 data={this.state.registerModel}
                 handleChange={this.handleRegisterFormChange}
                 handleSubmit={this.handleRegisterFormSubmit}
@@ -72,7 +72,7 @@ class LoginPage extends Component {
               </p>
             ]
           : [
-              <LoginForm
+              <LoginFormView
                 data={this.state.loginModel}
                 handleChange={this.handleLoginFormChange}
                 handleSubmit={this.handleLoginFormSubmit}

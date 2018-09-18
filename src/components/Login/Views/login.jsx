@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoginForm = props => {
+const LoginFormView = props => {
   const {
     data,
     handleChange,
@@ -27,4 +27,4 @@ const LoginForm = props => {
   );
 };
 
-export default LoginForm;
+export default LoginFormView;
