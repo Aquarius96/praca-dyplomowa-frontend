@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import LoginFormView from "./Views/login";
 import { login, register } from "../../redux/actions/user";
 import RegisterFormView from "./Views/register";
+import Grid from "@material-ui/core/Grid";
 
 class LoginPage extends Component {
   state = {
@@ -59,29 +60,22 @@ class LoginPage extends Component {
     this.props.error && window.alert(this.props.error);
 
     return (
-      <div>
-        {this.state.registerVisible
-          ? [
-              <RegisterFormView
-                data={this.state.registerModel}
-                handleChange={this.handleRegisterFormChange}
-                handleSubmit={this.handleRegisterFormSubmit}
-              />,
-              <p>
-                Masz już konto? <a onClick={this.toggleForms}>Zaloguj się</a>
-              </p>
-            ]
-          : [
-              <LoginFormView
-                data={this.state.loginModel}
-                handleChange={this.handleLoginFormChange}
-                handleSubmit={this.handleLoginFormSubmit}
-              />,
-              <p>
-                Nie masz jeszcze konta? <a onClick={this.toggleForms}>Zarejestruj się</a>
-              </p>
-            ]}
-      </div>
+      <Grid container spacing={0}>
+        <Grid id="book-image" item xs={6}>
+          <LoginFormView
+            data={this.state.loginModel}
+            handleChange={this.handleLoginFormChange}
+            handleSubmit={this.handleLoginFormSubmit}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <RegisterFormView
+            data={this.state.registerModel}
+            handleChange={this.handleRegisterFormChange}
+            handleSubmit={this.handleRegisterFormSubmit}
+          />
+        </Grid>
+      </Grid>
     );
   }
 }

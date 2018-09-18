@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import RatingView from "../../../views/rating";
+import RatingView from "../../Views/rating";
 
 const BookPartialView = props => {
   const {

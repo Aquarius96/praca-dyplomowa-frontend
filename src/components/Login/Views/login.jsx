@@ -1,28 +1,32 @@
 import React from "react";
+import TextField from "@material-ui/core/TextField";
+import Button from '@material-ui/core/Button';
 
 const LoginFormView = props => {
-  const {
-    data,
-    handleChange,
-    handleSubmit
-  } = props
+  const { data, handleChange, handleSubmit } = props;
   return (
     <form id="login" onChange={handleChange} onSubmit={handleSubmit}>
-      <label htmlFor="emailAddress" name="emailAddress">
-        Adres email
-      </label>
-      <input
+      <TextField
+        id="name"
+        label="Adres e-mail"
         name="emailAddress"
         value={data.emailAddress}
+        margin="normal"
+        className="input-width"
       />
-      <label htmlFor="password" name="password">
-        Hasło
-      </label>
-      <input
+      <TextField
+        id="password-input"
+        label="Hasło"
+        type="password"
+        autoComplete="current-password"
+        margin="normal"
         name="password"
-        value={data.password}        
+        value={data.password}
+        className="input-width"
       />
-      <button type="submit">Zaloguj się</button>
+      <Button variant="outlined" type="submit">
+        Zaloguj się
+      </Button>
     </form>
   );
 };

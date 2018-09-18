@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import RatingView from "../../../views/rating";
+import RatingView from "../../Views/rating";
 
 const AuthorPartialView = props => {
   const { author, user, addFavoriteAuthor, addAuthorRate } = props;

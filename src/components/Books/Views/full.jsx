@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import RatingView from "../../../views/rating";
-import CommentsList from "../../../views/comments";
+import RatingView from "../../Views/rating";
+import CommentsList from "../../Views/comments";
 
 const BookFullView = props => {
   const {
