@@ -10,18 +10,62 @@ import {
   addWantedBook
 } from "../../redux/actions/library";
 import BookPartialView from "./Views/partial";
-import { Input, Grid } from "@material-ui/core";
+import {
+  Input,
+  Grid,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from "@material-ui/core";
 
 export class BooksPage extends Component {
   static propTypes = {};
 
   state = {
-    date: moment().format("YYYY-MM-DD")
+    date: moment().format("YYYY-MM-DD"),
+    sortSelectValue: null
+  };
+
+  handleSelectChange = e => {
+    this.setState({ sortSelectValue: e.target.value }, () => {
+      switch (e.target.value) {
+        case "abc":
+          this.props.fetchBooks({
+            sortField: "Title"
+          });
+          break;
+        case "cba":
+          this.props.fetchBooks({
+            sortField: "Title",
+            sortAscending: false
+          });
+          break;
+        case "123":
+          this.props.fetchBooks({
+            sortByRating: true
+          });
+          break;
+        case "new":
+          this.props.fetchBooks({
+            sortField: "Released",
+            sortAscending: false
+          });
+          break;
+        case "old":
+          this.props.fetchBooks({
+            sortField: "Released"
+          });
+          break;
+        default:
+          this.props.fetchBooks();
+      }
+    });
   };
 
   componentDidMount = () => {
     this.props.fetchBooks();
-    console.log(this.state.date);
   };
 
   handleSearchChange = e => {
@@ -41,13 +85,36 @@ export class BooksPage extends Component {
   render() {
     return (
       <div>
-        <Grid className="text_align_right">
-          <Input
-            type="text"
-            placeholder="Wyszukaj książkę"
-            className="search_bar"
-            onChange={this.handleSearchChange}
-          />
+        <Grid container spacing={24}>
+          <Grid item md={3}>
+            <FormControl className="select">
+              <InputLabel htmlFor="sort_select">
+                <Typography variant="subheading">Sortuj według</Typography>
+              </InputLabel>
+              <Select
+                value={this.state.sortSelectValue}
+                onChange={this.handleSelectChange}
+                inputProps={{
+                  name: "sort_select"
+                }}
+              >
+                <MenuItem value={null}>domyślnie</MenuItem>
+                <MenuItem value={"abc"}>alfabetycznie rosnąco</MenuItem>
+                <MenuItem value={"cba"}>alfabetycznie malejąco</MenuItem>
+                <MenuItem value={"123"}>najwyżej ocenionych</MenuItem>
+                <MenuItem value={"new"}>najnowszych</MenuItem>
+                <MenuItem value={"old"}>najstarszych</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item md={6}>
+            <Input
+              type="text"
+              placeholder="Wyszukaj książkę"
+              className="search_bar"
+              onChange={this.handleSearchChange}
+            />
+          </Grid>
         </Grid>
 
         {this.props.loading ? (

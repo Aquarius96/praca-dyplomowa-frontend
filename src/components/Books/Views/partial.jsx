@@ -34,7 +34,7 @@ const BookPartialView = props => {
             }
           />
         </Grid>
-        <Grid item container md={6}>
+        <Grid item container md={5}>
           <Typography variant="subheading">
             <Grid item md={12}>
               <Typography variant="display1">
@@ -63,7 +63,7 @@ const BookPartialView = props => {
             </Grid>
           </Typography>
         </Grid>
-        <Grid item md={3}>
+        <Grid item md={4}>
           {user ? (
             <RatingView entity={book} user={user} addRate={addBookRate} />
           ) : (
@@ -91,7 +91,7 @@ const BookPartialView = props => {
                   <Button onClick={() => addWantedBook(user.email, book.id)}>
                     Chcę tą książkę
                   </Button>
-                  <ExpansionPanel>
+                  <ExpansionPanel style={{width: '80%'}}>
                     <ExpansionPanelSummary>
                       <Typography variant="button">Przeczytałem</Typography>
                     </ExpansionPanelSummary>
