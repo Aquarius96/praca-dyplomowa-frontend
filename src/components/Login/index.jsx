@@ -60,15 +60,15 @@ class LoginPage extends Component {
     this.props.error && window.alert(this.props.error);
 
     return (
-      <Grid container spacing={0}>
-        <Grid id="book-image" item xs={6}>
+      <Grid container spacing={0} className="login_page">
+        <Grid id="book-image" item sm={6} xs={12}>
           <LoginFormView
             data={this.state.loginModel}
             handleChange={this.handleLoginFormChange}
             handleSubmit={this.handleLoginFormSubmit}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item sm={6} xs={12}>
           <RegisterFormView
             data={this.state.registerModel}
             handleChange={this.handleRegisterFormChange}

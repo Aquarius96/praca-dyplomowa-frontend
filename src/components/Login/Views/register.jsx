@@ -18,7 +18,7 @@ const RegisterFormView = props => {
         name="emailAddress"
         value={data.emailAddress}
         margin="normal"
-        className="input-width"
+        className="input"
       />
     
       <TextField
@@ -29,7 +29,7 @@ const RegisterFormView = props => {
         margin="normal"
         name="password"
         value={data.password}
-        className="input-width"
+        className="input"
       />
       <TextField
         id="name"
@@ -37,7 +37,7 @@ const RegisterFormView = props => {
         name="username"
         value={data.username}
         margin="normal"
-        className="input-width"
+        className="input"
       />
       <TextField
         id="name"
@@ -45,7 +45,7 @@ const RegisterFormView = props => {
         name="firstname"
         value={data.firstname}
         margin="normal"
-        className="input-width"
+        className="input"
       />
       <TextField
         id="name"
@@ -53,7 +53,7 @@ const RegisterFormView = props => {
         name="lastname"
         value={data.lastname}
         margin="normal"
-        className="input-width"
+        className="input"
       />      
       <Button variant="outlined" type="submit">
         Zarejestruj się

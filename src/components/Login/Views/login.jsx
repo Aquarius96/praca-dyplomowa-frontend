@@ -12,7 +12,7 @@ const LoginFormView = props => {
         name="emailAddress"
         value={data.emailAddress}
         margin="normal"
-        className="input-width"
+        className="input"
       />
       <TextField
         id="password-input"
@@ -22,7 +22,7 @@ const LoginFormView = props => {
         margin="normal"
         name="password"
         value={data.password}
-        className="input-width"
+        className="input"
       />
       <Button variant="outlined" type="submit">
         Zaloguj się

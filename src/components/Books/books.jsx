@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import moment from "moment";
 import { fetchBooks, addBookRate } from "../../redux/actions/book";
 import {
   addCurrentlyReadBook,
@@ -9,12 +10,18 @@ import {
   addWantedBook
 } from "../../redux/actions/library";
 import BookPartialView from "./Views/partial";
+import { Input, Grid } from "@material-ui/core";
 
 export class BooksPage extends Component {
   static propTypes = {};
 
+  state = {
+    date: moment().format("YYYY-MM-DD")
+  };
+
   componentDidMount = () => {
     this.props.fetchBooks();
+    console.log(this.state.date);
   };
 
   handleSearchChange = e => {
@@ -27,14 +34,22 @@ export class BooksPage extends Component {
     }
   };
 
+  handleDateChange = e => {
+    this.setState({ date: e.target.value });
+  };
+
   render() {
     return (
       <div>
-        <input
-          type="text"
-          placeholder="szukajka"
-          onChange={this.handleSearchChange}
-        />
+        <Grid className="text_align_right">
+          <Input
+            type="text"
+            placeholder="Wyszukaj książkę"
+            className="search_bar"
+            onChange={this.handleSearchChange}
+          />
+        </Grid>
+
         {this.props.loading ? (
           <div>Loading...</div>
         ) : (
@@ -49,6 +64,8 @@ export class BooksPage extends Component {
                 addReadBook={this.props.addReadBook}
                 addWantedBook={this.props.addWantedBook}
                 addBookRate={this.props.addBookRate}
+                handleDateChange={this.handleDateChange}
+                date={this.state.date}
               />
             );
           })
