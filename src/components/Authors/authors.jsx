@@ -4,9 +4,24 @@ import { connect } from "react-redux";
 import { fetchAuthors, addAuthorRate } from "../../redux/actions/author";
 import { addFavoriteAuthor } from "../../redux/actions/library";
 import AuthorPartialView from "./Views/partial";
+import BookSortAndSearchView from "./Views/search-sort";
+import {
+  Input,
+  Grid,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from "@material-ui/core";
+import AuthorSortAndSearchView from "./Views/search-sort";
 
 export class AuthorsPage extends Component {
   static propTypes = {};
+
+  state = {
+    sortSelectValue: null
+  };
 
   componentDidMount = () => {
     this.props.fetchAuthors();
@@ -22,13 +37,38 @@ export class AuthorsPage extends Component {
     }
   };
 
+  handleSelectChange = e => {
+    this.setState({ sortSelectValue: e.target.value }, () => {
+      switch (e.target.value) {
+        case "abc":
+          this.props.fetchAuthors({
+            sortField: "Lastname"
+          });
+          break;
+        case "cba":
+          this.props.fetchAuthors({
+            sortField: "Lastname",
+            sortAscending: false
+          });
+          break;
+        case "123":
+          this.props.fetchAuthors({
+            sortByRating: true
+          });
+          break;
+        default:
+          this.props.fetchAuthors();
+      }
+    });
+  };
+
   render() {
     return (
       <div>
-        <input
-          type="text"
-          placeholder="szukajka"
-          onChange={this.handleSearchChange}
+        <AuthorSortAndSearchView
+          handleSelectChange={this.handleSelectChange}
+          handleSearchChange={this.handleSearchChange}
+          value={this.state.sortSelectValue}
         />
         {this.props.loading ? (
           <div>Loading...</div>

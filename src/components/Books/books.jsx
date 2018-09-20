@@ -10,6 +10,7 @@ import {
   addWantedBook
 } from "../../redux/actions/library";
 import BookPartialView from "./Views/partial";
+import BookSortAndSearchView from "./Views/search-sort";
 import {
   Input,
   Grid,
@@ -26,6 +27,20 @@ export class BooksPage extends Component {
   state = {
     date: moment().format("YYYY-MM-DD"),
     sortSelectValue: null
+  };
+
+  componentDidMount = () => {
+    this.props.fetchBooks();
+  };
+
+  handleSearchChange = e => {
+    if (e.target.value.length > 2) {
+      this.props.fetchBooks({
+        searchQuery: e.target.value
+      });
+    } else {
+      this.props.fetchBooks();
+    }
   };
 
   handleSelectChange = e => {
@@ -64,20 +79,6 @@ export class BooksPage extends Component {
     });
   };
 
-  componentDidMount = () => {
-    this.props.fetchBooks();
-  };
-
-  handleSearchChange = e => {
-    if (e.target.value.length > 2) {
-      this.props.fetchBooks({
-        searchQuery: e.target.value
-      });
-    } else {
-      this.props.fetchBooks();
-    }
-  };
-
   handleDateChange = e => {
     this.setState({ date: e.target.value });
   };
@@ -85,38 +86,11 @@ export class BooksPage extends Component {
   render() {
     return (
       <div>
-        <Grid container spacing={24}>
-          <Grid item md={3}>
-            <FormControl className="select">
-              <InputLabel htmlFor="sort_select">
-                <Typography variant="subheading">Sortuj według</Typography>
-              </InputLabel>
-              <Select
-                value={this.state.sortSelectValue}
-                onChange={this.handleSelectChange}
-                inputProps={{
-                  name: "sort_select"
-                }}
-              >
-                <MenuItem value={null}>domyślnie</MenuItem>
-                <MenuItem value={"abc"}>alfabetycznie rosnąco</MenuItem>
-                <MenuItem value={"cba"}>alfabetycznie malejąco</MenuItem>
-                <MenuItem value={"123"}>najwyżej ocenionych</MenuItem>
-                <MenuItem value={"new"}>najnowszych</MenuItem>
-                <MenuItem value={"old"}>najstarszych</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item md={6}>
-            <Input
-              type="text"
-              placeholder="Wyszukaj książkę"
-              className="search_bar"
-              onChange={this.handleSearchChange}
-            />
-          </Grid>
-        </Grid>
-
+        <BookSortAndSearchView
+          handleSelectChange={this.handleSelectChange}
+          handleSearchChange={this.handleSearchChange}
+          value={this.state.sortSelectValue}
+        />
         {this.props.loading ? (
           <div>Loading...</div>
         ) : (
