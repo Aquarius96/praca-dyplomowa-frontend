@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import RatingView from "../../Views/rating";
-import { Grid, Typography, Button, TextField } from "@material-ui/core";
+import { Grid, Typography, Button, TextField, Paper } from "@material-ui/core";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
@@ -21,6 +21,7 @@ const BookPartialView = props => {
     date
   } = props;
   return (
+    <Paper>
     <Grid container>
       <Grid item md={3}>
         <img
@@ -122,7 +123,7 @@ const BookPartialView = props => {
           </ExpansionPanel>
         )}
       </Grid>
-    </Grid>
+    </Grid></Paper>
   );
 };
 

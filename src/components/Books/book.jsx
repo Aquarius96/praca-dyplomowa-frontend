@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import moment from "moment";
 import {
   fetchBook,
   addBookComment,
@@ -18,8 +19,17 @@ import BookFullView from "./Views/full";
 export class BookPage extends Component {
   static propTypes = {};
 
+  state = {
+    date: moment().format("YYYY-MM-DD"),
+    sortSelectValue: null
+  };
+
   componentDidMount = () => {
     this.props.fetchBook(this.props.match.params.id);
+  };
+
+  handleDateChange = e => {
+    this.setState({ date: e.target.value });
   };
 
   render() {
@@ -37,6 +47,8 @@ export class BookPage extends Component {
           addWantedBook={this.props.addWantedBook}
           addBookRate={this.props.addBookRate}
           addBookComment={this.props.addBookComment}
+          handleDateChange={this.handleDateChange}
+          date={this.state.date}
         />
       </div>
     );
