@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import moment from "moment";
 import { addAuthor } from "../../redux/actions/author";
 import { addBook } from "../../redux/actions/book";
-import { fetchGenres } from '../../redux/actions/genre';
+import { fetchGenres } from "../../redux/actions/genre";
+
 import AddAuthorFormView from "./Views/author";
 import { Grid, Typography } from "@material-ui/core";
+import ImageUploadView from "./Views/image";
 
 class AddPage extends Component {
   state = {
@@ -27,13 +29,14 @@ class AddPage extends Component {
       genreIds: [],
       authorIds: []
     },
-    showBookForm: true
+    showBookForm: true,
+    file: null,
+    imagePreviewUrl: null
   };
 
   componentDidMount() {
     this.props.fetchGenres();
   }
-  
 
   handleAddAuthorFormChange = e => {
     var model = this.state.authorModel;
@@ -41,7 +44,7 @@ class AddPage extends Component {
     model[name] = value;
     this.setState({
       authorModel: Object.assign(this.state.authorModel, model)
-    });    
+    });
   };
 
   handleAddBookFormChange = e => {
@@ -51,7 +54,7 @@ class AddPage extends Component {
     this.setState({ bookModel: Object.assign(this.state.bookModel, model) });
   };
 
-  handleGenresChange = values => {    
+  handleGenresChange = values => {
     this.setState({
       authorModel: { ...this.state.authorModel, genreIds: values }
     });
@@ -59,8 +62,30 @@ class AddPage extends Component {
 
   handleAddAuthorSubmit = e => {
     e.preventDefault();
-    this.props.addAuthor(this.state.authorModel);
-  }
+    var formData = new FormData();
+    formData.append("file", this.state.file);
+    this.props.addAuthor(this.state.authorModel, formData);
+  };
+
+  handleImageChange = e => {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  handleImageSubmit = e => {
+    e.preventDefault();
+  };
 
   render() {
     return (
@@ -69,7 +94,7 @@ class AddPage extends Component {
           Dodaj książkę lub autora
         </Typography>
         <Grid container>
-          <Grid item md={6}>
+          <Grid item md={6} align="center">
             <AddAuthorFormView
               data={this.state.authorModel}
               handleChange={this.handleAddAuthorFormChange}
@@ -79,8 +104,14 @@ class AddPage extends Component {
                 return {
                   value: genre.id,
                   label: genre.name
-                }
+                };
               })}
+            />
+          </Grid>
+          <Grid item md={6}>
+            <ImageUploadView
+              handleChange={this.handleImageChange}
+              imageUrl={this.state.imagePreviewUrl}
             />
           </Grid>
         </Grid>
@@ -94,7 +125,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addAuthor: author => dispatch(addAuthor(author)),
+  addAuthor: (author, image) => dispatch(addAuthor(author, image)()),
   addBook: book => dispatch(addBook(book)),
   fetchGenres: () => dispatch(fetchGenres())
 });
