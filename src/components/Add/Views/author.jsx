@@ -5,13 +5,21 @@ import {
   MenuItem,
   InputLabel,
   Typography,
-  FormControl
+  FormControl,
+  Button
 } from "@material-ui/core";
+import MySelect from "../../Views/select";
 
 const AddAuthorFormView = props => {
-  const { data, handleChange, handleSubmit } = props;
+  const {
+    data,
+    handleChange,
+    handleSubmit,
+    genres,
+    handleGenresChange
+  } = props;
   return (
-    <form id="add_author" onChange={handleChange}>
+    <form id="add_author" onChange={handleChange} onSubmit={handleSubmit}>
       <TextField
         label="Imię"
         name="firstname"
@@ -39,7 +47,7 @@ const AddAuthorFormView = props => {
         value={data.dateOfBirth}
         margin="normal"
         className="input"
-        type="date"        
+        type="date"
       />
       <TextField
         label="Miejsce urodzenia"
@@ -47,7 +55,6 @@ const AddAuthorFormView = props => {
         value={data.birthCity}
         margin="normal"
         className="input"
-        
       />
       <TextField
         label="Kraj pochodzenia"
@@ -63,7 +70,6 @@ const AddAuthorFormView = props => {
         <Select
           value={data.gender}
           onChange={handleChange}
-          
           inputProps={{
             name: "gender"
           }}
@@ -71,7 +77,15 @@ const AddAuthorFormView = props => {
           <MenuItem value={"kobieta"}>kobieta</MenuItem>
           <MenuItem value={"mężczyzna"}>mężczyzna</MenuItem>
         </Select>
+        <MySelect
+          options={genres}
+          values={data.genreIds}
+          label={"Gatunki"}
+          placeholder={"Wybierz gatunki autora"}
+          handleValuesChange={handleGenresChange}
+        />
       </FormControl>
+      <Button variant="contained" type="submit">Dodaj autora</Button>
     </form>
   );
 };

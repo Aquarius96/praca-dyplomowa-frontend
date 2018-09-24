@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import moment from 'moment';
+import moment from "moment";
 import { addAuthor } from "../../redux/actions/author";
 import { addBook } from "../../redux/actions/book";
+import { fetchGenres } from '../../redux/actions/genre';
 import AddAuthorFormView from "./Views/author";
 import { Grid, Typography } from "@material-ui/core";
 
@@ -29,14 +30,18 @@ class AddPage extends Component {
     showBookForm: true
   };
 
+  componentDidMount() {
+    this.props.fetchGenres();
+  }
+  
+
   handleAddAuthorFormChange = e => {
     var model = this.state.authorModel;
     const { name, value } = e.target;
     model[name] = value;
     this.setState({
       authorModel: Object.assign(this.state.authorModel, model)
-    });
-    console.log(this.state.authorModel);
+    });    
   };
 
   handleAddBookFormChange = e => {
@@ -45,6 +50,17 @@ class AddPage extends Component {
     model[name] = value;
     this.setState({ bookModel: Object.assign(this.state.bookModel, model) });
   };
+
+  handleGenresChange = values => {    
+    this.setState({
+      authorModel: { ...this.state.authorModel, genreIds: values }
+    });
+  };
+
+  handleAddAuthorSubmit = e => {
+    e.preventDefault();
+    this.props.addAuthor(this.state.authorModel);
+  }
 
   render() {
     return (
@@ -57,6 +73,14 @@ class AddPage extends Component {
             <AddAuthorFormView
               data={this.state.authorModel}
               handleChange={this.handleAddAuthorFormChange}
+              handleGenresChange={this.handleGenresChange}
+              handleSubmit={this.handleAddAuthorSubmit}
+              genres={this.props.genres.map(genre => {
+                return {
+                  value: genre.id,
+                  label: genre.name
+                }
+              })}
             />
           </Grid>
         </Grid>
@@ -65,11 +89,14 @@ class AddPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  genres: state.genres.data
+});
 
 const mapDispatchToProps = dispatch => ({
   addAuthor: author => dispatch(addAuthor(author)),
-  addBook: book => dispatch(addBook(book))
+  addBook: book => dispatch(addBook(book)),
+  fetchGenres: () => dispatch(fetchGenres())
 });
 
 export default connect(

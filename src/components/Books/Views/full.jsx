@@ -49,13 +49,13 @@ const BookFullView = props => {
               <Grid item md={12}>
                 Autorzy:
                 {book.authors.map(author => {
-                  return <span key={author.id}>{author.authorName} </span>;
+                  return <span key={author.id}>{author.name} </span>;
                 })}
               </Grid>
               <Grid item md={12}>
                 Gatunki:
                 {book.genres.map(genre => {
-                  return <span key={genre.id}>{genre.genreName}</span>;
+                  return <span key={genre.id}>{genre.name}</span>;
                 })}
               </Grid>
               <Grid item md={12}>

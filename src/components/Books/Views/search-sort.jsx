@@ -20,11 +20,13 @@ const BookSortAndSearchView = props => {
             <Typography variant="subheading">Sortuj według</Typography>
           </InputLabel>
           <Select
+            id="sort_select"
             value={value}
             onChange={handleSelectChange}
             inputProps={{
+              id: "sort_select",
               name: "sort_select"
-            }}
+            }}            
           >
             <MenuItem value={null}>domyślnie</MenuItem>
             <MenuItem value={"abc"}>alfabetycznie rosnąco</MenuItem>

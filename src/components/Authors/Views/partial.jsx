@@ -32,7 +32,7 @@ const AuthorPartialView = props => {
           <Grid item md={12}>
             Gatunki:
             {author.genres.map(genre => {
-              return <span key={genre.id}>{genre.genreName}</span>;
+              return <span key={genre.id}>{genre.name}</span>;
             })}
           </Grid>
           <Grid item md={12}>Data i miejsce urodzenia:
@@ -57,19 +57,7 @@ const AuthorPartialView = props => {
         </Button>
         )}
       </Grid>
-    </Grid>
-      {/* <p>
-        <Link to={"/autorzy/" + author.id}>
-          {author.firstname} {author.lastname}
-        </Link>
-        {author.genres.map(genre => {
-          return <span key={genre.id}>{genre.genreName}</span>;
-        })}
-        <RatingView entity={author} user={user} addRate={addAuthorRate} />
-        <button onClick={() => addFavoriteAuthor(user.email, author.id)}>
-          Dodaj do ulubionych
-        </button>
-      </p> */}
+    </Grid>      
     </div>
   );
 };
