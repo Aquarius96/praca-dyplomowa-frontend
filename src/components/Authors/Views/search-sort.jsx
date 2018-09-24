@@ -23,7 +23,7 @@ const AuthorSortAndSearchView = props => {
             value={value}
             onChange={handleSelectChange}
             inputProps={{
-              name: "sort_select"
+              name: "sort_select",              
             }}
           >
             <MenuItem value={null}>domyślnie</MenuItem>

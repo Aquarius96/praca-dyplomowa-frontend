@@ -48,6 +48,5 @@ export const addAuthor = (author, image) => () => {
           }
         })
       });
-
   }
 }

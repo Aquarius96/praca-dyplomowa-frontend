@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { addAuthor } from "../../redux/actions/author";
+import { addAuthor, fetchAuthors } from "../../redux/actions/author";
 import { addBook } from "../../redux/actions/book";
 import { fetchGenres } from "../../redux/actions/genre";
 
 import AddAuthorFormView from "./Views/author";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Select, MenuItem } from "@material-ui/core";
 import ImageUploadView from "./Views/image";
+import AddBookFormView from "./Views/book";
 
 class AddPage extends Component {
   state = {
@@ -24,17 +25,18 @@ class AddPage extends Component {
     bookModel: {
       title: "",
       description: "",
-      pagesCount: "",
-      released: "",
+      pagesCount: null,
+      released: moment().format("YYYY-MM-DD"),
       genreIds: [],
       authorIds: []
     },
-    showBookForm: true,
+    showAuthorForm: false,
     file: null,
     imagePreviewUrl: null
   };
 
   componentDidMount() {
+    this.props.fetchAuthors();
     this.props.fetchGenres();
   }
 
@@ -54,11 +56,23 @@ class AddPage extends Component {
     this.setState({ bookModel: Object.assign(this.state.bookModel, model) });
   };
 
-  handleGenresChange = values => {
+  handleAuthorGenresChange = values => {
     this.setState({
       authorModel: { ...this.state.authorModel, genreIds: values }
     });
   };
+
+  handleBookGenresChange = values => {
+    this.setState({
+      bookModel: { ...this.state.bookModel, genreIds: values }
+    });
+  };
+
+  handleBookAuthorsChange = values => {
+    this.setState({
+      bookModel: {...this.state.bookModel, authorIds: values}
+    });
+  }
 
   handleAddAuthorSubmit = e => {
     e.preventDefault();
@@ -66,6 +80,13 @@ class AddPage extends Component {
     formData.append("file", this.state.file);
     this.props.addAuthor(this.state.authorModel, formData);
   };
+
+  handleAddBookSubmit = e => {
+    e.preventDefault();
+    var formData = new FormData();
+    formData.append("file", this.state.file);
+    this.props.addBook(this.state.bookModel, formData);
+  }
 
   handleImageChange = e => {
     e.preventDefault();
@@ -87,26 +108,64 @@ class AddPage extends Component {
     e.preventDefault();
   };
 
+  handleShowForm = () => {
+    this.setState(prevState => {
+      return {
+        showAuthorForm: !prevState.showAuthorForm
+      };
+    });
+  };
+
   render() {
     return (
       <div className="add_page">
-        <Typography variant="display1" align="center">
-          Dodaj książkę lub autora
+        <Typography variant="" align="center">
+          <Select
+            value={this.state.showAuthorForm}
+            onChange={this.handleShowForm}
+          >
+            <MenuItem defaultChecked value={true}>
+              Dodaj autora
+            </MenuItem>
+            <MenuItem value={false}>Dodaj książkę</MenuItem>
+          </Select>
         </Typography>
         <Grid container>
           <Grid item md={6} align="center">
-            <AddAuthorFormView
-              data={this.state.authorModel}
-              handleChange={this.handleAddAuthorFormChange}
-              handleGenresChange={this.handleGenresChange}
-              handleSubmit={this.handleAddAuthorSubmit}
-              genres={this.props.genres.map(genre => {
-                return {
-                  value: genre.id,
-                  label: genre.name
-                };
-              })}
-            />
+            {this.state.showAuthorForm ? (
+              <AddAuthorFormView
+                data={this.state.authorModel}
+                handleChange={this.handleAddAuthorFormChange}
+                handleGenresChange={this.handleAuthorGenresChange}
+                handleSubmit={this.handleAddAuthorSubmit}
+                genres={this.props.genres.map(genre => {
+                  return {
+                    value: genre.id,
+                    label: genre.name
+                  };
+                })}
+              />
+            ) : (
+              <AddBookFormView
+                data={this.state.bookModel}
+                handleChange={this.handleAddBookFormChange}
+                handleAuthorsChange={this.handleBookAuthorsChange}
+                handleGenresChange={this.handleBookGenresChange}
+                handleSubmit={this.handleAddBookSubmit}
+                authors={this.props.authors.map(author => {
+                  return {
+                    value: author.id,
+                    label: author.name
+                  }
+                })}
+                genres={this.props.genres.map(genre => {
+                  return {
+                    value: genre.id,
+                    label: genre.name
+                  };
+                })}
+              />
+            )}
           </Grid>
           <Grid item md={6}>
             <ImageUploadView
@@ -121,12 +180,14 @@ class AddPage extends Component {
 }
 
 const mapStateToProps = state => ({
+  authors: state.authors.data,
   genres: state.genres.data
 });
 
 const mapDispatchToProps = dispatch => ({
   addAuthor: (author, image) => dispatch(addAuthor(author, image)()),
-  addBook: book => dispatch(addBook(book)),
+  fetchAuthors: () => dispatch(fetchAuthors()),
+  addBook: (book, image) => dispatch(addBook(book, image)()),
   fetchGenres: () => dispatch(fetchGenres())
 });
 
