@@ -1,19 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchAuthors, addAuthorRate } from "../../redux/actions/author";
 import { addFavoriteAuthor } from "../../redux/actions/library";
 import AuthorPartialView from "./Views/partial";
-import BookSortAndSearchView from "./Views/search-sort";
-import {
-  Input,
-  Grid,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel
-} from "@material-ui/core";
 import AuthorSortAndSearchView from "./Views/search-sort";
 
 export class AuthorsPage extends Component {

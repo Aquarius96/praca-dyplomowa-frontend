@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import RatingView from "../../Views/rating";
-import { Grid, Typography, Button, TextField } from "@material-ui/core";
+import { Grid, Typography, Button } from "@material-ui/core";
 
 const AuthorPartialView = props => {
   const { author, user, addFavoriteAuthor, addAuthorRate } = props;

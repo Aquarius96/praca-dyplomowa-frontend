@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import RatingView from "../../Views/rating";
-import CommentsList from "../../Views/comments";
 import { Grid, Typography, Button, TextField, Paper } from "@material-ui/core";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
@@ -18,7 +16,6 @@ const BookFullView = props => {
     addReadBook,
     addWantedBook,
     addBookRate,
-    addBookComment,
     handleDateChange,
     date
   } = props;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Typography, TextField, Button} from '@material-ui/core'
 
-const UserLibraryInfoView = () => {
+const UserEditInfoView = () => {
   return (
     
     <Grid container>
@@ -22,4 +22,4 @@ const UserLibraryInfoView = () => {
   );
 };
 
-export default UserLibraryInfoView;
+export default UserEditInfoView;

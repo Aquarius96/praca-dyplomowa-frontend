@@ -7,13 +7,12 @@ import { fetchLibrary,addCurrentlyReadBook,
 import {
   Grid,
   Paper,
-  TextField,
   BottomNavigation,
   BottomNavigationAction,
   Typography
 } from "@material-ui/core";
 import UserInfoView from "./Views/info";
-import UserLibraryInfoView from "./Views/library-info";
+import UserEditInfoView from "./Views/edit-info";
 import LibraryBookView from "./Views/book";
 import decode from "jwt-decode";
 import ReadBookView from "./Views/read-book";
@@ -46,7 +45,7 @@ class ProfilePage extends Component {
               <UserInfoView />
             </Grid>
             <Grid item md={6}>
-              <UserLibraryInfoView />
+              <UserEditInfoView />
             </Grid>
           </Grid>
         </Paper>

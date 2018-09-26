@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import moment from "moment";
 import {
@@ -13,7 +12,6 @@ import {
   addReadBook,
   addWantedBook
 } from "../../redux/actions/library";
-import { Link } from "react-router-dom";
 import BookFullView from "./Views/full";
 
 export class BookPage extends Component {
