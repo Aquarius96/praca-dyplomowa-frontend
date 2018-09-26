@@ -16,7 +16,7 @@ const BookSortAndSearchView = props => {
     <Grid container spacing={24}>
       <Grid item md={3}>
         <FormControl className="select">
-          <InputLabel htmlFor="sort_select">
+          <InputLabel shrink={value ? "true" : ""} htmlFor="sort_select">
             <Typography variant="subheading">Sortuj według</Typography>
           </InputLabel>
           <Select
@@ -26,7 +26,7 @@ const BookSortAndSearchView = props => {
             inputProps={{
               id: "sort_select",
               name: "sort_select"
-            }}            
+            }}
           >
             <MenuItem value={null}>domyślnie</MenuItem>
             <MenuItem value={"abc"}>alfabetycznie rosnąco</MenuItem>

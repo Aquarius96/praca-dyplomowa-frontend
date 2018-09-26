@@ -63,6 +63,7 @@ const AddBookFormView = props => {
         value={data.description}
         margin="normal"
         className="input"
+        variant="outlined"      
         multiline
         rows={4}
       />

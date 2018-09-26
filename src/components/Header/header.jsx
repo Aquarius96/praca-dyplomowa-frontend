@@ -23,7 +23,7 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" style={{marginBottom: "7px"}}>
           <Toolbar>
             <Typography>
               <Link to="/">Strona główna</Link>
