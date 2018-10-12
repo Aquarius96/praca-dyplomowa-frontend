@@ -6,6 +6,7 @@ import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import AddReadBookPanelView from "../../Views/add-read-book";
 
 const BookFullView = props => {
   const {
@@ -93,33 +94,13 @@ const BookFullView = props => {
                     <Button onClick={() => addWantedBook(user.email, book.id)}>
                       Chcę tą książkę
                     </Button>
-                    <ExpansionPanel style={{ width: "80%" }}>
-                      <ExpansionPanelSummary>
-                        <Typography variant="button">Przeczytałem</Typography>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
-                        <TextField
-                          onChange={handleDateChange}
-                          id="date"
-                          label="Kiedy?"
-                          type="date"
-                          defaultValue={date}
-                          InputLabelProps={{
-                            shrink: true
-                          }}
-                        />
-                        <Button
-                          onClick={() =>
-                            addReadBook(user.email, {
-                              bookId: book.id,
-                              finished: date
-                            })
-                          }
-                        >
-                          Zatwierdź
-                        </Button>
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
+                    <AddReadBookPanelView
+                    addReadBook={addReadBook}
+                    date={date}
+                    handleDateChange={handleDateChange}
+                    book={book}
+                    user={user}
+                  />
                   </span>
                 </ExpansionPanelDetails>
               </ExpansionPanel>

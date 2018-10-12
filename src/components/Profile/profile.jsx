@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchLibrary,addCurrentlyReadBook,
+import moment from "moment";
+
+import {
+  fetchLibrary,
+  addCurrentlyReadBook,
   addFavoriteBook,
   addReadBook,
-  addWantedBook } from "../../redux/actions/library";
+  addWantedBook
+} from "../../redux/actions/library";
 import {
   Grid,
   Paper,
@@ -16,21 +21,26 @@ import UserEditInfoView from "./Views/edit-info";
 import LibraryBookView from "./Views/book";
 import decode from "jwt-decode";
 import ReadBookView from "./Views/read-book";
+import WantedBookView from "./Views/wanted-book";
 
 class ProfilePage extends Component {
   state = {
-    value: 0
+    value: 0,
+    date: moment().format("YYYY-MM-DD")
   };
 
   componentDidMount() {
     const token = localStorage.getItem("token");
 
     if (token !== null) {
-      console.log("no co jest");
       const user = decode(token);
       this.props.fetchLibrary(user.email);
     }
   }
+
+  handleDateChange = e => {
+    this.setState({ date: e.target.value });
+  };
 
   handleSubMenuChange = (event, value) => {
     this.setState({ value });
@@ -81,7 +91,19 @@ class ProfilePage extends Component {
           })}
         {this.state.value == 1 &&
           this.props.library.wantedBooks.map(book => {
-            return <LibraryBookView key={book.id} book={book} />;
+            return (
+              <WantedBookView
+                key={book.id}
+                book={book}
+                user={this.props.user}
+                addCurrentlyReadBook={this.props.addCurrentlyReadBook}
+                addFavoriteBook={this.props.addFavoriteBook}
+                addReadBook={this.props.addReadBook}
+                addWantedBook={this.props.addWantedBook}
+                date={this.state.date}
+                handleDateChange={this.handleDateChange}
+              />
+            );
           })}
         {this.state.value == 2 &&
           this.props.library.currentlyReadBooks.map(book => {

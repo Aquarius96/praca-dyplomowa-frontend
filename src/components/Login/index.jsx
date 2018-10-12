@@ -57,7 +57,7 @@ class LoginPage extends Component {
   };
 
   render() {
-    this.props.error && window.alert(this.props.error);
+    //this.props.error && window.alert(this.props.error);
 
     return (
       <Grid container spacing={0} className="login_page">

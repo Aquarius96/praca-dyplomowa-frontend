@@ -6,7 +6,7 @@ const ImageUploadView = props => {
   return (
     <Grid container>
       <Grid item md={12} style={{ textAlign: "center" }}>
-        {imageUrl && <img style={{ maxWidth: "100%" }} src={imageUrl} />}
+        {imageUrl && <img style={{ maxWidth: "100%" }} src={imageUrl} alt="" />}
       </Grid>
       <Grid item md={12} align="center">
         <input type="file" onChange={handleChange} />
