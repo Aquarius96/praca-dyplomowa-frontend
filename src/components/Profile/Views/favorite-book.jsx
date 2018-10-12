@@ -13,11 +13,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import BookInfoView from "../../Views/book-info";
 import AddReadBookPanelView from "../../Views/add-read-book";
 
-const WantedBookView = props => {
+const FavoriteBookView = props => {
   const {
     book,
     user,
-    addCurrentlyReadBook,
+    addWantedBook,
     addFavoriteBook,
     addReadBook,
     date,
@@ -42,27 +42,9 @@ const WantedBookView = props => {
         </Grid>
         <Grid item md={5}>
           <Typography variant="subheading">Moja ocena: 5</Typography>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="subheading">
-                Przenieś na inną półkę
-              </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <Button onClick={() => addCurrentlyReadBook(user.email, book.id)}>
-                Właśnie czytam
-              </Button>
-              <AddReadBookPanelView
-                addReadBook={addReadBook}
-                date={date}
-                handleDateChange={handleDateChange}
-                book={book}
-                user={user}
-              />
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+
           <Button onClick={() => addFavoriteBook(user.email, book.id)}>
-            Dodaj do ulubionych
+            Usuń z ulubionych
           </Button>
         </Grid>
       </Grid>
@@ -70,4 +52,4 @@ const WantedBookView = props => {
   );
 };
 
-export default WantedBookView;
+export default FavoriteBookView;

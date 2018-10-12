@@ -22,6 +22,9 @@ import LibraryBookView from "./Views/book";
 import decode from "jwt-decode";
 import ReadBookView from "./Views/read-book";
 import WantedBookView from "./Views/wanted-book";
+import CurrentlyReadBookView from "./Views/currently-read-book";
+import FavoriteBookView from "./Views/favorite-book";
+import FavoriteAuthorView from "./Views/favorite-author";
 
 class ProfilePage extends Component {
   state = {
@@ -107,15 +110,37 @@ class ProfilePage extends Component {
           })}
         {this.state.value == 2 &&
           this.props.library.currentlyReadBooks.map(book => {
-            return <LibraryBookView key={book.id} book={book} />;
+            return (
+              <CurrentlyReadBookView
+                key={book.id}
+                book={book}
+                user={this.props.user}
+                addWantedBook={this.props.addWantedBook}
+                addFavoriteBook={this.props.addFavoriteBook}
+                addReadBook={this.props.addReadBook}
+                date={this.state.date}
+                handleDateChange={this.handleDateChange}
+              />
+            );
           })}
         {this.state.value == 3 &&
           this.props.library.favoriteBooks.map(book => {
-            return <LibraryBookView key={book.id} book={book} />;
+            return (
+              <FavoriteBookView
+                key={book.id}
+                book={book}
+                user={this.props.user}
+                addWantedBook={this.props.addWantedBook}
+                addFavoriteBook={this.props.addFavoriteBook}
+                addReadBook={this.props.addReadBook}
+                date={this.state.date}
+                handleDateChange={this.handleDateChange}
+              />
+            );
           })}
         {this.state.value == 4 &&
-          this.props.library.favoriteAuthors.map(book => {
-            return <LibraryBookView key={book.id} book={book} />;
+          this.props.library.favoriteAuthors.map(author => {
+            return <FavoriteAuthorView author={author} />;
           })}
       </div>
     );
