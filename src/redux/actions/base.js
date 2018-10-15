@@ -5,7 +5,8 @@ const actionTypes = {
   ADD: 'ADD',
   DELETE: 'DELETE',
   FETCH_ALL: 'FETCH_ALL',
-  FETCH_ONE: 'FETCH_ONE'
+  FETCH_ONE: 'FETCH_ONE',
+  CONFIRM: 'CONFIRM'
 }
 
 export const actionFactory = (name, action, thunk, unit) => () => {
@@ -34,6 +35,7 @@ export const actionFactory = (name, action, thunk, unit) => () => {
             })
           });
       case actionTypes.DELETE:
+      case actionTypes.CONFIRM:
         return dispatch(thunk)
           .then(() => {
             dispatch({
@@ -83,9 +85,11 @@ const initialParams = {
 
 export const actionBuilder = (name) => {
   const actions = {
-    FETCH_ALL: (params) => actionFactory(name, actionTypes.FETCH_ALL, () => {      
+    FETCH_ALL: (params) => actionFactory(name, actionTypes.FETCH_ALL, () => {
       return axios.get(config.URL + name, {
-        params: {...initialParams, ...params}
+        params: { ...initialParams,
+          ...params
+        }
       });
     }),
     FETCH_ONE: param => actionFactory(name, actionTypes.FETCH_ONE, () => {
@@ -96,6 +100,9 @@ export const actionBuilder = (name) => {
     }),
     DELETE: param => actionFactory(name, actionTypes.DELETE, () => {
       return axios.delete(config.URL + name + "/" + param);
+    }, param),
+    CONFIRM: param => actionFactory(name, actionTypes.CONFIRM, () => {
+      return axios.post(config.URL + name + "/" + param + "/confirm");
     }, param)
   }
 

@@ -13,6 +13,7 @@ const baseReducer = (name = '') => {
       case `FETCH_ONE_${name}_BEGIN`:
       case `ADD_${name}_BEGIN`:
       case `DELETE_${name}_BEGIN`:
+      case `CONFIRM_${name}_BEGIN`:
         return {
           ...state,
           loading: true
@@ -21,6 +22,7 @@ const baseReducer = (name = '') => {
       case `FETCH_ONE_${name}_ERROR`:
       case `ADD_${name}_ERROR`:
       case `DELETE_${name}_ERROR`:
+      case `CONFIRM_${name}_ERROR`:
         return {
           ...state,
           loading: false,
@@ -49,6 +51,14 @@ const baseReducer = (name = '') => {
           ...state,
           loading: false,
           data: state.data.filter(entity => entity.id !== action.payload.id)
+        }
+      case `CONFIRM_${name}_SUCCESS`:
+        return {
+          ...state,
+          loading: false,
+          data: state.data.map(entity => entity.id !== action.payload.id ? entity : { ...entity,
+            confirmed: true
+          })
         }
       default:
         return state;
@@ -114,7 +124,9 @@ const baseCommentReducer = (name = '') => {
               comments: [...entity.comments, action.payload.data]
             }
           }),
-          entity: {...state.entity, comments: [...state.entity.comments, action.payload.data]}
+          entity: { ...state.entity,
+            comments: [...state.entity.comments, action.payload.data]
+          }
         }
       case `DELETE_${name}_COMMENT_SUCCESS`:
         return {

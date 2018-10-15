@@ -8,7 +8,8 @@ import AuthorsPage from "./components/Authors/authors";
 import AuthorPage from "./components/Authors/author";
 import Profile from "./components/Profile/profile";
 import Login from "./components/Login";
-import AddPage from './components/Add';
+import AddPage from "./components/Add";
+import AdminPage from "./components/Admin";
 
 class Routes extends Component {
   render() {
@@ -24,6 +25,7 @@ class Routes extends Component {
           <Route exact path="/profil" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/dodaj" component={AddPage} />
+          <Route exact path="/admin" component={AdminPage} />
         </div>
       </Router>
     );

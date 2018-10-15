@@ -12,6 +12,7 @@ const bookActions = actionBuilder('BOOK', 'http://localhost:8000/api/book/');
 export const fetchBooks = params => bookActions.FETCH_ALL(params)();
 export const fetchBook = id => bookActions.FETCH_ONE(id)();
 export const deleteBook = id => bookActions.DELETE(id)();
+export const confirmBook = id => bookActions.CONFIRM(id)();
 
 export const addBookRate = (id, rate) => subActionFactory('BOOK', 'ADD', 'RATE', () => {
   return axios.post('http://localhost:8000/api/book/' + id + '/rate/', rate);

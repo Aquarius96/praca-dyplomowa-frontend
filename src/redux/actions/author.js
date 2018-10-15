@@ -12,6 +12,7 @@ const authorActions = actionBuilder('AUTHOR', 'http://localhost:8000/api/author/
 export const fetchAuthors = params => authorActions.FETCH_ALL(params)();
 export const fetchAuthor = id => authorActions.FETCH_ONE(id)();
 export const deleteAuthor = id => authorActions.DELETE(id)();
+export const confirmAuthor = id => authorActions.CONFIRM(id)();
 
 export const addAuthorRate = (id, rate) => subActionFactory('AUTHOR', 'ADD', 'RATE', () => {
   return axios.post('http://localhost:8000/api/author/' + id + '/rate/', rate);

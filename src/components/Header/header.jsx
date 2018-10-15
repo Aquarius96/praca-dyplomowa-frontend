@@ -23,7 +23,11 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <AppBar position="static" color="default" style={{marginBottom: "7px"}}>
+        <AppBar
+          position="static"
+          color="default"
+          style={{ marginBottom: "7px" }}
+        >
           <Toolbar>
             <Typography>
               <Link to="/">Strona główna</Link>
@@ -33,9 +37,10 @@ class Header extends Component {
             <Link to="/dodaj">Dodaj książkę/autora</Link>
             <Link to="/profil">Mój profil</Link>
             {!this.props.user && <Link to="/login">Logowanie</Link>}
-            {this.props.user &&               
+            {this.props.user && (
               <button onClick={this.props.logout}>Wyloguj się</button>
-            }
+            )}
+            <Link to="/admin">Panel admina</Link>
           </Toolbar>
         </AppBar>
       </div>
