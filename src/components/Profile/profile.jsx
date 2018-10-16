@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 
+import { fetchUser } from "../../redux/actions/user";
+
 import {
   fetchLibrary,
   addCurrentlyReadBook,
@@ -25,11 +27,17 @@ import WantedBookView from "./Views/wanted-book";
 import CurrentlyReadBookView from "./Views/currently-read-book";
 import FavoriteBookView from "./Views/favorite-book";
 import FavoriteAuthorView from "./Views/favorite-author";
+import { changePassword } from "../../redux/actions/user";
 
 class ProfilePage extends Component {
   state = {
     value: 0,
-    date: moment().format("YYYY-MM-DD")
+    date: moment().format("YYYY-MM-DD"),
+    changePasswordModel: {
+      oldPassword: "",
+      password: "",
+      confirmPassword: ""
+    }
   };
 
   componentDidMount() {
@@ -38,6 +46,7 @@ class ProfilePage extends Component {
     if (token !== null) {
       const user = decode(token);
       this.props.fetchLibrary(user.email);
+      this.props.fetchUser(user.email);
     }
   }
 
@@ -49,16 +58,37 @@ class ProfilePage extends Component {
     this.setState({ value });
   };
 
+  handleChangePasswordFormChange = e => {
+    var model = this.state.changePasswordModel;
+    const { name, value } = e.target;
+    model[name] = value;
+    this.setState({
+      changePasswordModel: Object.assign(this.state.changePasswordModel, model)
+    });
+  };
+
+  handleChangePasswordSubmit = e => {
+    e.preventDefault();
+    this.props.changePassword(
+      this.props.user.email,
+      this.state.changePasswordModel
+    );
+  };
+
   render() {
     return (
       <div>
         <Paper style={{ paddingBottom: "10px" }}>
           <Grid container>
             <Grid item md={6}>
-              <UserInfoView />
+              <UserInfoView info={this.props.userInfo} />
             </Grid>
             <Grid item md={6}>
-              <UserEditInfoView />
+              <UserEditInfoView
+                data={this.state.changePasswordModel}
+                handleChange={this.handleChangePasswordFormChange}
+                handleSubmit={this.handleChangePasswordSubmit}
+              />
             </Grid>
           </Grid>
         </Paper>
@@ -149,10 +179,12 @@ class ProfilePage extends Component {
 
 const mapStateToProps = state => ({
   user: state.users.user,
+  userInfo: state.users.entity,
   library: state.library.data
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchUser: emailAddress => dispatch(fetchUser(emailAddress)),
   fetchLibrary: userEmailAddress => dispatch(fetchLibrary(userEmailAddress)()),
   addCurrentlyReadBook: (userEmailAddress, id) =>
     dispatch(addCurrentlyReadBook(userEmailAddress, id)),
@@ -161,7 +193,9 @@ const mapDispatchToProps = dispatch => ({
   addReadBook: (userEmailAddress, model) =>
     dispatch(addReadBook(userEmailAddress, model)()),
   addWantedBook: (userEmailAddress, id) =>
-    dispatch(addWantedBook(userEmailAddress, id))
+    dispatch(addWantedBook(userEmailAddress, id)),
+  changePassword: (userEmailAddress, model) =>
+    dispatch(changePassword(userEmailAddress, model)())
 });
 
 export default connect(

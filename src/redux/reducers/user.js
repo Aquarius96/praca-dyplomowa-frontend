@@ -12,12 +12,14 @@ const initialState = {
 
 function userReducer(state = initialState, action) {
   switch (action.type) {
-    case 'LOGIN_BEGIN':    
+    case 'LOGIN_BEGIN':
+    case 'CHANGE_PASSWORD_BEGIN':
       return {
         ...state,
-        loading: true        
+        loading: true
       }
-    case 'LOGIN_ERROR':    
+    case 'LOGIN_ERROR':
+    case 'CHANGE_PASSWORD_ERROR':
       return {
         ...state,
         loading: false,
@@ -29,9 +31,14 @@ function userReducer(state = initialState, action) {
         loading: false,
         user: action.payload.user
       }
+    case 'CHANGE_PASSWORD_SUCCESS':
+      return {
+        ...state,
+        loading: false
+      }
     case 'LOGOUT':
       return {
-        ...state,        
+        ...state,
         user: null
       }
     case 'SAVE_USER':

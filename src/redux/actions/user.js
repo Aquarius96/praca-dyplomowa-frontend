@@ -39,12 +39,37 @@ export const login = (model) => () => {
   }
 }
 
+export const changePassword = (emailAddress, model) => () => {
+  return dispatch => {
+    dispatch({
+      type: 'CHANGE_PASSWORD_BEGIN'
+    });
+
+    console.log('model', model)
+
+    return axios.post(config.URL + 'user/changepassword/' + emailAddress, model)
+      .then(() => {
+        dispatch({
+          type: 'CHANGE_PASSWORD_SUCCESS'
+        })
+      })
+      .catch(error => {
+        dispatch({
+          type: 'CHANGE_PASSWORD_ERROR',
+          payload: {
+            error: error.message
+          }
+        })
+      })
+  }
+}
+
 export const logout = () => {
   return dispatch => {
     localStorage.removeItem('token');
     dispatch({
       type: 'LOGOUT'
-    });    
+    });
   }
 }
 
