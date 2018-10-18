@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
-import { fetchBooks, addBookRate } from "../../redux/actions/book";
+import {
+  fetchBooks,
+  addBookRate,
+  addBookComment
+} from "../../redux/actions/book";
 import {
   addCurrentlyReadBook,
   addFavoriteBook,
@@ -131,7 +135,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addReadBook(userEmailAddress, model)()),
   addWantedBook: (userEmailAddress, id) =>
     dispatch(addWantedBook(userEmailAddress, id)),
-  addBookRate: (id, rate) => dispatch(addBookRate(id, rate))
+  addBookRate: (id, rate) => dispatch(addBookRate(id, rate)),
+  addBookComment: (id, comment) => dispatch(addBookComment(id, comment))
 });
 
 export default connect(

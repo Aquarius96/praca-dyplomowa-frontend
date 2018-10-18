@@ -19,7 +19,8 @@ export class BookPage extends Component {
 
   state = {
     date: moment().format("YYYY-MM-DD"),
-    sortSelectValue: null
+    sortSelectValue: null,
+    comment: ""
   };
 
   componentDidMount = () => {
@@ -28,6 +29,10 @@ export class BookPage extends Component {
 
   handleDateChange = e => {
     this.setState({ date: e.target.value });
+  };
+
+  handleAddCommentFormChange = e => {
+    this.setState({ comment: e.target.value });
   };
 
   render() {
