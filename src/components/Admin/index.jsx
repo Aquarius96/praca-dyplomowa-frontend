@@ -5,7 +5,11 @@ import {
   Paper,
   BottomNavigation,
   BottomNavigationAction,
-  Button
+  Button,
+  Typography,
+  Grid,
+  Tabs,
+  Tab
 } from "@material-ui/core";
 
 import {
@@ -19,6 +23,10 @@ import {
   confirmReview,
   deleteReview
 } from "../../redux/actions/review";
+
+import ConfirmAuthorView from "./Views/author";
+import ConfirmBookView from "./Views/book";
+import ConfirmReviewView from "./Views/review";
 
 export class AdminPage extends Component {
   state = {
@@ -39,87 +47,74 @@ export class AdminPage extends Component {
     return (
       <div>
         <Paper>
-          <BottomNavigation
+          <Tabs
             value={this.state.value}
-            showLabels
             onChange={this.handleSubMenuChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
           >
-            <BottomNavigationAction label="Autorzy" />
-            <BottomNavigationAction label="Książki" />
-            <BottomNavigationAction label="Recenzje" />
-            <BottomNavigationAction label="Użytkownicy" />
-          </BottomNavigation>
+            <Tab label="Autorzy" />
+            <Tab label="Książki" />
+            <Tab label="Recenzje" />
+          </Tabs>
         </Paper>
         {this.state.value == 0 && (
-          <div>
+          <Grid container>
             {this.props.authors &&
               this.props.authors.map(author => {
                 return (
-                  <div key={author.id}>
-                    <p>{author.name}</p>
-                    <div>
-                      <button
-                        onClick={() => this.props.confirmAuthor(author.id)}
-                      >
-                        Potwierdź
-                      </button>
-                      <button
-                        onClick={() => this.props.deleteAuthor(author.id)}
-                      >
-                        Odrzuć
-                      </button>
-                    </div>
-                  </div>
+                  <Grid item sm={6}>
+                    <ConfirmAuthorView
+                      key={author.id}
+                      author={author}
+                      confirmAuthor={this.props.confirmAuthor}
+                      rejectAuthor={this.props.deleteAuthor}
+                    />
+                  </Grid>
                 );
               })}
-          </div>
+          </Grid>
         )}
         {this.state.value == 1 && (
-          <div>
+          <Grid container>
             {this.props.books &&
               this.props.books.map(book => {
                 return (
-                  <div key={book.id}>
-                    <p>{book.title}</p>
-                    <div>
-                      <button onClick={() => this.props.confirmBook(book.id)}>
-                        Potwierdź
-                      </button>
-                      <button onClick={() => this.props.deleteBook(book.id)}>
-                        Odrzuć
-                      </button>
-                    </div>
-                  </div>
+                  <Grid item sm={6}>
+                    <ConfirmBookView
+                      key={book.id}
+                      book={book}
+                      confirmBook={this.props.confirmBook}
+                      rejectBook={this.props.deleteBook}
+                    />
+                  </Grid>
                 );
               })}
-          </div>
+          </Grid>
         )}
         {this.state.value == 2 && (
-          <div>
+          <Grid container>
             {this.props.reviews &&
               this.props.reviews.map(review => {
                 return (
-                  <div key={review.id}>
-                    <p>{review.title}</p>
-                    <div>
-                      <button
-                        onClick={() => this.props.confirmReview(review.id)}
-                      >
-                        Potwierdź
-                      </button>
-                      <button
-                        onClick={() => this.props.deleteReview(review.id)}
-                      >
-                        Odrzuć
-                      </button>
-                    </div>
-                  </div>
+                  <Grid item sm={6}>
+                    <ConfirmReviewView
+                      key={review.id}
+                      review={review}
+                      confirmReview={this.props.confirmReview}
+                      rejectReview={this.props.deleteReview}
+                    />
+                  </Grid>
                 );
               })}
-          </div>
+          </Grid>
         )}
         {this.state.value == 3 && (
           <div>
+            <Typography variant="subheading" align="center">
+              Lista użytkowników do potwierdzenia
+            </Typography>
             {this.props.authors &&
               this.props.authors.map(author => {
                 return <div key={author.id}>{author.name}</div>;
