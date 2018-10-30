@@ -1,12 +1,17 @@
 import React from "react";
 import Comment from "./comment";
-import { TextField, Button, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 
 const CommentsList = props => {
   const { comments, id, addComment, user, handleChange, handleSubmit } = props;
   return (
     <div>
-      <form onChange={handleChange} onSubmit={handleSubmit}>
+      <form
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        style={{ textAlign: "center" }}
+      >
         <TextField
           style={{ width: "100%" }}
           label=""
@@ -18,18 +23,10 @@ const CommentsList = props => {
           multiline
           rows={4}
         />
-        <Button
-          onClick={() =>
-            addComment(id, {
-              userEmailAddress: user.email,
-              content: "jakis tam content"
-            })
-          }
-        >
+        <Button variant="raised" type="submit">
           Dodaj komentarz
         </Button>
       </form>
-      <Typography variant="subheading">Komentarze:</Typography>
       {comments.map(comment => {
         return <Comment comment={comment} />;
       })}

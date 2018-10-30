@@ -13,7 +13,7 @@ const AuthorSortAndSearchView = props => {
   const { handleSelectChange, handleSearchChange, value } = props;
 
   return (
-    <Grid container spacing={24}>
+    <Grid container spacing={24} style={{ marginBottom: "2px" }}>
       <Grid item md={3}>
         <FormControl className="select">
           <InputLabel shrink={value ? "true" : ""} htmlFor="sort_select">

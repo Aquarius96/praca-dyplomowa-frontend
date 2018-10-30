@@ -33,7 +33,7 @@ const AddAuthorFormView = props => {
         value={data.lastname}
         margin="normal"
         className="input"
-      />      
+      />
       <TextField
         label="Data urodzenia"
         name="dateOfBirth"
@@ -87,7 +87,9 @@ const AddAuthorFormView = props => {
         multiline
         rows={4}
       />
-      <Button variant="contained" type="submit">Dodaj autora</Button>
+      <Button variant="contained" type="submit">
+        Dodaj autora
+      </Button>
     </form>
   );
 };

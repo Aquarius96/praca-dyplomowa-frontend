@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import RatingView from "../../Views/rating";
-import { Grid, Typography, Button, TextField, Paper } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Button,
+  TextField,
+  Paper,
+  Tabs,
+  Tab
+} from "@material-ui/core";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
@@ -9,6 +17,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddReadBookPanelView from "../../Views/add-read-book";
 
 import CommentsList from "../../Views/comments";
+import ReviewsList from "./reviews";
 
 const BookFullView = props => {
   const {
@@ -22,8 +31,13 @@ const BookFullView = props => {
     addBookRate,
     handleDateChange,
     date,
-    handleAddCommentChange,
-    handleAddCommentSubmit
+    handleAddCommentFormChange,
+    handleAddCommentFormSubmit,
+    handleAddReviewChange,
+    handleSubMenuChange,
+    value,
+    commentModel,
+    reviewModel
   } = props;
   return (
     book && (
@@ -79,7 +93,7 @@ const BookFullView = props => {
                 </Typography>
               )}
               {user && (
-                <ExpansionPanel>
+                <ExpansionPanel style={{ width: "95%" }}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography variant="subheading">
                       Dodaj do biblioteczki
@@ -118,15 +132,28 @@ const BookFullView = props => {
             </Grid>
           </Grid>
         </Paper>
-        <Typography variant="display1">Komentarze:</Typography>
-        <CommentsList
-          comments={book.comments}
-          id={book.id}
-          user={user}
-          addComment={addBookComment}
-          handleChange={handleAddCommentChange}
-          handleSubmit={handleAddCommentSubmit}
-        />
+        <Tabs
+          value={0}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+          onChange={handleSubMenuChange}
+          value={value}
+        >
+          <Tab label="Komentarze" />
+          <Tab label="Recenzje" />
+        </Tabs>
+        {value == 0 && (
+          <CommentsList
+            comments={book.comments}
+            id={book.id}
+            user={user}
+            addComment={addBookComment}
+            handleChange={handleAddCommentFormChange}
+            handleSubmit={handleAddCommentFormSubmit}
+          />
+        )}
+        {value == 1 && <ReviewsList reviews={book.reviews} user={user} />}
       </div>
     )
 

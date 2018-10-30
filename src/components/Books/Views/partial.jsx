@@ -21,7 +21,7 @@ const BookPartialView = props => {
     date
   } = props;
   return (
-    <Paper>
+    <Paper style={{ marginTop: "3px" }}>
       <Grid container>
         <Grid item md={3}>
           <img
@@ -65,14 +65,16 @@ const BookPartialView = props => {
         </Grid>
         <Grid item md={4}>
           {user ? (
-            <RatingView entity={book} user={user} addRate={addBookRate} />
+            <div className="gowno">
+              <RatingView entity={book} user={user} addRate={addBookRate} />
+            </div>
           ) : (
             <Typography variant="subheading">
               Zaloguj się, aby móc dodać ocenę
             </Typography>
           )}
           {user && (
-            <ExpansionPanel>
+            <ExpansionPanel style={{ width: "95%" }}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography variant="subheading">
                   Dodaj do biblioteczki

@@ -7,7 +7,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 const AddReadBookPanelView = props => {
   const { addReadBook, handleDateChange, date, book, user } = props;
   return (
-    <ExpansionPanel style={{ width: "80%" }}>
+    <ExpansionPanel style={{ width: "85%" }}>
       <ExpansionPanelSummary>
         <Typography variant="button">Przeczytałem</Typography>
       </ExpansionPanelSummary>

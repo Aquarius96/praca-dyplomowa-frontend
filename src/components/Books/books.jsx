@@ -94,26 +94,22 @@ export class BooksPage extends Component {
           handleSearchChange={this.handleSearchChange}
           value={this.state.sortSelectValue}
         />
-        {this.props.loading ? (
-          <div>Loading...</div>
-        ) : (
-          this.props.books.map(book => {
-            return (
-              <BookPartialView
-                key={book.id}
-                book={book}
-                user={this.props.user}
-                addCurrentlyReadBook={this.props.addCurrentlyReadBook}
-                addFavoriteBook={this.props.addFavoriteBook}
-                addReadBook={this.props.addReadBook}
-                addWantedBook={this.props.addWantedBook}
-                addBookRate={this.props.addBookRate}
-                handleDateChange={this.handleDateChange}
-                date={this.state.date}
-              />
-            );
-          })
-        )}
+        {this.props.books.map(book => {
+          return (
+            <BookPartialView
+              key={book.id}
+              book={book}
+              user={this.props.user}
+              addCurrentlyReadBook={this.props.addCurrentlyReadBook}
+              addFavoriteBook={this.props.addFavoriteBook}
+              addReadBook={this.props.addReadBook}
+              addWantedBook={this.props.addWantedBook}
+              addBookRate={this.props.addBookRate}
+              handleDateChange={this.handleDateChange}
+              date={this.state.date}
+            />
+          );
+        })}
       </div>
     );
   }

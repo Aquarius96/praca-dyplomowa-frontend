@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  TextField,
-  FormControl,
-  Button
-} from "@material-ui/core";
+import { TextField, FormControl, Button } from "@material-ui/core";
 import MySelect from "../../Views/select";
 
 const AddBookFormView = props => {
@@ -41,7 +37,7 @@ const AddBookFormView = props => {
         className="input"
         type="date"
       />
-      <FormControl className="formControl input">
+      <FormControl className="formControl input" style={{ zIndex: "10" }}>
         <MySelect
           options={authors}
           values={data.genreIds}
@@ -63,7 +59,7 @@ const AddBookFormView = props => {
         value={data.description}
         margin="normal"
         className="input"
-        variant="outlined"      
+        variant="outlined"
         multiline
         rows={4}
       />

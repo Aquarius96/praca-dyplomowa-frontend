@@ -121,11 +121,11 @@ const baseCommentReducer = (name = '') => {
           loading: false,
           data: state.data.map(entity => {
             return entity.id !== action.payload.id ? entity : { ...entity,
-              comments: [...entity.comments, action.payload.data]
+              comments: [action.payload.data, ...entity.comments]
             }
           }),
           entity: { ...state.entity,
-            comments: [...state.entity.comments, action.payload.data]
+            comments: [action.payload.data, ...state.entity.comments]
           }
         }
       case `DELETE_${name}_COMMENT_SUCCESS`:

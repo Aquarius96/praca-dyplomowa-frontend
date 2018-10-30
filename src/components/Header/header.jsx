@@ -28,19 +28,35 @@ class Header extends Component {
           color="default"
           style={{ marginBottom: "7px" }}
         >
-          <Toolbar>
+          <Toolbar style={{ margin: "auto" }}>
             <Typography>
               <Link to="/">Strona główna</Link>
             </Typography>
-            <Link to="/ksiazki">Baza książek</Link>
-            <Link to="/autorzy">Baza autorów</Link>
-            <Link to="/dodaj">Dodaj książkę/autora</Link>
-            <Link to="/profil">Mój profil</Link>
-            {!this.props.user && <Link to="/login">Logowanie</Link>}
-            {this.props.user && (
-              <button onClick={this.props.logout}>Wyloguj się</button>
+            <Typography>
+              <Link to="/ksiazki">Baza książek</Link>
+            </Typography>
+            <Typography>
+              <Link to="/autorzy">Baza autorów</Link>
+            </Typography>
+            <Typography>
+              <Link to="/dodaj">Dodaj książkę/autora</Link>
+            </Typography>
+            <Typography>
+              <Link to="/profil">Mój profil</Link>
+            </Typography>
+            {!this.props.user && (
+              <Typography>
+                <Link to="/login">Logowanie</Link>
+              </Typography>
             )}
-            <Link to="/admin">Panel admina</Link>
+            <Typography>
+              <Link to="/admin">Panel admina</Link>
+            </Typography>
+            {this.props.user && (
+              <Typography onClick={this.props.logout}>
+                <a>Wyloguj się</a>
+              </Typography>
+            )}
           </Toolbar>
         </AppBar>
       </div>
