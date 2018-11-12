@@ -54,7 +54,10 @@ const AuthorPartialView = props => {
             </Typography>
           )}
           {user && (
-            <Button onClick={() => addFavoriteAuthor(user.email, author.id)}>
+            <Button
+              variant="contained"
+              onClick={() => addFavoriteAuthor(user.email, author.id)}
+            >
               Dodaj do ulubionych
             </Button>
           )}

@@ -14,7 +14,7 @@ const UserInfoView = props => {
           }
           alt=""
         />
-        <Button variant="contained">Zmień awatar</Button>
+        {/* <Button variant="contained">Zmień awatar</Button> */}
       </Grid>
       {info && (
         <Grid item md={6}>

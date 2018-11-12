@@ -7,7 +7,7 @@ import {
   addBookRate
 } from "../../redux/actions/book";
 
-import { addReview } from "../../redux/actions/review";
+import { addReview, addReviewRate } from "../../redux/actions/review";
 
 import {
   addCurrentlyReadBook,
@@ -71,6 +71,13 @@ export class BookPage extends Component {
     });
   };
 
+  addBookReviewRate = (id, value) => {
+    this.props.addBookReviewRate(id, {
+      userEmailAddress: this.props.user.email,
+      value
+    });
+  };
+
   render() {
     return (
       <div>
@@ -93,6 +100,7 @@ export class BookPage extends Component {
           handleAddCommentFormSubmit={this.handleAddCommentFormSubmit}
           handleAddReviewFormChange={this.handleAddReviewFormChange}
           handleAddReviewFormSubmit={this.handleAddReviewFormSubmit}
+          addBookReviewRate={this.addBookReviewRate}
         />
       </div>
     );
@@ -117,7 +125,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addWantedBook(userEmailAddress, id)),
   addBookRate: (id, rate) => dispatch(addBookRate(id, rate)),
   addBookComment: (id, comment) => dispatch(addBookComment(id, comment)),
-  addBookReview: model => dispatch(addReview(model))
+  addBookReview: model => dispatch(addReview(model)),
+  addBookReviewRate: (id, rate) => dispatch(addReviewRate(id, rate))
 });
 
 export default connect(

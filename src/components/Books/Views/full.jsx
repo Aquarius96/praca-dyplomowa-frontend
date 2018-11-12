@@ -33,16 +33,19 @@ const BookFullView = props => {
     date,
     handleAddCommentFormChange,
     handleAddCommentFormSubmit,
-    handleAddReviewChange,
+    handleAddReviewFormChange,
+    handleAddReviewFormSubmit,
     handleSubMenuChange,
     value,
     commentModel,
-    reviewModel
+    reviewModel,
+    addBookReviewRate
   } = props;
   return (
     book && (
       <div>
         <Paper>
+          <Link to="/ksiazki">Wróc do listy wszystkich książek</Link>
           <Grid container>
             <Grid item md={3}>
               <img
@@ -153,7 +156,15 @@ const BookFullView = props => {
             handleSubmit={handleAddCommentFormSubmit}
           />
         )}
-        {value == 1 && <ReviewsList reviews={book.reviews} user={user} />}
+        {value == 1 && (
+          <ReviewsList
+            reviews={book.reviews}
+            user={user}
+            handleChange={handleAddReviewFormChange}
+            handleSubmit={handleAddReviewFormSubmit}
+            addReviewRate={addBookReviewRate}
+          />
+        )}
       </div>
     )
 

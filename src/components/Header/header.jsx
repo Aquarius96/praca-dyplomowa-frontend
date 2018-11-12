@@ -29,9 +29,9 @@ class Header extends Component {
           style={{ marginBottom: "7px" }}
         >
           <Toolbar style={{ margin: "auto" }}>
-            <Typography>
+            {/* <Typography>
               <Link to="/">Strona główna</Link>
-            </Typography>
+            </Typography> */}
             <Typography>
               <Link to="/ksiazki">Baza książek</Link>
             </Typography>

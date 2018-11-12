@@ -37,6 +37,11 @@ class ProfilePage extends Component {
       oldPassword: "",
       password: "",
       confirmPassword: ""
+    },
+    changeDataModel: {
+      firstname: "",
+      lastname: "",
+      username: ""
     }
   };
 
@@ -45,7 +50,7 @@ class ProfilePage extends Component {
 
     if (token !== null) {
       const user = decode(token);
-      this.props.fetchLibrary(user.email);
+      this.props.fetchLibrary(this.props.user.email);
       this.props.fetchUser(user.email);
     }
   }
@@ -58,7 +63,7 @@ class ProfilePage extends Component {
     this.setState({ value });
   };
 
-  handleChangePasswordFormChange = e => {
+  handlePasswordChange = e => {
     var model = this.state.changePasswordModel;
     const { name, value } = e.target;
     model[name] = value;
@@ -67,7 +72,7 @@ class ProfilePage extends Component {
     });
   };
 
-  handleChangePasswordSubmit = e => {
+  handlePasswordSubmit = e => {
     e.preventDefault();
     this.props.changePassword(
       this.props.user.email,
@@ -75,10 +80,24 @@ class ProfilePage extends Component {
     );
   };
 
+  handleDataChange = e => {
+    var model = this.state.changeDataModel;
+    const { name, value } = e.target;
+    model[name] = value;
+    this.setState({
+      changeDataModel: Object.assign(this.state.changeDataModel, model)
+    });
+  };
+
+  handleDataSubmit = e => {
+    e.preventDefault();
+    this.props.changeData(this.props.user.email, this.state.changeDataModel);
+  };
+
   render() {
     return (
       <div>
-        <Paper style={{ paddingBottom: "10px" }}>
+        {/* <Paper style={{ paddingBottom: "10px" }}>
           <Grid container>
             <Grid item md={6}>
               <UserInfoView info={this.props.userInfo} />
@@ -86,12 +105,12 @@ class ProfilePage extends Component {
             <Grid item md={6}>
               <UserEditInfoView
                 data={this.state.changePasswordModel}
-                handleChange={this.handleChangePasswordFormChange}
-                handleSubmit={this.handleChangePasswordSubmit}
+                handlePasswordChange={this.handlePasswordChange}
+                handlePasswordSubmit={this.handlePasswordSubmit}
               />
             </Grid>
           </Grid>
-        </Paper>
+        </Paper> */}
         <Paper>
           <Typography align="center" variant="display1">
             Moja biblioteczka
