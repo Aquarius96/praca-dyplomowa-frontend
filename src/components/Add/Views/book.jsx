@@ -63,7 +63,7 @@ const AddBookFormView = props => {
         multiline
         rows={4}
       />
-      <Button variant="contained" type="submit">
+      <Button variant="contained" type="submit" color="primary">
         Dodaj książkę
       </Button>
     </form>

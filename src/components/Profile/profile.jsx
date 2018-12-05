@@ -9,7 +9,12 @@ import {
   addCurrentlyReadBook,
   addFavoriteBook,
   addReadBook,
-  addWantedBook
+  addWantedBook,
+  deleteCurrentlyReadBook,
+  deleteFavoriteAuthor,
+  deleteFavoriteBook,
+  deleteWantedBook,
+  deleteReadBook
 } from "../../redux/actions/library";
 import {
   Grid,
@@ -20,7 +25,7 @@ import {
 } from "@material-ui/core";
 import UserInfoView from "./Views/info";
 import UserEditInfoView from "./Views/edit-info";
-import LibraryBookView from "./Views/book";
+import LibraryBookView from "./Views/library-book";
 import decode from "jwt-decode";
 import ReadBookView from "./Views/read-book";
 import WantedBookView from "./Views/wanted-book";
@@ -50,7 +55,7 @@ class ProfilePage extends Component {
 
     if (token !== null) {
       const user = decode(token);
-      this.props.fetchLibrary(this.props.user.email);
+      //this.props.fetchLibrary(this.props.user.email);
       this.props.fetchUser(user.email);
     }
   }
@@ -127,10 +132,40 @@ class ProfilePage extends Component {
             <BottomNavigationAction label="Ulubieni autorzy" />
           </BottomNavigation>
         </Paper>
-        {this.state.value == 0 &&
+        {this.state.value === 0 &&
+          this.props.library.readBooks.length === 0 && (
+            <Typography style={{ textAlign: "center" }}>
+              Brak książek na tej półce
+            </Typography>
+          )}
+        {this.state.value === 1 &&
+          this.props.library.wantedBooks.length === 0 && (
+            <Typography style={{ textAlign: "center" }}>
+              Brak książek na tej półce
+            </Typography>
+          )}
+        {this.state.value === 2 &&
+          this.props.library.currentlyReadBooks.length === 0 && (
+            <Typography style={{ textAlign: "center" }}>
+              Brak książek na tej półce
+            </Typography>
+          )}
+        {this.state.value === 3 &&
+          this.props.library.favoriteBooks.length === 0 && (
+            <Typography style={{ textAlign: "center" }}>
+              Brak książek na tej półce
+            </Typography>
+          )}
+        {this.state.value === 4 &&
+          this.props.library.favoriteAuthors.length === 0 && (
+            <Typography style={{ textAlign: "center" }}>
+              Brak autorów do wyświetlenia
+            </Typography>
+          )}
+        {this.state.value === 0 &&
           this.props.library.readBooks.map(book => {
             return (
-              <ReadBookView
+              <LibraryBookView
                 key={book.id}
                 book={book}
                 user={this.props.user}
@@ -138,13 +173,20 @@ class ProfilePage extends Component {
                 addFavoriteBook={this.props.addFavoriteBook}
                 addReadBook={this.props.addReadBook}
                 addWantedBook={this.props.addWantedBook}
+                deleteCurrentlyReadBook={this.props.deleteCurrentlyReadBook}
+                deleteFavoriteBook={this.props.deleteFavoriteBook}
+                deleteReadBook={this.props.deleteReadBook}
+                deleteWantedBook={this.props.deleteWantedBook}
+                date={this.state.date}
+                handleDateChange={this.handleDateChange}
+                library={this.props.library}
               />
             );
           })}
         {this.state.value == 1 &&
           this.props.library.wantedBooks.map(book => {
             return (
-              <WantedBookView
+              <LibraryBookView
                 key={book.id}
                 book={book}
                 user={this.props.user}
@@ -152,44 +194,68 @@ class ProfilePage extends Component {
                 addFavoriteBook={this.props.addFavoriteBook}
                 addReadBook={this.props.addReadBook}
                 addWantedBook={this.props.addWantedBook}
+                deleteCurrentlyReadBook={this.props.deleteCurrentlyReadBook}
+                deleteFavoriteBook={this.props.deleteFavoriteBook}
+                deleteReadBook={this.props.deleteReadBook}
+                deleteWantedBook={this.props.deleteWantedBook}
                 date={this.state.date}
                 handleDateChange={this.handleDateChange}
+                library={this.props.library}
               />
             );
           })}
         {this.state.value == 2 &&
           this.props.library.currentlyReadBooks.map(book => {
             return (
-              <CurrentlyReadBookView
+              <LibraryBookView
                 key={book.id}
                 book={book}
                 user={this.props.user}
-                addWantedBook={this.props.addWantedBook}
+                addCurrentlyReadBook={this.props.addCurrentlyReadBook}
                 addFavoriteBook={this.props.addFavoriteBook}
                 addReadBook={this.props.addReadBook}
+                addWantedBook={this.props.addWantedBook}
+                deleteCurrentlyReadBook={this.props.deleteCurrentlyReadBook}
+                deleteFavoriteBook={this.props.deleteFavoriteBook}
+                deleteReadBook={this.props.deleteReadBook}
+                deleteWantedBook={this.props.deleteWantedBook}
                 date={this.state.date}
                 handleDateChange={this.handleDateChange}
+                library={this.props.library}
               />
             );
           })}
         {this.state.value == 3 &&
           this.props.library.favoriteBooks.map(book => {
             return (
-              <FavoriteBookView
+              <LibraryBookView
                 key={book.id}
                 book={book}
                 user={this.props.user}
-                addWantedBook={this.props.addWantedBook}
+                addCurrentlyReadBook={this.props.addCurrentlyReadBook}
                 addFavoriteBook={this.props.addFavoriteBook}
                 addReadBook={this.props.addReadBook}
+                addWantedBook={this.props.addWantedBook}
+                deleteCurrentlyReadBook={this.props.deleteCurrentlyReadBook}
+                deleteFavoriteBook={this.props.deleteFavoriteBook}
+                deleteReadBook={this.props.deleteReadBook}
+                deleteWantedBook={this.props.deleteWantedBook}
                 date={this.state.date}
                 handleDateChange={this.handleDateChange}
+                library={this.props.library}
               />
             );
           })}
         {this.state.value == 4 &&
           this.props.library.favoriteAuthors.map(author => {
-            return <FavoriteAuthorView author={author} />;
+            return (
+              <FavoriteAuthorView
+                key={author.id}
+                author={author}
+                user={this.props.user}
+                deleteFavoriteAuthor={this.props.deleteFavoriteAuthor}
+              />
+            );
           })}
       </div>
     );
@@ -213,6 +279,16 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addReadBook(userEmailAddress, model)()),
   addWantedBook: (userEmailAddress, id) =>
     dispatch(addWantedBook(userEmailAddress, id)),
+  deleteCurrentlyReadBook: (userEmailAddress, id) =>
+    dispatch(deleteCurrentlyReadBook(userEmailAddress, id)),
+  deleteFavoriteBook: (userEmailAddress, id) =>
+    dispatch(deleteFavoriteBook(userEmailAddress, id)),
+  deleteReadBook: (userEmailAddress, id) =>
+    dispatch(deleteReadBook(userEmailAddress, id)),
+  deleteWantedBook: (userEmailAddress, id) =>
+    dispatch(deleteWantedBook(userEmailAddress, id)),
+  deleteFavoriteAuthor: (userEmailAddress, id) =>
+    dispatch(deleteFavoriteAuthor(userEmailAddress, id)),
   changePassword: (userEmailAddress, model) =>
     dispatch(changePassword(userEmailAddress, model)())
 });

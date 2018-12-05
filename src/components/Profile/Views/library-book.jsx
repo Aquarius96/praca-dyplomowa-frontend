@@ -13,7 +13,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import BookInfoView from "../../Views/book-info";
 import AddReadBookPanelView from "../../Views/add-read-book";
 
-const FavoriteBookView = props => {
+const LibraryBookView = props => {
   const {
     book,
     user,
@@ -43,16 +43,16 @@ const FavoriteBookView = props => {
             }
           />
         </Grid>
-        <Grid item container md={5}>
+        <Grid item container md={6}>
           <BookInfoView book={book} />
         </Grid>
-        <Grid item md={5}>
+        <Grid item md={4}>
           <Typography variant="subheading">Moja ocena: 5</Typography>
 
           <ExpansionPanel style={{ width: "95%" }}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography variant="subheading">
-                Dodaj do biblioteczki
+                Przenieś na inną półkę
               </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
@@ -159,4 +159,4 @@ const FavoriteBookView = props => {
   );
 };
 
-export default FavoriteBookView;
+export default LibraryBookView;

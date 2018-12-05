@@ -3,6 +3,7 @@ import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import decode from "jwt-decode";
 import { saveUser, logout } from "../../redux/actions/user";
+import { fetchLibrary } from "../../redux/actions/library";
 import { connect } from "react-redux";
 import "./header.css";
 
@@ -16,6 +17,7 @@ class Header extends Component {
 
     if (token !== null) {
       const user = decode(token);
+      this.props.fetchLibrary(user.email);
       this.props.saveUser(user);
     }
   }
@@ -70,7 +72,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
-  saveUser: user => dispatch(saveUser(user))
+  saveUser: user => dispatch(saveUser(user)),
+  fetchLibrary: userEmailAddress => dispatch(fetchLibrary(userEmailAddress)())
 });
 
 export default connect(

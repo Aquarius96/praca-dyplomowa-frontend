@@ -59,7 +59,22 @@ export class AdminPage extends Component {
             <Tab label="Recenzje" />
           </Tabs>
         </Paper>
-        {this.state.value == 0 && (
+        {this.state.value === 0 && this.props.authors.length === 0 && (
+          <Typography style={{ textAlign: "center" }}>
+            Brak autorów do potwierdzenia
+          </Typography>
+        )}
+        {this.state.value === 1 && this.props.books.length === 0 && (
+          <Typography style={{ textAlign: "center" }}>
+            Brak książek do potwierdzenia
+          </Typography>
+        )}
+        {this.state.value === 2 && this.props.reviews.length === 0 && (
+          <Typography style={{ textAlign: "center" }}>
+            Brak recenzji do potwierdzenia
+          </Typography>
+        )}
+        {this.state.value === 0 && (
           <Grid container>
             {this.props.authors &&
               this.props.authors.map(author => {

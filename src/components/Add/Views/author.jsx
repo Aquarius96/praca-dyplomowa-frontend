@@ -56,7 +56,7 @@ const AddAuthorFormView = props => {
         margin="normal"
         className="input"
       />
-      <FormControl className="formControl input">
+      <FormControl className="formControl input" style={{ zIndex: "10" }}>
         <InputLabel htmlFor="sort_select">
           <Typography variant="subheading">Płeć</Typography>
         </InputLabel>
@@ -87,7 +87,7 @@ const AddAuthorFormView = props => {
         multiline
         rows={4}
       />
-      <Button variant="contained" type="submit">
+      <Button variant="contained" type="submit" color="primary">
         Dodaj autora
       </Button>
     </form>

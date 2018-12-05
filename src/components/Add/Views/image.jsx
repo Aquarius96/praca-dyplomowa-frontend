@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 
 const ImageUploadView = props => {
   const { handleChange, imageUrl } = props;
@@ -9,7 +9,12 @@ const ImageUploadView = props => {
         {imageUrl && <img style={{ maxWidth: "100%" }} src={imageUrl} alt="" />}
       </Grid>
       <Grid item md={12} align="center">
-        <input type="file" onChange={handleChange} />
+        <label htmlFor="img" className="imageButton">
+          <Typography variant="button" color="primary">
+            Wybierz obraz
+          </Typography>
+        </label>
+        <input id="img" type="file" onChange={handleChange} />
       </Grid>
     </Grid>
   );

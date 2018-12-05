@@ -70,23 +70,26 @@ class AddPage extends Component {
 
   handleBookAuthorsChange = values => {
     this.setState({
-      bookModel: {...this.state.bookModel, authorIds: values}
+      bookModel: { ...this.state.bookModel, authorIds: values }
     });
-  }
+  };
 
   handleAddAuthorSubmit = e => {
-    e.preventDefault();
+    //e.preventDefault();
     var formData = new FormData();
     formData.append("file", this.state.file);
     this.props.addAuthor(this.state.authorModel, formData);
+    window.alert("Pomyślnie dodano nowego autora!");
+    // this.props.history.push("/autorzy");
   };
 
   handleAddBookSubmit = e => {
-    e.preventDefault();
+    //e.preventDefault();
     var formData = new FormData();
     formData.append("file", this.state.file);
     this.props.addBook(this.state.bookModel, formData);
-  }
+    window.alert("Pomyślnie dodano nową książkę!");
+  };
 
   handleImageChange = e => {
     e.preventDefault();
@@ -156,7 +159,7 @@ class AddPage extends Component {
                   return {
                     value: author.id,
                     label: author.name
-                  }
+                  };
                 })}
                 genres={this.props.genres.map(genre => {
                   return {

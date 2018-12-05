@@ -4,7 +4,14 @@ import RatingView from "../../Views/rating";
 import { Grid, Typography, Button, Paper } from "@material-ui/core";
 
 const AuthorPartialView = props => {
-  const { author, user, addFavoriteAuthor, addAuthorRate } = props;
+  const {
+    author,
+    user,
+    addFavoriteAuthor,
+    deleteFavoriteAuthor,
+    addAuthorRate,
+    library
+  } = props;
   return (
     <Paper>
       <Grid container>
@@ -53,14 +60,27 @@ const AuthorPartialView = props => {
               Zaloguj się, aby móc dodać ocenę
             </Typography>
           )}
-          {user && (
-            <Button
-              variant="contained"
-              onClick={() => addFavoriteAuthor(user.email, author.id)}
-            >
-              Dodaj do ulubionych
-            </Button>
-          )}
+          {user &&
+            library &&
+            (library.favoriteAuthors.filter(
+              favAuthor => favAuthor.id === author.id
+            ).length === 0 ? (
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => addFavoriteAuthor(user.email, author.id)}
+              >
+                Dodaj do ulubionych
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => deleteFavoriteAuthor(user.email, author.id)}
+              >
+                Usuń z ulubionych
+              </Button>
+            ))}
         </Grid>
       </Grid>
     </Paper>

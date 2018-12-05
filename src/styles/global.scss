@@ -114,3 +114,11 @@ legend {
 .rating_view {
   height: 90px;
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.imageButton:hover {
+  cursor: pointer;
+}

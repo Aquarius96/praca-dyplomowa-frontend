@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchAuthors, addAuthorRate } from "../../redux/actions/author";
-import { addFavoriteAuthor } from "../../redux/actions/library";
+import {
+  addFavoriteAuthor,
+  deleteFavoriteAuthor
+} from "../../redux/actions/library";
 import AuthorPartialView from "./Views/partial";
 import AuthorSortAndSearchView from "./Views/search-sort";
 
@@ -59,21 +62,19 @@ export class AuthorsPage extends Component {
           handleSearchChange={this.handleSearchChange}
           value={this.state.sortSelectValue}
         />
-        {this.props.loading ? (
-          <div>Loading...</div>
-        ) : (
-          this.props.authors.map(author => {
-            return (
-              <AuthorPartialView
-                key={author.id}
-                author={author}
-                user={this.props.user}
-                addFavoriteAuthor={this.props.addFavoriteAuthor}
-                addAuthorRate={this.props.addAuthorRate}
-              />
-            );
-          })
-        )}
+        {this.props.authors.map(author => {
+          return (
+            <AuthorPartialView
+              key={author.id}
+              author={author}
+              user={this.props.user}
+              addFavoriteAuthor={this.props.addFavoriteAuthor}
+              deleteFavoriteAuthor={this.props.deleteFavoriteAuthor}
+              addAuthorRate={this.props.addAuthorRate}
+              library={this.props.library}
+            />
+          );
+        })}
       </div>
     );
   }
@@ -82,13 +83,16 @@ export class AuthorsPage extends Component {
 const mapStateToProps = state => ({
   authors: state.authors.data,
   user: state.users.user,
-  loading: state.authors.loading
+  loading: state.authors.loading,
+  library: state.library.data
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchAuthors: params => dispatch(fetchAuthors(params)),
   addFavoriteAuthor: (userEmailAddress, id) =>
     dispatch(addFavoriteAuthor(userEmailAddress, id)),
+  deleteFavoriteAuthor: (userEmailAddress, id) =>
+    dispatch(deleteFavoriteAuthor(userEmailAddress, id)),
   addAuthorRate: (id, rate) => dispatch(addAuthorRate(id, rate))
 });
 

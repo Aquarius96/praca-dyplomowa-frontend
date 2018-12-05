@@ -10,7 +10,11 @@ import {
   addCurrentlyReadBook,
   addFavoriteBook,
   addReadBook,
-  addWantedBook
+  addWantedBook,
+  deleteCurrentlyReadBook,
+  deleteFavoriteBook,
+  deleteReadBook,
+  deleteWantedBook
 } from "../../redux/actions/library";
 import BookPartialView from "./Views/partial";
 import BookSortAndSearchView from "./Views/search-sort";
@@ -104,9 +108,14 @@ export class BooksPage extends Component {
               addFavoriteBook={this.props.addFavoriteBook}
               addReadBook={this.props.addReadBook}
               addWantedBook={this.props.addWantedBook}
+              deleteCurrentlyReadBook={this.props.deleteCurrentlyReadBook}
+              deleteFavoriteBook={this.props.deleteFavoriteBook}
+              deleteReadBook={this.props.deleteReadBook}
+              deleteWantedBook={this.props.deleteWantedBook}
               addBookRate={this.props.addBookRate}
               handleDateChange={this.handleDateChange}
               date={this.state.date}
+              library={this.props.library}
             />
           );
         })}
@@ -118,7 +127,8 @@ export class BooksPage extends Component {
 const mapStateToProps = state => ({
   books: state.books.data,
   user: state.users.user,
-  loading: state.books.loading
+  loading: state.books.loading,
+  library: state.library.data
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -131,6 +141,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addReadBook(userEmailAddress, model)()),
   addWantedBook: (userEmailAddress, id) =>
     dispatch(addWantedBook(userEmailAddress, id)),
+  deleteCurrentlyReadBook: (userEmailAddress, id) =>
+    dispatch(deleteCurrentlyReadBook(userEmailAddress, id)),
+  deleteFavoriteBook: (userEmailAddress, id) =>
+    dispatch(deleteFavoriteBook(userEmailAddress, id)),
+  deleteReadBook: (userEmailAddress, id) =>
+    dispatch(deleteReadBook(userEmailAddress, id)),
+  deleteWantedBook: (userEmailAddress, id) =>
+    dispatch(deleteWantedBook(userEmailAddress, id)),
   addBookRate: (id, rate) => dispatch(addBookRate(id, rate)),
   addBookComment: (id, comment) => dispatch(addBookComment(id, comment))
 });

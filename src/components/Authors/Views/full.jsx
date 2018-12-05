@@ -10,18 +10,24 @@ const AuthorFullView = props => {
     author,
     user,
     addFavoriteAuthor,
+    deleteFavoriteAuthor,
     addAuthorRate,
     addAuthorComment,
     addCurrentlyReadBook,
     addFavoriteBook,
     addReadBook,
     addWantedBook,
+    deleteCurrentlyReadBook,
+    deleteFavoriteBook,
+    deleteReadBook,
+    deleteWantedBook,
     addBookRate,
     value,
     handleSubMenuChange,
     handleAddCommentFormChange,
     handleAddCommentFormSubmit,
-    date
+    date,
+    library
   } = props;
 
   return (
@@ -125,9 +131,14 @@ const AuthorFullView = props => {
                   addFavoriteBook={addFavoriteBook}
                   addReadBook={addReadBook}
                   addWantedBook={addWantedBook}
+                  deleteCurrentlyReadBook={deleteCurrentlyReadBook}
+                  deleteFavoriteBook={deleteFavoriteBook}
+                  deleteReadBook={deleteReadBook}
+                  deleteWantedBook={deleteWantedBook}
                   addBookRate={addBookRate}
                   handleDateChange={this.handleDateChange}
                   date={date}
+                  library={library}
                 />
               );
             })}
