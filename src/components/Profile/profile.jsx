@@ -17,22 +17,16 @@ import {
   deleteReadBook
 } from "../../redux/actions/library";
 import {
-  Grid,
   Paper,
   BottomNavigation,
   BottomNavigationAction,
   Typography
 } from "@material-ui/core";
-import UserInfoView from "./Views/info";
-import UserEditInfoView from "./Views/edit-info";
 import LibraryBookView from "./Views/library-book";
 import decode from "jwt-decode";
-import ReadBookView from "./Views/read-book";
-import WantedBookView from "./Views/wanted-book";
-import CurrentlyReadBookView from "./Views/currently-read-book";
-import FavoriteBookView from "./Views/favorite-book";
 import FavoriteAuthorView from "./Views/favorite-author";
 import { changePassword } from "../../redux/actions/user";
+import { addBookRate } from '../../redux/actions/book';
 
 class ProfilePage extends Component {
   state = {
@@ -102,20 +96,6 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
-        {/* <Paper style={{ paddingBottom: "10px" }}>
-          <Grid container>
-            <Grid item md={6}>
-              <UserInfoView info={this.props.userInfo} />
-            </Grid>
-            <Grid item md={6}>
-              <UserEditInfoView
-                data={this.state.changePasswordModel}
-                handlePasswordChange={this.handlePasswordChange}
-                handlePasswordSubmit={this.handlePasswordSubmit}
-              />
-            </Grid>
-          </Grid>
-        </Paper> */}
         <Paper>
           <Typography align="center" variant="display1">
             Moja biblioteczka
@@ -180,10 +160,11 @@ class ProfilePage extends Component {
                 date={this.state.date}
                 handleDateChange={this.handleDateChange}
                 library={this.props.library}
+                addBookRate={this.props.addBookRate}
               />
             );
           })}
-        {this.state.value == 1 &&
+        {this.state.value === 1 &&
           this.props.library.wantedBooks.map(book => {
             return (
               <LibraryBookView
@@ -201,10 +182,11 @@ class ProfilePage extends Component {
                 date={this.state.date}
                 handleDateChange={this.handleDateChange}
                 library={this.props.library}
+                addBookRate={this.props.addBookRate}
               />
             );
           })}
-        {this.state.value == 2 &&
+        {this.state.value === 2 &&
           this.props.library.currentlyReadBooks.map(book => {
             return (
               <LibraryBookView
@@ -222,10 +204,11 @@ class ProfilePage extends Component {
                 date={this.state.date}
                 handleDateChange={this.handleDateChange}
                 library={this.props.library}
+                addBookRate={this.props.addBookRate}
               />
             );
           })}
-        {this.state.value == 3 &&
+        {this.state.value === 3 &&
           this.props.library.favoriteBooks.map(book => {
             return (
               <LibraryBookView
@@ -243,10 +226,11 @@ class ProfilePage extends Component {
                 date={this.state.date}
                 handleDateChange={this.handleDateChange}
                 library={this.props.library}
+                addBookRate={this.props.addBookRate}
               />
             );
           })}
-        {this.state.value == 4 &&
+        {this.state.value === 4 &&
           this.props.library.favoriteAuthors.map(author => {
             return (
               <FavoriteAuthorView
@@ -290,7 +274,8 @@ const mapDispatchToProps = dispatch => ({
   deleteFavoriteAuthor: (userEmailAddress, id) =>
     dispatch(deleteFavoriteAuthor(userEmailAddress, id)),
   changePassword: (userEmailAddress, model) =>
-    dispatch(changePassword(userEmailAddress, model)())
+    dispatch(changePassword(userEmailAddress, model)()),
+  addBookRate: (id, rate) => dispatch(addBookRate(id, rate))
 });
 
 export default connect(

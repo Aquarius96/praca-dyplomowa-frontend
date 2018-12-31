@@ -4,6 +4,7 @@ import { Grid, Typography, Button, Paper, Tabs, Tab } from "@material-ui/core";
 import RatingView from "../../Views/rating";
 import CommentsList from "../../Views/comments";
 import BookPartialView from "../../Books/Views/partial";
+import { firstOrDefault } from '../../../utils/array-functions';
 
 const AuthorFullView = props => {
   const {
@@ -46,6 +47,7 @@ const AuthorFullView = props => {
                     ? author.photoUrl
                     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkcGAmbKRhO9zYpnttSkwef1Rr-Lr5emDd3RyORBCF8tO6AK3BSA"
                 }
+                alt=""
               />
             </Grid>
             <Grid item container md={5}>
@@ -81,25 +83,39 @@ const AuthorFullView = props => {
                   entity={author}
                   user={user}
                   addRate={addAuthorRate}
+                  currentValue={firstOrDefault(library.authorRates, function (element) {
+                    return element.authorId === author.id
+                  }).value}
                 />
               ) : (
-                <Typography variant="subheading">
-                  Zaloguj się, aby móc dodać ocenę
+                  <Typography variant="subheading">
+                    Zaloguj się, aby móc dodać ocenę
                 </Typography>
-              )}
-              {user && (
-                <Button
-                  variant="contained"
-                  onClick={() => addFavoriteAuthor(user.email, author.id)}
-                >
-                  Dodaj do ulubionych
-                </Button>
-              )}
+                )}
+              {user && <span>{library.favoriteAuthors.filter(favAuthor => favAuthor.id === author.id)
+                .length === 0 ? (
+                  <Button
+                    onClick={() => addFavoriteAuthor(user.email, author.id)}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Dodaj do ulubionych
+                  </Button>
+                ) : (
+                  <Grid>
+                    <Button
+                      onClick={() => deleteFavoriteAuthor(user.email, author.id)}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      Usuń z ulubionych
+                    </Button>
+                  </Grid>
+                )}</span>}
             </Grid>
           </Grid>
         </Paper>
         <Tabs
-          value={0}
           indicatorColor="primary"
           textColor="primary"
           centered
@@ -109,7 +125,7 @@ const AuthorFullView = props => {
           <Tab label="Komentarze" />
           <Tab label="Książki" />
         </Tabs>
-        {value == 0 && (
+        {value === 0 && (
           <CommentsList
             comments={author.comments}
             id={author.id}
@@ -119,7 +135,7 @@ const AuthorFullView = props => {
             handleSubmit={handleAddCommentFormSubmit}
           />
         )}
-        {value == 1 && (
+        {value === 1 && (
           <div>
             {author.books.map(book => {
               return (

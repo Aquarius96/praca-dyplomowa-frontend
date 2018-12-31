@@ -47,7 +47,7 @@ export const changePassword = (emailAddress, model) => () => {
 
     console.log('model', model)
 
-    return axios.post(config.URL + 'user/changepassword/' + emailAddress, model)
+    return axios.post(config.URL + 'user/changepassword/' + emailAddress, model, config.headers)
       .then(() => {
         dispatch({
           type: 'CHANGE_PASSWORD_SUCCESS'

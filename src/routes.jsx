@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Main from "./components/Main/main";
 import Header from "./components/Header/header";
 import BooksPage from "./components/Books/books";
 import BookPage from "./components/Books/book";
@@ -16,8 +15,8 @@ class Routes extends Component {
     return (
       <Router>
         <div>
-          <Header />
-          <Route exact path="/" component={Main} />
+          <Header />          
+          <Route exact path="/" component={BooksPage} />
           <Route exact path="/ksiazki" component={BooksPage} />
           <Route path="/ksiazki/:id" component={BookPage} />
           <Route exact path="/autorzy" component={AuthorsPage} />

@@ -7,6 +7,8 @@ import {
 } from "../../redux/actions/library";
 import AuthorPartialView from "./Views/partial";
 import AuthorSortAndSearchView from "./Views/search-sort";
+import { searchAuthor } from '../../redux/actions/author';
+import { Loader } from '../Loader/loader';
 
 export class AuthorsPage extends Component {
   static propTypes = {};
@@ -20,13 +22,7 @@ export class AuthorsPage extends Component {
   };
 
   handleSearchChange = e => {
-    if (e.target.value.length > 2) {
-      this.props.fetchAuthors({
-        searchQuery: e.target.value
-      });
-    } else {
-      this.props.fetchAuthors();
-    }
+    this.props.searchAuthor(e.target.value);
   };
 
   handleSelectChange = e => {
@@ -55,6 +51,9 @@ export class AuthorsPage extends Component {
   };
 
   render() {
+    if (this.props.loading) {
+      return <Loader />
+    }
     return (
       <div>
         <AuthorSortAndSearchView
@@ -81,7 +80,7 @@ export class AuthorsPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  authors: state.authors.data,
+  authors: state.authors.filteredData,
   user: state.users.user,
   loading: state.authors.loading,
   library: state.library.data
@@ -93,7 +92,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addFavoriteAuthor(userEmailAddress, id)),
   deleteFavoriteAuthor: (userEmailAddress, id) =>
     dispatch(deleteFavoriteAuthor(userEmailAddress, id)),
-  addAuthorRate: (id, rate) => dispatch(addAuthorRate(id, rate))
+  addAuthorRate: (id, rate) => dispatch(addAuthorRate(id, rate)),
+  searchAuthor: (query) => dispatch(searchAuthor(query))
 });
 
 export default connect(

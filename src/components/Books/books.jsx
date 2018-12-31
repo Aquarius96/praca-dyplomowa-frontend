@@ -16,24 +16,17 @@ import {
   deleteReadBook,
   deleteWantedBook
 } from "../../redux/actions/library";
+import { searchBook } from '../../redux/actions/book';
 import BookPartialView from "./Views/partial";
 import BookSortAndSearchView from "./Views/search-sort";
-import {
-  Input,
-  Grid,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel
-} from "@material-ui/core";
+import { Loader } from '../Loader/loader';
 
 export class BooksPage extends Component {
   static propTypes = {};
 
   state = {
     date: moment().format("YYYY-MM-DD"),
-    sortSelectValue: null
+    sortSelectValue: ""
   };
 
   componentDidMount = () => {
@@ -41,13 +34,7 @@ export class BooksPage extends Component {
   };
 
   handleSearchChange = e => {
-    if (e.target.value.length > 2) {
-      this.props.fetchBooks({
-        searchQuery: e.target.value
-      });
-    } else {
-      this.props.fetchBooks();
-    }
+    this.props.searchBook(e.target.value);
   };
 
   handleSelectChange = e => {
@@ -91,6 +78,9 @@ export class BooksPage extends Component {
   };
 
   render() {
+    if (this.props.loading) {
+      return <Loader />
+    }
     return (
       <div>
         <BookSortAndSearchView
@@ -125,7 +115,7 @@ export class BooksPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  books: state.books.data,
+  books: state.books.filteredData,
   user: state.users.user,
   loading: state.books.loading,
   library: state.library.data
@@ -150,7 +140,8 @@ const mapDispatchToProps = dispatch => ({
   deleteWantedBook: (userEmailAddress, id) =>
     dispatch(deleteWantedBook(userEmailAddress, id)),
   addBookRate: (id, rate) => dispatch(addBookRate(id, rate)),
-  addBookComment: (id, comment) => dispatch(addBookComment(id, comment))
+  addBookComment: (id, comment) => dispatch(addBookComment(id, comment)),
+  searchBook: (query) => dispatch(searchBook(query))
 });
 
 export default connect(

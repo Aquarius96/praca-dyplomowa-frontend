@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
   Paper,
-  BottomNavigation,
-  BottomNavigationAction,
-  Button,
   Typography,
   Grid,
   Tabs,
@@ -91,7 +87,7 @@ export class AdminPage extends Component {
               })}
           </Grid>
         )}
-        {this.state.value == 1 && (
+        {this.state.value === 1 && (
           <Grid container>
             {this.props.books &&
               this.props.books.map(book => {
@@ -108,7 +104,7 @@ export class AdminPage extends Component {
               })}
           </Grid>
         )}
-        {this.state.value == 2 && (
+        {this.state.value === 2 && (
           <Grid container>
             {this.props.reviews &&
               this.props.reviews.map(review => {
@@ -125,7 +121,7 @@ export class AdminPage extends Component {
               })}
           </Grid>
         )}
-        {this.state.value == 3 && (
+        {this.state.value === 3 && (
           <div>
             <Typography variant="subheading" align="center">
               Lista użytkowników do potwierdzenia

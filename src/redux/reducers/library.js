@@ -25,6 +25,7 @@ export default function libraryReducer(state = initialState, action, name) {
     case 'DELETE_CURRENTLY_READ_BOOK_BEGIN':
     case 'DELETE_READ_BOOK_BEGIN':
     case 'DELETE_WANTED_BOOK_BEGIN':
+    case 'ADD_BOOK_RATE_BEGIN':
       return {
         ...state,
         loading: true
@@ -40,6 +41,7 @@ export default function libraryReducer(state = initialState, action, name) {
     case 'DELETE_CURRENTLY_READ_BOOK_ERROR':
     case 'DELETE_READ_BOOK_ERROR':
     case 'DELETE_WANTED_BOOK_ERROR':
+    case 'ADD_BOOK_RATE_ERROR':
       return {
         ...state,
         loading: false,
@@ -77,23 +79,57 @@ export default function libraryReducer(state = initialState, action, name) {
           favoriteBooks: state.data.favoriteBooks.filter(entity => entity.id !== action.payload.id)
         }
       }
-      case 'DELETE_CURRENTLY_READ_BOOK_SUCCESS':
+    case 'DELETE_CURRENTLY_READ_BOOK_SUCCESS':
       return {
         ...state,
         loading: false,
-        data: {...state.data, currentlyReadBooks: state.data.currentlyReadBooks.filter(entity => entity.id !== action.payload.id)}
+        data: { ...state.data,
+          currentlyReadBooks: state.data.currentlyReadBooks.filter(entity => entity.id !== action.payload.id)
+        }
       }
-      case 'DELETE_READ_BOOK_SUCCESS':
+    case 'DELETE_READ_BOOK_SUCCESS':
       return {
         ...state,
         loading: false,
-        data: {...state.data, readBooks: state.data.favoriteAuthors.filter(entity => entity.id !== action.payload.id)}
+        data: { ...state.data,
+          readBooks: state.data.favoriteAuthors.filter(entity => entity.id !== action.payload.id)
+        }
       }
-      case 'DELETE_WANTED_BOOK_SUCCESS':
+    case 'DELETE_WANTED_BOOK_SUCCESS':
       return {
         ...state,
         loading: false,
-        data: {...state.data, wantedBooks: state.data.wantedBooks.filter(entity => entity.id !== action.payload.id)}
+        data: { ...state.data,
+          wantedBooks: state.data.wantedBooks.filter(entity => entity.id !== action.payload.id)
+        }
+      }
+    case 'ADD_BOOK_RATE_SUCCESS':
+      return {
+        ...state,
+        loading: false,
+        data: {
+          ...state.data,
+          currentlyReadBooks: state.data.currentlyReadBooks.map(entity => {
+            return entity.id !== action.payload.id ? entity : { ...entity,
+              rating: action.payload.data
+            }
+          }),
+          favoriteBooks: state.data.favoriteBooks.map(entity => {
+            return entity.id !== action.payload.id ? entity : { ...entity,
+              rating: action.payload.data
+            }
+          }),
+          wantedBooks: state.data.wantedBooks.map(entity => {
+            return entity.id !== action.payload.id ? entity : { ...entity,
+              rating: action.payload.data
+            }
+          }),
+          readBooks: state.data.readBooks.map(entity => {
+            return entity.id !== action.payload.id ? entity : { ...entity,
+              rating: action.payload.data
+            }
+          }),
+        }
       }
     default:
       return state

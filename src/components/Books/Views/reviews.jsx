@@ -1,9 +1,11 @@
 import React from "react";
 import { TextField, Button, Typography } from "@material-ui/core";
 import ReviewView from "./review";
+import { Loader } from "../../Loader/loader";
 
 const ReviewsList = props => {
-  const { reviews, handleChange, handleSubmit, addReviewRate } = props;
+  const { reviews, handleChange, handleSubmit, addReviewRate, loading } = props;
+  if(loading) return <Loader />
   return (
     <div style={{ textAlign: "center", marginTop: "15px" }}>
       <form
@@ -23,7 +25,7 @@ const ReviewsList = props => {
           multiline
           rows={4}
         />
-        <Button variant="raised" type="submit">
+        <Button variant="contained" type="submit">
           Dodaj recenzję
         </Button>
       </form>

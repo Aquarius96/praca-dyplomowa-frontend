@@ -20,6 +20,7 @@ import {
   deleteReadBook
 } from "../../redux/actions/library";
 import AuthorFullView from "./Views/full";
+import { Loader } from "../Loader/loader";
 
 export class AuthorPage extends Component {
   static propTypes = {};
@@ -55,6 +56,9 @@ export class AuthorPage extends Component {
   };
 
   render() {
+    if(this.props.loading) {
+      return <Loader />
+    }
     return (
       <div>
         <AuthorFullView

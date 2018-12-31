@@ -10,7 +10,7 @@ export const fetchLibrary = (userEmailAddress) => () => {
       type: 'FETCH_LIBRARY_BEGIN'
     });
 
-    return axios.get(config.URL + "library/" + userEmailAddress)
+    return axios.get(config.URL + "library/" + userEmailAddress, config.headers)
       .then(response => {
         dispatch({
           type: 'FETCH_LIBRARY_SUCCESS',
@@ -33,10 +33,10 @@ export const fetchLibrary = (userEmailAddress) => () => {
 const actionBuilder = name => {
   const actions = {
     ADD: (userEmailAddress, id) => libraryActionFactory(name, 'ADD', () => {
-      return axios.post(config.URL + 'library/' + userEmailAddress + '/' + name + '/' + id);
+      return axios.post(config.URL + 'library/' + userEmailAddress + '/' + name + '/' + id, {}, config.headers);
     }, userEmailAddress, id),
     DELETE: (userEmailAddress, id) => libraryActionFactory(name, 'DELETE', () => {
-      return axios.delete(config.URL + 'library/' + userEmailAddress + '/' + name + '/' + id);
+      return axios.delete(config.URL + 'library/' + userEmailAddress + '/' + name + '/' + id, {}, config.headers);
     }, userEmailAddress, id)
   }
 
@@ -61,6 +61,6 @@ export const deleteWantedBook = (userEmailAddress, id) => wantedBooklibraryActio
 
 const readBooklibraryActions = actionBuilder('READ_BOOK');
 export const addReadBook = (userEmailAddress, model) => libraryActionFactory('READ_BOOK', 'ADD', () => {
-  return axios.post(config.URL + 'library/' + userEmailAddress + '/READ_BOOK', model);
+  return axios.post(config.URL + 'library/' + userEmailAddress + '/READ_BOOK', model, config.headers);
 }, userEmailAddress);
 export const deleteReadBook = (userEmailAddress, id) => readBooklibraryActions.DELETE(userEmailAddress, id)();

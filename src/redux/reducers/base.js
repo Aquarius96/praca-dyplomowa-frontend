@@ -2,6 +2,7 @@ const initialState = {
   loading: false,
   error: null,
   data: [],
+  filteredData: [],
   entity: null,
   query: null
 }
@@ -32,7 +33,8 @@ const baseReducer = (name = '') => {
         return {
           ...state,
           loading: false,
-          data: action.payload.data
+          data: action.payload.data,
+          filteredData: action.payload.data,
         }
       case `FETCH_ONE_${name}_SUCCESS`:
         return {
@@ -69,11 +71,6 @@ const baseReducer = (name = '') => {
 const baseRateReducer = (name = '') => {
   return (state = initialState, action) => {
     switch (action.type) {
-      case `ADD_${name}_RATE_BEGIN`:
-        return {
-          ...state,
-          loading: true
-        }
       case `ADD_${name}_RATE_ERROR`:
         return {
           ...state,
@@ -85,6 +82,11 @@ const baseRateReducer = (name = '') => {
           ...state,
           loading: false,
           data: state.data.map(entity => {
+            return entity.id !== action.payload.id ? entity : { ...entity,
+              rating: action.payload.data
+            }
+          }),
+          filteredData: state.filteredData.map(entity => {
             return entity.id !== action.payload.id ? entity : { ...entity,
               rating: action.payload.data
             }

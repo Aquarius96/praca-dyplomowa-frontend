@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import RatingView from "../../Views/rating";
-import { Grid, Typography, Button, TextField, Paper } from "@material-ui/core";
+import { Grid, Typography, Button, Paper } from "@material-ui/core";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddReadBookPanelView from "../../Views/add-read-book";
-import { libraryActionFactory } from "../../../redux/actions/base";
+import { firstOrDefault } from '../../../utils/array-functions';
 
 const BookPartialView = props => {
   const {
@@ -38,6 +38,7 @@ const BookPartialView = props => {
                 ? book.photoUrl
                 : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkcGAmbKRhO9zYpnttSkwef1Rr-Lr5emDd3RyORBCF8tO6AK3BSA"
             }
+            alt=""
           />
         </Grid>
         <Grid item container md={5}>
@@ -65,20 +66,23 @@ const BookPartialView = props => {
               Liczba stron: {book.pagesCount}
             </Grid>
             <Grid item md={12}>
+              Data wydania: {book.released}
+            </Grid>
+            <Grid item md={12}>
               {book.description}
             </Grid>
           </Typography>
         </Grid>
         <Grid item md={4}>
           {user ? (
-            <div className="gowno">
-              <RatingView entity={book} user={user} addRate={addBookRate} />
-            </div>
+            <RatingView entity={book} user={user} addRate={addBookRate} currentValue={firstOrDefault(library.bookRates, function (element) {
+              return element.bookId === book.id
+            }).value} />
           ) : (
-            <Typography variant="subheading">
-              Zaloguj się, aby móc dodać ocenę
+              <Typography variant="subheading">
+                Zaloguj się, aby móc dodać ocenę
             </Typography>
-          )}
+            )}
           {user && library && (
             <ExpansionPanel style={{ width: "95%" }}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -91,99 +95,99 @@ const BookPartialView = props => {
                   {library.currentlyReadBooks.filter(
                     curBook => curBook.id === book.id
                   ).length === 0 ? (
-                    <Button
-                      onClick={() => addCurrentlyReadBook(user.email, book.id)}
-                      color="primary"
-                    >
-                      Właśnie czytam
-                    </Button>
-                  ) : (
-                    <Grid>
                       <Button
-                        onClick={() =>
-                          addCurrentlyReadBook(user.email, book.id)
-                        }
-                        disabled
+                        onClick={() => addCurrentlyReadBook(user.email, book.id)}
                         color="primary"
                       >
                         Właśnie czytam
+                    </Button>
+                    ) : (
+                      <Grid>
+                        <Button
+                          onClick={() =>
+                            addCurrentlyReadBook(user.email, book.id)
+                          }
+                          disabled
+                          color="primary"
+                        >
+                          Właśnie czytam
                       </Button>
-                      <Button
-                        onClick={() =>
-                          deleteCurrentlyReadBook(user.email, book.id)
-                        }
-                        color="secondary"
-                      >
-                        Usuń
+                        <Button
+                          onClick={() =>
+                            deleteCurrentlyReadBook(user.email, book.id)
+                          }
+                          color="secondary"
+                        >
+                          Usuń
                       </Button>
-                    </Grid>
-                  )}
+                      </Grid>
+                    )}
                   {library.favoriteBooks.filter(
                     curBook => curBook.id === book.id
                   ).length === 0 ? (
-                    <Button
-                      onClick={() => addFavoriteBook(user.email, book.id)}
-                      color="primary"
-                    >
-                      Dodaj do ulubionych
-                    </Button>
-                  ) : (
-                    <Grid>
                       <Button
-                        onClick={() => deleteFavoriteBook(user.email, book.id)}
-                        color="secondary"
+                        onClick={() => addFavoriteBook(user.email, book.id)}
+                        color="primary"
                       >
-                        Usuń z ulubionych
+                        Dodaj do ulubionych
+                    </Button>
+                    ) : (
+                      <Grid>
+                        <Button
+                          onClick={() => deleteFavoriteBook(user.email, book.id)}
+                          color="secondary"
+                        >
+                          Usuń z ulubionych
                       </Button>
-                    </Grid>
-                  )}
+                      </Grid>
+                    )}
                   {library.wantedBooks.filter(curBook => curBook.id === book.id)
                     .length === 0 ? (
-                    <Button
-                      onClick={() => addWantedBook(user.email, book.id)}
-                      color="primary"
-                    >
-                      Chcę przeczytać
-                    </Button>
-                  ) : (
-                    <Grid>
                       <Button
                         onClick={() => addWantedBook(user.email, book.id)}
-                        disabled
                         color="primary"
                       >
                         Chcę przeczytać
+                    </Button>
+                    ) : (
+                      <Grid>
+                        <Button
+                          onClick={() => addWantedBook(user.email, book.id)}
+                          disabled
+                          color="primary"
+                        >
+                          Chcę przeczytać
                       </Button>
-                      <Button
-                        onClick={() => deleteWantedBook(user.email, book.id)}
-                        color="secondary"
-                      >
-                        Usuń
+                        <Button
+                          onClick={() => deleteWantedBook(user.email, book.id)}
+                          color="secondary"
+                        >
+                          Usuń
                       </Button>
-                    </Grid>
-                  )}
+                      </Grid>
+                    )}
                   {library.readBooks.filter(curBook => curBook.id === book.id)
                     .length === 0 ? (
-                    <AddReadBookPanelView
-                      addReadBook={addReadBook}
-                      date={date}
-                      handleDateChange={handleDateChange}
-                      book={book}
-                      user={user}
-                    />
-                  ) : (
-                    <Grid>
-                      <Button disabled color="primary">
-                        Przeczytałem
+                      <AddReadBookPanelView
+                        addReadBook={addReadBook}
+                        date={date}
+                        handleDateChange={handleDateChange}
+                        book={book}
+                        user={user}
+                      />
+                    ) : (
+                      <Grid>
+                        <Button disabled color="primary">
+                          Przeczytałem
                       </Button>
-                      <Button
-                        onClick={() => deleteReadBook(user.email, book.id)}
-                        color="secondary"
-                      >
-                        Usuń
+                        <Button
+                          onClick={() => deleteReadBook(user.email, book.id)}
+                          color="secondary"
+                        >
+                          Usuń
                       </Button>
-                    </Grid>
-                  )}
+                      </Grid>
+                    )}
                 </span>
               </ExpansionPanelDetails>
             </ExpansionPanel>

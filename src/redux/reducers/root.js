@@ -3,6 +3,8 @@ import mergeable from 'redux-merge-reducers';
 import {
   combineReducers
 } from 'redux';
+import authorReducer from './author';
+import bookReducer from './book';
 import userReducer from './user';
 import genreReducer from './genre';
 import roleReducer from './role';
@@ -24,8 +26,8 @@ import {
 
 export default combineReducers({
   users: userReducer.merge(baseUserReducer),
-  authors: mergeable(baseAuthorCommentReducer).merge(mergeable(baseAuthorReducer).merge(baseAuthorRateReducer)),
-  books: mergeable(baseBookCommentReducer).merge( mergeable(baseBookReducer).merge(baseBookRateReducer)),
+  authors: authorReducer.merge(mergeable(baseAuthorCommentReducer).merge(mergeable(baseAuthorReducer).merge(baseAuthorRateReducer))),
+  books: bookReducer.merge(mergeable(baseBookCommentReducer).merge(mergeable(baseBookReducer).merge(baseBookRateReducer))),
   genres: genreReducer.merge(baseGenreReducer),
   roles: roleReducer.merge(baseRoleReducer),
   reviews: mergeable(baseReviewReducer).merge(baseReviewRateReducer),

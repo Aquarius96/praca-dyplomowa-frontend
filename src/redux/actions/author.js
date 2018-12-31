@@ -6,6 +6,7 @@ import axios from 'axios';
 import {
   uploadImage
 } from "../../utils/image-upload";
+import * as config from '../../utils/axios-config';
 
 const authorActions = actionBuilder('AUTHOR', 'http://localhost:8000/api/author/');
 
@@ -15,14 +16,14 @@ export const deleteAuthor = id => authorActions.DELETE(id)();
 export const confirmAuthor = id => authorActions.CONFIRM(id)();
 
 export const addAuthorRate = (id, rate) => subActionFactory('AUTHOR', 'ADD', 'RATE', () => {
-  return axios.post('http://localhost:8000/api/author/' + id + '/rate/', rate);
+  return axios.post('http://localhost:8000/api/author/' + id + '/rate/', rate, config.headers);
 }, id)();
 
 export const addAuthorComment = (id, comment) => subActionFactory('AUTHOR', 'ADD', 'COMMENT', () => {
-  return axios.post('http://localhost:8000/api/author/' + id + '/comment/', comment);
+  return axios.post('http://localhost:8000/api/author/' + id + '/comment/', comment, config.headers);
 }, id)();
 export const deleteAuthorComment = (id) => subActionFactory('AUTHOR', 'DELETE', 'COMMENT', () => {
-  return axios.delete('http://localhost:8000/api/author/comment/' + id);
+  return axios.delete('http://localhost:8000/api/author/comment/' + id, {}, config.headers);
 }, id)();
 
 export const addAuthor = (author, image) => () => {
@@ -31,7 +32,7 @@ export const addAuthor = (author, image) => () => {
       type: `ADD_AUTHOR_BEGIN`
     });
 
-    return axios.post('http://localhost:8000/api/author', author)
+    return axios.post('http://localhost:8000/api/author', author, config.headers)
       .then(response => {
         uploadImage('author', response.data.id, image);
         dispatch({
@@ -49,5 +50,16 @@ export const addAuthor = (author, image) => () => {
           }
         })
       });
+  }
+}
+
+export const searchAuthor = (query) => {
+  return dispatch => {
+    dispatch({
+      type: 'SEARCH_AUTHOR',
+      payload: {
+        query
+      }
+    })
   }
 }

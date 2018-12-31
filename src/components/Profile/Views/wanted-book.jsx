@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {
   Paper,
   Grid,
@@ -35,6 +34,7 @@ const WantedBookView = props => {
                 ? book.photoUrl
                 : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkcGAmbKRhO9zYpnttSkwef1Rr-Lr5emDd3RyORBCF8tO6AK3BSA"
             }
+            alt=""
           />
         </Grid>
         <Grid item container md={5}>

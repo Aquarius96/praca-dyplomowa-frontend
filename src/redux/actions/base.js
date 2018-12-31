@@ -56,12 +56,12 @@ export const actionFactory = (name, action, thunk, unit) => () => {
       default:
         return dispatch(thunk)
           .then(response => {
-            dispatch({
+            setTimeout(() => dispatch({
               type: `${action}_${name}_SUCCESS`,
               payload: {
                 data: response.data
               }
-            })
+            }), 1000);
           })
           .catch(error => {
             dispatch({
@@ -89,20 +89,21 @@ export const actionBuilder = (name) => {
       return axios.get(config.URL + name, {
         params: { ...initialParams,
           ...params
-        }
+        },
+        headers: config.headers
       });
     }),
     FETCH_ONE: param => actionFactory(name, actionTypes.FETCH_ONE, () => {
-      return axios.get(config.URL + name + "/" + param);
+      return axios.get(config.URL + name + "/" + param, config.headers);
     }),
     ADD: body => actionFactory(name, actionTypes.ADD, () => {
-      return axios.post(config.URL + name, body);
+      return axios.post(config.URL + name, body, config.headers);
     }),
     DELETE: param => actionFactory(name, actionTypes.DELETE, () => {
-      return axios.delete(config.URL + name + "/" + param);
+      return axios.delete(config.URL + name + "/" + param, {}, config.headers);
     }, param),
     CONFIRM: param => actionFactory(name, actionTypes.CONFIRM, () => {
-      return axios.post(config.URL + name + "/" + param + "/confirm");
+      return axios.post(config.URL + name + "/" + param + "/confirm", {}, config.headers);
     }, param)
   }
 

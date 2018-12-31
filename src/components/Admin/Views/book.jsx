@@ -18,14 +18,14 @@ const ConfirmBookView = props => {
             <Grid item sm={5}>
               <Button
                 style={{ marginRight: "3px" }}
-                variant="raised"
+                variant="contained"
                 color="primary"
                 onClick={() => confirmBook(book.id)}
               >
                 Potwierdź
               </Button>
               <Button
-                variant="raised"
+                variant="contained"
                 color="secondary"
                 onClick={() => rejectBook(book.id)}
               >

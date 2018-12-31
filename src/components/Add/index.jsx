@@ -75,16 +75,19 @@ class AddPage extends Component {
   };
 
   handleAddAuthorSubmit = e => {
-    //e.preventDefault();
+    e.preventDefault();
+    if (this.state.authorModel.genreIds.length === 0) {
+      window.alert('Musisz wybrać co najmniej jeden gatunek.');
+      return;
+    }
     var formData = new FormData();
     formData.append("file", this.state.file);
     this.props.addAuthor(this.state.authorModel, formData);
     window.alert("Pomyślnie dodano nowego autora!");
-    // this.props.history.push("/autorzy");
   };
 
   handleAddBookSubmit = e => {
-    //e.preventDefault();
+    e.preventDefault();
     var formData = new FormData();
     formData.append("file", this.state.file);
     this.props.addBook(this.state.bookModel, formData);
@@ -149,26 +152,26 @@ class AddPage extends Component {
                 })}
               />
             ) : (
-              <AddBookFormView
-                data={this.state.bookModel}
-                handleChange={this.handleAddBookFormChange}
-                handleAuthorsChange={this.handleBookAuthorsChange}
-                handleGenresChange={this.handleBookGenresChange}
-                handleSubmit={this.handleAddBookSubmit}
-                authors={this.props.authors.map(author => {
-                  return {
-                    value: author.id,
-                    label: author.name
-                  };
-                })}
-                genres={this.props.genres.map(genre => {
-                  return {
-                    value: genre.id,
-                    label: genre.name
-                  };
-                })}
-              />
-            )}
+                <AddBookFormView
+                  data={this.state.bookModel}
+                  handleChange={this.handleAddBookFormChange}
+                  handleAuthorsChange={this.handleBookAuthorsChange}
+                  handleGenresChange={this.handleBookGenresChange}
+                  handleSubmit={this.handleAddBookSubmit}
+                  authors={this.props.authors.map(author => {
+                    return {
+                      value: author.id,
+                      label: author.name
+                    };
+                  })}
+                  genres={this.props.genres.map(genre => {
+                    return {
+                      value: genre.id,
+                      label: genre.name
+                    };
+                  })}
+                />
+              )}
           </Grid>
           <Grid item md={6}>
             <ImageUploadView

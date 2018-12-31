@@ -1,10 +1,12 @@
 import React from "react";
 import Comment from "./comment";
-import { Button, Typography } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import  {Loader} from '../Loader/loader';
 
 const CommentsList = props => {
-  const { comments, id, addComment, user, handleChange, handleSubmit } = props;
+  const { comments, handleChange, handleSubmit, loading } = props;
+  if(loading) return <Loader />
   return (
     <div>
       <form
@@ -23,7 +25,7 @@ const CommentsList = props => {
           multiline
           rows={4}
         />
-        <Button variant="raised" type="submit">
+        <Button variant="contained" type="submit">
           Dodaj komentarz
         </Button>
       </form>

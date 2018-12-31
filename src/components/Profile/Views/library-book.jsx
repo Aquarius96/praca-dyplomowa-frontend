@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import {
   Paper,
   Grid,
@@ -12,6 +11,8 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import BookInfoView from "../../Views/book-info";
 import AddReadBookPanelView from "../../Views/add-read-book";
+import { firstOrDefault } from '../../../utils/array-functions';
+import RatingView from '../../Views/rating';
 
 const LibraryBookView = props => {
   const {
@@ -27,7 +28,8 @@ const LibraryBookView = props => {
     deleteCurrentlyReadBook,
     deleteFavoriteBook,
     deleteReadBook,
-    deleteWantedBook
+    deleteWantedBook,
+    addBookRate
   } = props;
   return (
     <Paper>
@@ -41,13 +43,22 @@ const LibraryBookView = props => {
                 ? book.photoUrl
                 : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkcGAmbKRhO9zYpnttSkwef1Rr-Lr5emDd3RyORBCF8tO6AK3BSA"
             }
+            alt=""
           />
         </Grid>
         <Grid item container md={6}>
           <BookInfoView book={book} />
         </Grid>
         <Grid item md={4}>
-          <Typography variant="subheading">Moja ocena: 5</Typography>
+          {user ? (
+            <RatingView entity={book} user={user} addRate={addBookRate} currentValue={firstOrDefault(library.bookRates, function (element) {
+              return element.bookId === book.id
+            }).value} />
+          ) : (
+              <Typography variant="subheading">
+                Zaloguj się, aby móc dodać ocenę
+            </Typography>
+            )}
 
           <ExpansionPanel style={{ width: "95%" }}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -60,96 +71,96 @@ const LibraryBookView = props => {
                 {library.currentlyReadBooks.filter(
                   curBook => curBook.id === book.id
                 ).length === 0 ? (
-                  <Button
-                    onClick={() => addCurrentlyReadBook(user.email, book.id)}
-                    color="primary"
-                  >
-                    Właśnie czytam
-                  </Button>
-                ) : (
-                  <Grid>
                     <Button
                       onClick={() => addCurrentlyReadBook(user.email, book.id)}
-                      disabled
                       color="primary"
                     >
                       Właśnie czytam
+                  </Button>
+                  ) : (
+                    <Grid>
+                      <Button
+                        onClick={() => addCurrentlyReadBook(user.email, book.id)}
+                        disabled
+                        color="primary"
+                      >
+                        Właśnie czytam
                     </Button>
-                    <Button
-                      onClick={() =>
-                        deleteCurrentlyReadBook(user.email, book.id)
-                      }
-                      color="secondary"
-                    >
-                      Usuń
+                      <Button
+                        onClick={() =>
+                          deleteCurrentlyReadBook(user.email, book.id)
+                        }
+                        color="secondary"
+                      >
+                        Usuń
                     </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  )}
                 {library.favoriteBooks.filter(curBook => curBook.id === book.id)
                   .length === 0 ? (
-                  <Button
-                    onClick={() => addFavoriteBook(user.email, book.id)}
-                    color="primary"
-                  >
-                    Dodaj do ulubionych
-                  </Button>
-                ) : (
-                  <Grid>
                     <Button
-                      onClick={() => deleteFavoriteBook(user.email, book.id)}
-                      color="secondary"
+                      onClick={() => addFavoriteBook(user.email, book.id)}
+                      color="primary"
                     >
-                      Usuń z ulubionych
+                      Dodaj do ulubionych
+                  </Button>
+                  ) : (
+                    <Grid>
+                      <Button
+                        onClick={() => deleteFavoriteBook(user.email, book.id)}
+                        color="secondary"
+                      >
+                        Usuń z ulubionych
                     </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  )}
                 {library.wantedBooks.filter(curBook => curBook.id === book.id)
                   .length === 0 ? (
-                  <Button
-                    onClick={() => addWantedBook(user.email, book.id)}
-                    color="primary"
-                  >
-                    Chcę przeczytać
-                  </Button>
-                ) : (
-                  <Grid>
                     <Button
                       onClick={() => addWantedBook(user.email, book.id)}
-                      disabled
                       color="primary"
                     >
                       Chcę przeczytać
+                  </Button>
+                  ) : (
+                    <Grid>
+                      <Button
+                        onClick={() => addWantedBook(user.email, book.id)}
+                        disabled
+                        color="primary"
+                      >
+                        Chcę przeczytać
                     </Button>
-                    <Button
-                      onClick={() => deleteWantedBook(user.email, book.id)}
-                      color="secondary"
-                    >
-                      Usuń
+                      <Button
+                        onClick={() => deleteWantedBook(user.email, book.id)}
+                        color="secondary"
+                      >
+                        Usuń
                     </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  )}
                 {library.readBooks.filter(curBook => curBook.id === book.id)
                   .length === 0 ? (
-                  <AddReadBookPanelView
-                    addReadBook={addReadBook}
-                    date={date}
-                    handleDateChange={handleDateChange}
-                    book={book}
-                    user={user}
-                  />
-                ) : (
-                  <Grid>
-                    <Button disabled color="primary">
-                      Przeczytałem
+                    <AddReadBookPanelView
+                      addReadBook={addReadBook}
+                      date={date}
+                      handleDateChange={handleDateChange}
+                      book={book}
+                      user={user}
+                    />
+                  ) : (
+                    <Grid>
+                      <Button disabled color="primary">
+                        Przeczytałem
                     </Button>
-                    <Button
-                      onClick={() => deleteReadBook(user.email, book.id)}
-                      color="secondary"
-                    >
-                      Usuń
+                      <Button
+                        onClick={() => deleteReadBook(user.email, book.id)}
+                        color="secondary"
+                      >
+                        Usuń
                     </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  )}
               </span>
             </ExpansionPanelDetails>
           </ExpansionPanel>

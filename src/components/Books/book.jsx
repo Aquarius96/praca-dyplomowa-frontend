@@ -13,9 +13,15 @@ import {
   addCurrentlyReadBook,
   addFavoriteBook,
   addReadBook,
-  addWantedBook
+  addWantedBook,
+  deleteCurrentlyReadBook,
+  deleteFavoriteBook,
+  deleteReadBook,
+  deleteWantedBook,
+  fetchLibrary
 } from "../../redux/actions/library";
 import BookFullView from "./Views/full";
+import { Loader } from "../Loader/loader";
 
 export class BookPage extends Component {
   static propTypes = {};
@@ -69,6 +75,7 @@ export class BookPage extends Component {
       userEmailAddress: this.props.user.email,
       bookId: this.props.book.id
     });
+    window.alert('Pomyślenie dodano recenzję do bazy. Po zaakceptowaniu przez administratora pojawi się ona na stronie!');
   };
 
   addBookReviewRate = (id, value) => {
@@ -79,15 +86,23 @@ export class BookPage extends Component {
   };
 
   render() {
+    if(this.props.loading) {
+      return <Loader />
+    }
     return (
       <div>
         <BookFullView
           book={this.props.book}
           user={this.props.user}
+          library={this.props.library}
           addCurrentlyReadBook={this.props.addCurrentlyReadBook}
           addFavoriteBook={this.props.addFavoriteBook}
           addReadBook={this.props.addReadBook}
           addWantedBook={this.props.addWantedBook}
+          deleteCurrentlyReadBook={this.props.deleteCurrentlyReadBook}
+          deleteFavoriteBook={this.props.deleteFavoriteBook}
+          deleteReadBook={this.props.deleteReadBook}
+          deleteWantedBook={this.props.deleteWantedBook}
           addBookRate={this.props.addBookRate}
           addBookComment={this.props.addBookComment}
           handleDateChange={this.handleDateChange}
@@ -101,6 +116,7 @@ export class BookPage extends Component {
           handleAddReviewFormChange={this.handleAddReviewFormChange}
           handleAddReviewFormSubmit={this.handleAddReviewFormSubmit}
           addBookReviewRate={this.addBookReviewRate}
+          loading={this.props.loading}
         />
       </div>
     );
@@ -110,11 +126,13 @@ export class BookPage extends Component {
 const mapStateToProps = state => ({
   book: state.books.entity,
   user: state.users.user,
+  library: state.library.data,
   loading: state.books.loading
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchBook: id => dispatch(fetchBook(id)),
+  fetchLibrary: userEmailAddress => dispatch(fetchLibrary(userEmailAddress)()),
   addCurrentlyReadBook: (userEmailAddress, id) =>
     dispatch(addCurrentlyReadBook(userEmailAddress, id)),
   addFavoriteBook: (userEmailAddress, id) =>
@@ -123,6 +141,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addReadBook(userEmailAddress, model)()),
   addWantedBook: (userEmailAddress, id) =>
     dispatch(addWantedBook(userEmailAddress, id)),
+  deleteCurrentlyReadBook: (userEmailAddress, id) =>
+    dispatch(deleteCurrentlyReadBook(userEmailAddress, id)),
+  deleteFavoriteBook: (userEmailAddress, id) =>
+    dispatch(deleteFavoriteBook(userEmailAddress, id)),
+  deleteReadBook: (userEmailAddress, id) =>
+    dispatch(deleteReadBook(userEmailAddress, id)),
+  deleteWantedBook: (userEmailAddress, id) =>
+    dispatch(deleteWantedBook(userEmailAddress, id)),
   addBookRate: (id, rate) => dispatch(addBookRate(id, rate)),
   addBookComment: (id, comment) => dispatch(addBookComment(id, comment)),
   addBookReview: model => dispatch(addReview(model)),

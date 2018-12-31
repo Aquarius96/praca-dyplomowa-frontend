@@ -5,7 +5,6 @@ import {
   Grid,
   Typography,
   Button,
-  TextField,
   Paper,
   Tabs,
   Tab
@@ -18,6 +17,7 @@ import AddReadBookPanelView from "../../Views/add-read-book";
 
 import CommentsList from "../../Views/comments";
 import ReviewsList from "./reviews";
+import { firstOrDefault } from '../../../utils/array-functions';
 
 const BookFullView = props => {
   const {
@@ -28,6 +28,10 @@ const BookFullView = props => {
     addFavoriteBook,
     addReadBook,
     addWantedBook,
+    deleteCurrentlyReadBook,
+    deleteFavoriteBook,
+    deleteReadBook,
+    deleteWantedBook,
     addBookRate,
     handleDateChange,
     date,
@@ -37,9 +41,9 @@ const BookFullView = props => {
     handleAddReviewFormSubmit,
     handleSubMenuChange,
     value,
-    commentModel,
-    reviewModel,
-    addBookReviewRate
+    addBookReviewRate,
+    library,
+    loading
   } = props;
   return (
     book && (
@@ -56,6 +60,7 @@ const BookFullView = props => {
                     ? book.photoUrl
                     : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkcGAmbKRhO9zYpnttSkwef1Rr-Lr5emDd3RyORBCF8tO6AK3BSA"
                 }
+                alt=""
               />
             </Grid>
             <Grid item container md={5}>
@@ -89,12 +94,14 @@ const BookFullView = props => {
             </Grid>
             <Grid item md={4}>
               {user ? (
-                <RatingView entity={book} user={user} addRate={addBookRate} />
+                <RatingView entity={book} user={user} addRate={addBookRate} currentValue={firstOrDefault(library.bookRates, function (element) {
+                  return element.bookId === book.id
+                }).value} />
               ) : (
-                <Typography variant="subheading">
-                  Zaloguj się, aby móc dodać ocenę
+                  <Typography variant="subheading">
+                    Zaloguj się, aby móc dodać ocenę
                 </Typography>
-              )}
+                )}
               {user && (
                 <ExpansionPanel style={{ width: "95%" }}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -104,30 +111,99 @@ const BookFullView = props => {
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                     <span>
-                      <Button
-                        onClick={() =>
-                          addCurrentlyReadBook(user.email, book.id)
-                        }
-                      >
-                        Właśnie czytam
-                      </Button>
-                      <Button
-                        onClick={() => addFavoriteBook(user.email, book.id)}
-                      >
-                        Dodaj do ulubionych
-                      </Button>
-                      <Button
-                        onClick={() => addWantedBook(user.email, book.id)}
-                      >
-                        Chcę tą książkę
-                      </Button>
-                      <AddReadBookPanelView
-                        addReadBook={addReadBook}
-                        date={date}
-                        handleDateChange={handleDateChange}
-                        book={book}
-                        user={user}
-                      />
+                      {library.currentlyReadBooks.filter(
+                        curBook => curBook.id === book.id
+                      ).length === 0 ? (
+                          <Button
+                            onClick={() => addCurrentlyReadBook(user.email, book.id)}
+                            color="primary"
+                          >
+                            Właśnie czytam
+                  </Button>
+                        ) : (
+                          <Grid>
+                            <Button
+                              onClick={() => addCurrentlyReadBook(user.email, book.id)}
+                              disabled
+                              color="primary"
+                            >
+                              Właśnie czytam
+                    </Button>
+                            <Button
+                              onClick={() =>
+                                deleteCurrentlyReadBook(user.email, book.id)
+                              }
+                              color="secondary"
+                            >
+                              Usuń
+                    </Button>
+                          </Grid>
+                        )}
+                      {library.favoriteBooks.filter(curBook => curBook.id === book.id)
+                        .length === 0 ? (
+                          <Button
+                            onClick={() => addFavoriteBook(user.email, book.id)}
+                            color="primary"
+                          >
+                            Dodaj do ulubionych
+                  </Button>
+                        ) : (
+                          <Grid>
+                            <Button
+                              onClick={() => deleteFavoriteBook(user.email, book.id)}
+                              color="secondary"
+                            >
+                              Usuń z ulubionych
+                    </Button>
+                          </Grid>
+                        )}
+                      {library.wantedBooks.filter(curBook => curBook.id === book.id)
+                        .length === 0 ? (
+                          <Button
+                            onClick={() => addWantedBook(user.email, book.id)}
+                            color="primary"
+                          >
+                            Chcę przeczytać
+                  </Button>
+                        ) : (
+                          <Grid>
+                            <Button
+                              onClick={() => addWantedBook(user.email, book.id)}
+                              disabled
+                              color="primary"
+                            >
+                              Chcę przeczytać
+                    </Button>
+                            <Button
+                              onClick={() => deleteWantedBook(user.email, book.id)}
+                              color="secondary"
+                            >
+                              Usuń
+                    </Button>
+                          </Grid>
+                        )}
+                      {library.readBooks.filter(curBook => curBook.id === book.id)
+                        .length === 0 ? (
+                          <AddReadBookPanelView
+                            addReadBook={addReadBook}
+                            date={date}
+                            handleDateChange={handleDateChange}
+                            book={book}
+                            user={user}
+                          />
+                        ) : (
+                          <Grid>
+                            <Button disabled color="primary">
+                              Przeczytałem
+                    </Button>
+                            <Button
+                              onClick={() => deleteReadBook(user.email, book.id)}
+                              color="secondary"
+                            >
+                              Usuń
+                    </Button>
+                          </Grid>
+                        )}
                     </span>
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
@@ -136,7 +212,6 @@ const BookFullView = props => {
           </Grid>
         </Paper>
         <Tabs
-          value={0}
           indicatorColor="primary"
           textColor="primary"
           centered
@@ -146,7 +221,7 @@ const BookFullView = props => {
           <Tab label="Komentarze" />
           <Tab label="Recenzje" />
         </Tabs>
-        {value == 0 && (
+        {value === 0 && (
           <CommentsList
             comments={book.comments}
             id={book.id}
@@ -154,15 +229,17 @@ const BookFullView = props => {
             addComment={addBookComment}
             handleChange={handleAddCommentFormChange}
             handleSubmit={handleAddCommentFormSubmit}
+            loading={loading}
           />
         )}
-        {value == 1 && (
+        {value === 1 && (
           <ReviewsList
             reviews={book.reviews}
             user={user}
             handleChange={handleAddReviewFormChange}
             handleSubmit={handleAddReviewFormSubmit}
             addReviewRate={addBookReviewRate}
+            loading={loading}
           />
         )}
       </div>

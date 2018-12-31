@@ -16,13 +16,14 @@ const AuthorSortAndSearchView = props => {
     <Grid container spacing={24} style={{ marginBottom: "2px" }}>
       <Grid item md={3}>
         <FormControl className="select">
-          <InputLabel shrink={value ? "true" : ""} htmlFor="sort_select">
+          <InputLabel shrink={value !== ""} htmlFor="sort_select">
             <Typography variant="subheading">Sortuj według</Typography>
           </InputLabel>
           <Select
             value={value}
             onChange={handleSelectChange}
             inputProps={{
+              id: "sort_select",
               name: "sort_select"
             }}
           >
