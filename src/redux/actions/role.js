@@ -1,8 +1,9 @@
-import {
-  actionBuilder
-} from './base';
+import { actionBuilder } from "./base";
 
-const roleActions = actionBuilder('ROLE', 'http://localhost:8000/api/role/');
+const roleActions = actionBuilder(
+  "ROLE",
+  "https://bazaksiazek.azurewebsites.net/api/role/"
+);
 
 export const fetchRoles = roleActions.FETCH_ALL;
 export const fetchRole = id => roleActions.FETCH_ONE(id)();

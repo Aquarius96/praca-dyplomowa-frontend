@@ -16,13 +16,13 @@ const AuthorInfoView = props => {
 
       <Grid item md={12}>
         Gatunki:
-        {/* {author.genres.map(genre => {
+        {author.genres.map(genre => {
           return <span key={genre.id}>{genre.name}</span>;
-        })} */}
+        })}
       </Grid>
       <Grid item md={12}>
         Data i miejsce urodzenia:
-        {/* {author.dateOfBirth}, {author.birthCity}, {author.birthCountry} */}
+        {author.dateOfBirth}, {author.birthCity}, {author.birthCountry}
       </Grid>
 
       <Grid item md={12}>

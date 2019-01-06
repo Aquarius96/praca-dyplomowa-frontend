@@ -1,9 +1,11 @@
 import React from "react";
 import { Paper, Grid, Typography, Button } from "@material-ui/core";
 import AuthorInfoView from "../../Views/author-info";
+import { firstOrDefault } from "../../../utils/array-functions";
+import RatingView from "../../Views/rating";
 
 const FavoriteAuthorView = props => {
-  const { author, user, deleteFavoriteAuthor } = props;
+  const { author, user, deleteFavoriteAuthor, library, addAuthorRate } = props;
   return (
     <Paper>
       <Grid container>
@@ -23,11 +25,27 @@ const FavoriteAuthorView = props => {
           <AuthorInfoView author={author} />
         </Grid>
         <Grid item md={5}>
-          <Typography variant="subheading">Moja ocena: 5</Typography>
+          {user ? (
+            <RatingView
+              entity={author}
+              user={user}
+              addRate={addAuthorRate}
+              currentValue={
+                firstOrDefault(library.authorRates, function(element) {
+                  return element.authorId === author.id;
+                }).value
+              }
+            />
+          ) : (
+            <Typography variant="subheading">
+              Zaloguj się, aby móc dodać ocenę
+            </Typography>
+          )}
 
           <Button
             onClick={() => deleteFavoriteAuthor(user.email, author.id)}
             color="secondary"
+            variant="contained"
           >
             Usuń z ulubionych
           </Button>

@@ -86,6 +86,7 @@ const initialParams = {
 export const actionBuilder = (name) => {
   const actions = {
     FETCH_ALL: (params) => actionFactory(name, actionTypes.FETCH_ALL, () => {
+      console.log(config.headers);
       return axios.get(config.URL + name, {
         params: { ...initialParams,
           ...params

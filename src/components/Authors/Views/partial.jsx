@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import RatingView from "../../Views/rating";
 import { Grid, Typography, Button, Paper } from "@material-ui/core";
-import { firstOrDefault } from '../../../utils/array-functions';
+import { firstOrDefault } from "../../../utils/array-functions";
 
 const AuthorPartialView = props => {
   const {
@@ -56,35 +56,42 @@ const AuthorPartialView = props => {
         </Grid>
         <Grid item md={4}>
           {user ? (
-            <RatingView entity={author} user={user} addRate={addAuthorRate} currentValue={firstOrDefault(library.authorRates, function (element) {
-              return element.authorId === author.id
-            }).value} />
+            <RatingView
+              entity={author}
+              user={user}
+              addRate={addAuthorRate}
+              currentValue={
+                firstOrDefault(library.authorRates, function(element) {
+                  return element.authorId === author.id;
+                }).value
+              }
+            />
           ) : (
-              <Typography variant="subheading">
-                Zaloguj się, aby móc dodać ocenę
+            <Typography variant="subheading">
+              Zaloguj się, aby móc dodać ocenę
             </Typography>
-            )}
+          )}
           {user &&
             library &&
             (library.favoriteAuthors.filter(
               favAuthor => favAuthor.id === author.id
             ).length === 0 ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => addFavoriteAuthor(user.email, author.id)}
-                >
-                  Dodaj do ulubionych
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => addFavoriteAuthor(user.email, author.id)}
+              >
+                Dodaj do ulubionych
               </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => deleteFavoriteAuthor(user.email, author.id)}
-                >
-                  Usuń z ulubionych
+            ) : (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => deleteFavoriteAuthor(user.email, author.id)}
+              >
+                Usuń z ulubionych
               </Button>
-              ))}
+            ))}
         </Grid>
       </Grid>
     </Paper>

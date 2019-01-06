@@ -26,7 +26,8 @@ import LibraryBookView from "./Views/library-book";
 import decode from "jwt-decode";
 import FavoriteAuthorView from "./Views/favorite-author";
 import { changePassword } from "../../redux/actions/user";
-import { addBookRate } from '../../redux/actions/book';
+import { addBookRate } from "../../redux/actions/book";
+import { addAuthorRate } from "../../redux/actions/author";
 
 class ProfilePage extends Component {
   state = {
@@ -237,7 +238,10 @@ class ProfilePage extends Component {
                 key={author.id}
                 author={author}
                 user={this.props.user}
+                addFavoriteAuthor={this.props.addFavoriteAuthor}
                 deleteFavoriteAuthor={this.props.deleteFavoriteAuthor}
+                library={this.props.library}
+                addAuthorRate={this.props.addAuthorRate}
               />
             );
           })}
@@ -275,7 +279,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(deleteFavoriteAuthor(userEmailAddress, id)),
   changePassword: (userEmailAddress, model) =>
     dispatch(changePassword(userEmailAddress, model)()),
-  addBookRate: (id, rate) => dispatch(addBookRate(id, rate))
+  addBookRate: (id, rate) => dispatch(addBookRate(id, rate)),
+  addAuthorRate: (id, rate) => dispatch(addAuthorRate(id, rate))
 });
 
 export default connect(
