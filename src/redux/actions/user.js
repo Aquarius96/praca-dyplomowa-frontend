@@ -29,10 +29,11 @@ export const login = (model) => () => {
         })
       })
       .catch(error => {
+        console.log(error);
         dispatch({
           type: 'LOGIN_ERROR',
           payload: {
-            error: error.message
+            error: error.response.data
           }
         })
       })
@@ -80,6 +81,22 @@ export const saveUser = (user) => {
       payload: {
         user
       }
+    });
+  }
+}
+
+export const clearErrors = () => {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_ERRORS'
+    });
+  }
+}
+
+export const clearMessage = () => {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGE'
     });
   }
 }

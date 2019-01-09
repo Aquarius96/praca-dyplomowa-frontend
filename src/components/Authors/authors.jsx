@@ -7,8 +7,9 @@ import {
 } from "../../redux/actions/library";
 import AuthorPartialView from "./Views/partial";
 import AuthorSortAndSearchView from "./Views/search-sort";
-import { searchAuthor } from '../../redux/actions/author';
-import { Loader } from '../Loader/loader';
+import { searchAuthor } from "../../redux/actions/author";
+import { Loader } from "../Loader/loader";
+import { Typography } from "@material-ui/core";
 
 export class AuthorsPage extends Component {
   static propTypes = {};
@@ -52,7 +53,7 @@ export class AuthorsPage extends Component {
 
   render() {
     if (this.props.loading) {
-      return <Loader />
+      return <Loader />;
     }
     return (
       <div>
@@ -61,6 +62,11 @@ export class AuthorsPage extends Component {
           handleSearchChange={this.handleSearchChange}
           value={this.state.sortSelectValue}
         />
+        {this.props.authors.length === 0 && (
+          <Typography style={{ textAlign: "center" }}>
+            Brak autorów do wyświetlenia
+          </Typography>
+        )}
         {this.props.authors.map(author => {
           return (
             <AuthorPartialView
@@ -80,7 +86,7 @@ export class AuthorsPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  authors: state.authors.filteredData,
+  authors: state.authors.filteredData.filter(author => author.confirmed),
   user: state.users.user,
   loading: state.authors.loading,
   library: state.library.data
@@ -93,7 +99,7 @@ const mapDispatchToProps = dispatch => ({
   deleteFavoriteAuthor: (userEmailAddress, id) =>
     dispatch(deleteFavoriteAuthor(userEmailAddress, id)),
   addAuthorRate: (id, rate) => dispatch(addAuthorRate(id, rate)),
-  searchAuthor: (query) => dispatch(searchAuthor(query))
+  searchAuthor: query => dispatch(searchAuthor(query))
 });
 
 export default connect(

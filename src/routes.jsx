@@ -15,13 +15,13 @@ class Routes extends Component {
     return (
       <Router>
         <div>
-          <Header />          
+          <Header />
           <Route exact path="/" component={BooksPage} />
           <Route exact path="/ksiazki" component={BooksPage} />
           <Route path="/ksiazki/:id" component={BookPage} />
           <Route exact path="/autorzy" component={AuthorsPage} />
           <Route path="/autorzy/:id" component={AuthorPage} />
-          <Route exact path="/profil" component={Profile} />
+          <Route exact path="/biblioteczka" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/dodaj" component={AddPage} />
           <Route exact path="/admin" component={AdminPage} />

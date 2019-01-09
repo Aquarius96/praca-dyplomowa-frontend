@@ -30,7 +30,7 @@ export const actionFactory = (name, action, thunk, unit) => () => {
             dispatch({
               type: `${action}_${name}_ERROR`,
               payload: {
-                error: error.message
+                error: error.response.data
               }
             })
           });
@@ -49,25 +49,25 @@ export const actionFactory = (name, action, thunk, unit) => () => {
             dispatch({
               type: `${action}_${name}_ERROR`,
               payload: {
-                error: error.message
+                error: error.response.data
               }
             })
           });
       default:
         return dispatch(thunk)
           .then(response => {
-            setTimeout(() => dispatch({
+            dispatch({
               type: `${action}_${name}_SUCCESS`,
               payload: {
                 data: response.data
               }
-            }), 1000);
+            })
           })
           .catch(error => {
             dispatch({
               type: `${action}_${name}_ERROR`,
               payload: {
-                error: error.message
+                error: error.response.data
               }
             })
           });
@@ -133,7 +133,7 @@ export const subActionFactory = (name, action, subName, thunk, id) => () => {
             dispatch({
               type: `${action}_${name}_${subName}_ERROR`,
               payload: {
-                error: error.message
+                error: error.response.data
               }
             })
           });
@@ -152,7 +152,7 @@ export const subActionFactory = (name, action, subName, thunk, id) => () => {
             dispatch({
               type: `${action}_${name}_${subName}_ERROR`,
               payload: {
-                error: error.message
+                error: error.response.data
               }
             })
           });
@@ -183,7 +183,7 @@ export const libraryActionFactory = (name, action, thunk, email, id) => () => {
             dispatch({
               type: `${action}_${name}_ERROR`,
               payload: {
-                error: error.message
+                error: error.response.data
               }
             })
           });
@@ -203,7 +203,7 @@ export const libraryActionFactory = (name, action, thunk, email, id) => () => {
             dispatch({
               type: `${action}_${name}_ERROR`,
               payload: {
-                error: error.message
+                error: error.response.data
               }
             })
           });

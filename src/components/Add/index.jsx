@@ -9,6 +9,7 @@ import AddAuthorFormView from "./Views/author";
 import { Grid, Typography, Select, MenuItem } from "@material-ui/core";
 import ImageUploadView from "./Views/image";
 import AddBookFormView from "./Views/book";
+import { Loader } from "../Loader/loader";
 
 class AddPage extends Component {
   state = {
@@ -77,13 +78,27 @@ class AddPage extends Component {
   handleAddAuthorSubmit = e => {
     e.preventDefault();
     if (this.state.authorModel.genreIds.length === 0) {
-      window.alert('Musisz wybrać co najmniej jeden gatunek.');
+      window.alert("Musisz wybrać co najmniej jeden gatunek.");
       return;
     }
     var formData = new FormData();
     formData.append("file", this.state.file);
     this.props.addAuthor(this.state.authorModel, formData);
-    window.alert("Pomyślnie dodano nowego autora!");
+    this.setState({
+      authorModel: {
+        firstname: "",
+        lastname: "",
+        description: "",
+        dateOfBirth: moment().format("YYYY-MM-DD"),
+        birthCity: "",
+        birthCountry: "",
+        gender: "",
+        genreIds: []
+      }
+    });
+    window.alert(
+      "Pomyślnie dodano nowego autora. Po zaakceptowaniu przez administratora pojawi się on na stronie."
+    );
   };
 
   handleAddBookSubmit = e => {
@@ -91,7 +106,19 @@ class AddPage extends Component {
     var formData = new FormData();
     formData.append("file", this.state.file);
     this.props.addBook(this.state.bookModel, formData);
-    window.alert("Pomyślnie dodano nową książkę!");
+    this.setState({
+      bookModel: {
+        title: "",
+        description: "",
+        pagesCount: null,
+        released: moment().format("YYYY-MM-DD"),
+        genreIds: [],
+        authorIds: []
+      }
+    });
+    window.alert(
+      "Pomyślnie dodano nową książkę. Po zaakceptowaniu przez administratora pojawi się ona na stronie."
+    );
   };
 
   handleImageChange = e => {
@@ -123,6 +150,9 @@ class AddPage extends Component {
   };
 
   render() {
+    if (this.props.authorsLoading || this.props.booksLoading) {
+      return <Loader />;
+    }
     return (
       <div className="add_page">
         <Typography variant="" align="center">
@@ -152,26 +182,26 @@ class AddPage extends Component {
                 })}
               />
             ) : (
-                <AddBookFormView
-                  data={this.state.bookModel}
-                  handleChange={this.handleAddBookFormChange}
-                  handleAuthorsChange={this.handleBookAuthorsChange}
-                  handleGenresChange={this.handleBookGenresChange}
-                  handleSubmit={this.handleAddBookSubmit}
-                  authors={this.props.authors.map(author => {
-                    return {
-                      value: author.id,
-                      label: author.name
-                    };
-                  })}
-                  genres={this.props.genres.map(genre => {
-                    return {
-                      value: genre.id,
-                      label: genre.name
-                    };
-                  })}
-                />
-              )}
+              <AddBookFormView
+                data={this.state.bookModel}
+                handleChange={this.handleAddBookFormChange}
+                handleAuthorsChange={this.handleBookAuthorsChange}
+                handleGenresChange={this.handleBookGenresChange}
+                handleSubmit={this.handleAddBookSubmit}
+                authors={this.props.authors.map(author => {
+                  return {
+                    value: author.id,
+                    label: author.name
+                  };
+                })}
+                genres={this.props.genres.map(genre => {
+                  return {
+                    value: genre.id,
+                    label: genre.name
+                  };
+                })}
+              />
+            )}
           </Grid>
           <Grid item md={6}>
             <ImageUploadView
@@ -187,7 +217,9 @@ class AddPage extends Component {
 
 const mapStateToProps = state => ({
   authors: state.authors.data,
-  genres: state.genres.data
+  genres: state.genres.data,
+  authorsLoading: state.authors.loading,
+  booksLoading: state.books.loading
 });
 
 const mapDispatchToProps = dispatch => ({

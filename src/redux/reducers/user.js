@@ -7,7 +7,8 @@ const initialState = {
   data: [],
   entity: null,
   query: null,
-  user: null
+  user: null,
+  message: null
 }
 
 function userReducer(state = initialState, action) {
@@ -45,6 +46,21 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         user: action.payload.user
+      }
+    case 'CLEAR_ERRORS':
+      return {
+        ...state,
+        error: null
+      }
+    case 'CLEAR_MESSAGE':
+      return {
+        ...state,
+        message: null
+      }
+    case 'ADD_USER_SUCCESS':
+      return {
+        ...state,
+        message: 'Pomyślnie zarejestrowano nowego użytkownika. Teraz można się zalogować.'
       }
     case types.DELETE_USER_SUCCESS:
       return {

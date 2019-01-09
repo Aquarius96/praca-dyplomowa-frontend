@@ -16,17 +16,18 @@ import {
   deleteReadBook,
   deleteWantedBook
 } from "../../redux/actions/library";
-import { searchBook } from '../../redux/actions/book';
+import { searchBook } from "../../redux/actions/book";
 import BookPartialView from "./Views/partial";
 import BookSortAndSearchView from "./Views/search-sort";
-import { Loader } from '../Loader/loader';
+import { Loader } from "../Loader/loader";
+import { Typography } from "@material-ui/core";
 
 export class BooksPage extends Component {
   static propTypes = {};
 
   state = {
     date: moment().format("YYYY-MM-DD"),
-    sortSelectValue: ""
+    sortSelectValue: null
   };
 
   componentDidMount = () => {
@@ -79,7 +80,7 @@ export class BooksPage extends Component {
 
   render() {
     if (this.props.loading) {
-      return <Loader />
+      return <Loader />;
     }
     return (
       <div>
@@ -88,6 +89,11 @@ export class BooksPage extends Component {
           handleSearchChange={this.handleSearchChange}
           value={this.state.sortSelectValue}
         />
+        {this.props.books.length === 0 && (
+          <Typography style={{ textAlign: "center" }}>
+            Brak książek do wyświetlenia
+          </Typography>
+        )}
         {this.props.books.map(book => {
           return (
             <BookPartialView
@@ -115,7 +121,7 @@ export class BooksPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  books: state.books.filteredData,
+  books: state.books.filteredData.filter(book => book.confirmed),
   user: state.users.user,
   loading: state.books.loading,
   library: state.library.data
@@ -141,7 +147,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(deleteWantedBook(userEmailAddress, id)),
   addBookRate: (id, rate) => dispatch(addBookRate(id, rate)),
   addBookComment: (id, comment) => dispatch(addBookComment(id, comment)),
-  searchBook: (query) => dispatch(searchBook(query))
+  searchBook: query => dispatch(searchBook(query))
 });
 
 export default connect(

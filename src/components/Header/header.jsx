@@ -44,7 +44,7 @@ class Header extends Component {
               <Link to="/dodaj">Dodaj książkę/autora</Link>
             </Typography>
             <Typography>
-              <Link to="/profil">Mój profil</Link>
+              <Link to="/biblioteczka">Moja biblioteczka</Link>
             </Typography>
             {!this.props.user && (
               <Typography>
