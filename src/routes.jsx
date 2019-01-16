@@ -22,7 +22,7 @@ class Routes extends Component {
           <Route exact path="/autorzy" component={AuthorsPage} />
           <Route path="/autorzy/:id" component={AuthorPage} />
           <Route exact path="/biblioteczka" component={Profile} />
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/logowanie" component={Login} />
           <Route exact path="/dodaj" component={AddPage} />
           <Route exact path="/admin" component={AdminPage} />
         </div>

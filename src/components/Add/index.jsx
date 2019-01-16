@@ -94,7 +94,7 @@ class AddPage extends Component {
         birthCountry: "",
         gender: "",
         genreIds: []
-      }
+      }, file: null, imagePreviewUrl: null
     });
     window.alert(
       "Pomyślnie dodano nowego autora. Po zaakceptowaniu przez administratora pojawi się on na stronie."
@@ -114,7 +114,7 @@ class AddPage extends Component {
         released: moment().format("YYYY-MM-DD"),
         genreIds: [],
         authorIds: []
-      }
+      }, file: null, imagePreviewUrl: null
     });
     window.alert(
       "Pomyślnie dodano nową książkę. Po zaakceptowaniu przez administratora pojawi się ona na stronie."
@@ -182,26 +182,26 @@ class AddPage extends Component {
                 })}
               />
             ) : (
-              <AddBookFormView
-                data={this.state.bookModel}
-                handleChange={this.handleAddBookFormChange}
-                handleAuthorsChange={this.handleBookAuthorsChange}
-                handleGenresChange={this.handleBookGenresChange}
-                handleSubmit={this.handleAddBookSubmit}
-                authors={this.props.authors.map(author => {
-                  return {
-                    value: author.id,
-                    label: author.name
-                  };
-                })}
-                genres={this.props.genres.map(genre => {
-                  return {
-                    value: genre.id,
-                    label: genre.name
-                  };
-                })}
-              />
-            )}
+                <AddBookFormView
+                  data={this.state.bookModel}
+                  handleChange={this.handleAddBookFormChange}
+                  handleAuthorsChange={this.handleBookAuthorsChange}
+                  handleGenresChange={this.handleBookGenresChange}
+                  handleSubmit={this.handleAddBookSubmit}
+                  authors={this.props.authors.map(author => {
+                    return {
+                      value: author.id,
+                      label: author.name
+                    };
+                  })}
+                  genres={this.props.genres.map(genre => {
+                    return {
+                      value: genre.id,
+                      label: genre.name
+                    };
+                  })}
+                />
+              )}
           </Grid>
           <Grid item md={6}>
             <ImageUploadView

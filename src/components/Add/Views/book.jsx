@@ -31,7 +31,7 @@ const AddBookFormView = props => {
       />
       <TextField
         label="Data wydania"
-        name="dateOfBirth"
+        name="released"
         value={data.released}
         margin="normal"
         className="input"

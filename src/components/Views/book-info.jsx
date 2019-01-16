@@ -16,13 +16,13 @@ const BookInfoView = props => {
       <Grid item md={12}>
         Autorzy:
         {book.authors.map(author => {
-          return <span key={author.id}>{author.name} </span>;
+          return book.authors[book.authors.length - 1] === author ? <span key={author.id}> {author.name} </span> : <span key={author.id}> {author.name},</span>;
         })}
       </Grid>
       <Grid item md={12}>
         Gatunki:
         {book.genres.map(genre => {
-          return <span key={genre.id}>{genre.name}</span>;
+          return book.genres[book.genres.length - 1] === genre ? <span key={genre.id}> {genre.name}</span> : <span key={genre.id}> {genre.name},</span>;
         })}
       </Grid>
       <Grid item md={12}>

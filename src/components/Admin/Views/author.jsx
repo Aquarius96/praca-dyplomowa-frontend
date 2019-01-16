@@ -35,13 +35,15 @@ const ConfirmAuthorView = props => {
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Typography variant="body1">
-            <p>Data urodzenia: {author.dateOfBirth}</p>
-            <p>
-              Miejsce urodzenia: {author.birthCity} , {author.birthCountry}
-            </p>
-            <p>Płeć: {author.gender}</p>
-          </Typography>
+          <Grid container>
+            <Grid item sm={8} container><Typography variant="body1">
+              <Grid item md={12}>Data urodzenia: {author.dateOfBirth}</Grid>
+              <Grid item md={12}>
+                Miejsce urodzenia: {author.birthCity} , {author.birthCountry}
+              </Grid>
+              <Grid item md={12}>Płeć: {author.gender}</Grid></Typography></Grid>
+            <Grid item sm={4}><img alt="" src={author.photoUrl}></img></Grid>
+          </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </Paper>

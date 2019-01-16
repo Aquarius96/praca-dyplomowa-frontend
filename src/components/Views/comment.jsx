@@ -8,7 +8,6 @@ const Comment = props => {
       <Grid container>
         <Grid item md={3} style={{ textAlign: "center" }}>
           <img
-            height="150"
             alt=""
             src="https://images.vexels.com/media/users/3/145908/preview2/52eabf633ca6414e60a7677b0b917d92-male-avatar-maker.jpg"
           />
@@ -16,7 +15,7 @@ const Comment = props => {
             {comment.author.username}
           </Typography>
         </Grid>
-        <Grid item md={9}>
+        <Grid item md={9} style={{ padding: "10px" }}>
           {comment.content}
         </Grid>
       </Grid>

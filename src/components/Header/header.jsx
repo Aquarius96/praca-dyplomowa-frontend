@@ -31,34 +31,32 @@ class Header extends Component {
           style={{ marginBottom: "7px" }}
         >
           <Toolbar style={{ margin: "auto" }}>
-            {/* <Typography>
-              <Link to="/">Strona główna</Link>
-            </Typography> */}
             <Typography>
               <Link to="/ksiazki">Baza książek</Link>
             </Typography>
             <Typography>
               <Link to="/autorzy">Baza autorów</Link>
             </Typography>
-            <Typography>
-              <Link to="/dodaj">Dodaj książkę/autora</Link>
-            </Typography>
-            <Typography>
-              <Link to="/biblioteczka">Moja biblioteczka</Link>
-            </Typography>
+            {this.props.user && [
+              <Typography>
+                <Link to="/dodaj">Dodaj książkę/autora</Link>
+              </Typography>,
+              <Typography>
+                <Link to="/biblioteczka">Moja biblioteczka</Link>
+              </Typography>]}
             {!this.props.user && (
               <Typography>
-                <Link to="/login">Logowanie</Link>
+                <Link to="/logowanie">Logowanie</Link>
               </Typography>
             )}
-            <Typography>
-              <Link to="/admin">Panel admina</Link>
-            </Typography>
-            {this.props.user && (
+            {this.props.user && this.props.user.Role === 'administrator' &&
+              <Typography>
+                <Link to="/admin">Panel admina</Link>
+              </Typography>}
+            {this.props.user &&
               <Typography onClick={this.props.logout}>
-                <a>Wyloguj się</a>
-              </Typography>
-            )}
+                <Link to="/ksiazki">Wyloguj się</Link>
+              </Typography>}
           </Toolbar>
         </AppBar>
       </div>

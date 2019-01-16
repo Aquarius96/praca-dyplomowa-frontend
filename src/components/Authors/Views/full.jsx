@@ -34,14 +34,10 @@ const AuthorFullView = props => {
   return (
     author && (
       <div>
-        <Link to="/autorzy">Wróc do listy wszystkich autorów</Link>
-
         <Paper>
           <Grid container>
             <Grid item md={3}>
-              <img
-                width="230"
-                height="270"
+              <img                
                 src={
                   author.photoUrl
                     ? author.photoUrl
@@ -63,7 +59,7 @@ const AuthorFullView = props => {
                 <Grid item md={12}>
                   Gatunki:
                   {author.genres.map(genre => {
-                    return <span key={genre.id}>{genre.name}</span>;
+                    return author.genres[author.genres.length - 1] === genre ? <span key={genre.id}> {genre.name}</span> : <span key={genre.id}> {genre.name},</span>;
                   })}
                 </Grid>
                 <Grid item md={12}>
@@ -77,8 +73,7 @@ const AuthorFullView = props => {
                 </Grid>
               </Typography>
             </Grid>
-            <Grid item md={4}>
-              {user ? (
+            <Grid item md={4}>              
                 <RatingView
                   entity={author}
                   user={user}
@@ -86,12 +81,7 @@ const AuthorFullView = props => {
                   currentValue={firstOrDefault(library.authorRates, function (element) {
                     return element.authorId === author.id
                   }).value}
-                />
-              ) : (
-                  <Typography variant="subheading">
-                    Zaloguj się, aby móc dodać ocenę
-                </Typography>
-                )}
+                />              
               {user && <span>{library.favoriteAuthors.filter(favAuthor => favAuthor.id === author.id)
                 .length === 0 ? (
                   <Button

@@ -27,8 +27,6 @@ const WantedBookView = props => {
       <Grid container>
         <Grid item md={2}>
           <img
-            width="180"
-            height="230"
             src={
               book.photoUrl
                 ? book.photoUrl

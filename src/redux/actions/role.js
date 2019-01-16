@@ -1,4 +1,6 @@
-import { actionBuilder } from "./base";
+import {
+  actionBuilder
+} from "./base";
 
 const roleActions = actionBuilder(
   "ROLE",

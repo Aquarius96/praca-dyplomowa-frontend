@@ -14,12 +14,10 @@ const AuthorPartialView = props => {
     library
   } = props;
   return (
-    <Paper>
+    <Paper style={{ marginTop: "3px" }}>
       <Grid container>
         <Grid item md={3}>
           <img
-            width="230"
-            height="270"
             src={
               author.photoUrl
                 ? author.photoUrl
@@ -41,57 +39,53 @@ const AuthorPartialView = props => {
             <Grid item md={12}>
               Gatunki:
               {author.genres.map(genre => {
-                return <span key={genre.id}>{genre.name}</span>;
+                return author.genres[author.genres.length - 1] === genre ? <span key={genre.id}> {genre.name}</span> : <span key={genre.id}> {genre.name},</span>;
               })}
             </Grid>
             <Grid item md={12}>
-              Data i miejsce urodzenia:
-              {author.dateOfBirth}, {author.birthCity}, {author.birthCountry}
+              Data i miejsce urodzenia: {author.dateOfBirth}, {author.birthCity}, {author.birthCountry}
             </Grid>
-
+            <Grid item md={12}>
+              Płeć: {author.gender}
+            </Grid>
             <Grid item md={12}>
               {author.description}
             </Grid>
           </Typography>
         </Grid>
         <Grid item md={4}>
-          {user ? (
-            <RatingView
-              entity={author}
-              user={user}
-              addRate={addAuthorRate}
-              currentValue={
-                firstOrDefault(library.authorRates, function(element) {
-                  return element.authorId === author.id;
-                }).value
-              }
-            />
-          ) : (
-            <Typography variant="subheading">
-              Zaloguj się, aby móc dodać ocenę
-            </Typography>
-          )}
+
+          <RatingView
+            entity={author}
+            user={user}
+            addRate={addAuthorRate}
+            currentValue={
+              firstOrDefault(library.authorRates, function (element) {
+                return element.authorId === author.id;
+              }).value
+            }
+          />
           {user &&
             library &&
             (library.favoriteAuthors.filter(
               favAuthor => favAuthor.id === author.id
             ).length === 0 ? (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => addFavoriteAuthor(user.email, author.id)}
-              >
-                Dodaj do ulubionych
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => addFavoriteAuthor(user.email, author.id)}
+                >
+                  Dodaj do ulubionych
               </Button>
-            ) : (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => deleteFavoriteAuthor(user.email, author.id)}
-              >
-                Usuń z ulubionych
+              ) : (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => deleteFavoriteAuthor(user.email, author.id)}
+                >
+                  Usuń z ulubionych
               </Button>
-            ))}
+              ))}
         </Grid>
       </Grid>
     </Paper>

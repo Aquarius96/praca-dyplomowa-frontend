@@ -33,8 +33,6 @@ const FavoriteBookView = props => {
       <Grid container>
         <Grid item md={2}>
           <img
-            width="180"
-            height="230"
             src={
               book.photoUrl
                 ? book.photoUrl
@@ -60,96 +58,96 @@ const FavoriteBookView = props => {
                 {library.currentlyReadBooks.filter(
                   curBook => curBook.id === book.id
                 ).length === 0 ? (
-                  <Button
-                    onClick={() => addCurrentlyReadBook(user.email, book.id)}
-                    color="primary"
-                  >
-                    Właśnie czytam
-                  </Button>
-                ) : (
-                  <Grid>
                     <Button
                       onClick={() => addCurrentlyReadBook(user.email, book.id)}
-                      disabled
                       color="primary"
                     >
                       Właśnie czytam
+                  </Button>
+                  ) : (
+                    <Grid>
+                      <Button
+                        onClick={() => addCurrentlyReadBook(user.email, book.id)}
+                        disabled
+                        color="primary"
+                      >
+                        Właśnie czytam
                     </Button>
-                    <Button
-                      onClick={() =>
-                        deleteCurrentlyReadBook(user.email, book.id)
-                      }
-                      color="secondary"
-                    >
-                      Usuń
+                      <Button
+                        onClick={() =>
+                          deleteCurrentlyReadBook(user.email, book.id)
+                        }
+                        color="secondary"
+                      >
+                        Usuń
                     </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  )}
                 {library.favoriteBooks.filter(curBook => curBook.id === book.id)
                   .length === 0 ? (
-                  <Button
-                    onClick={() => addFavoriteBook(user.email, book.id)}
-                    color="primary"
-                  >
-                    Dodaj do ulubionych
-                  </Button>
-                ) : (
-                  <Grid>
                     <Button
-                      onClick={() => deleteFavoriteBook(user.email, book.id)}
-                      color="secondary"
+                      onClick={() => addFavoriteBook(user.email, book.id)}
+                      color="primary"
                     >
-                      Usuń z ulubionych
+                      Dodaj do ulubionych
+                  </Button>
+                  ) : (
+                    <Grid>
+                      <Button
+                        onClick={() => deleteFavoriteBook(user.email, book.id)}
+                        color="secondary"
+                      >
+                        Usuń z ulubionych
                     </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  )}
                 {library.wantedBooks.filter(curBook => curBook.id === book.id)
                   .length === 0 ? (
-                  <Button
-                    onClick={() => addWantedBook(user.email, book.id)}
-                    color="primary"
-                  >
-                    Chcę przeczytać
-                  </Button>
-                ) : (
-                  <Grid>
                     <Button
                       onClick={() => addWantedBook(user.email, book.id)}
-                      disabled
                       color="primary"
                     >
                       Chcę przeczytać
+                  </Button>
+                  ) : (
+                    <Grid>
+                      <Button
+                        onClick={() => addWantedBook(user.email, book.id)}
+                        disabled
+                        color="primary"
+                      >
+                        Chcę przeczytać
                     </Button>
-                    <Button
-                      onClick={() => deleteWantedBook(user.email, book.id)}
-                      color="secondary"
-                    >
-                      Usuń
+                      <Button
+                        onClick={() => deleteWantedBook(user.email, book.id)}
+                        color="secondary"
+                      >
+                        Usuń
                     </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  )}
                 {library.readBooks.filter(curBook => curBook.id === book.id)
                   .length === 0 ? (
-                  <AddReadBookPanelView
-                    addReadBook={addReadBook}
-                    date={date}
-                    handleDateChange={handleDateChange}
-                    book={book}
-                    user={user}
-                  />
-                ) : (
-                  <Grid>
-                    <Button disabled color="primary">
-                      Przeczytałem
+                    <AddReadBookPanelView
+                      addReadBook={addReadBook}
+                      date={date}
+                      handleDateChange={handleDateChange}
+                      book={book}
+                      user={user}
+                    />
+                  ) : (
+                    <Grid>
+                      <Button disabled color="primary">
+                        Przeczytałem
                     </Button>
-                    <Button
-                      onClick={() => deleteReadBook(user.email, book.id)}
-                      color="secondary"
-                    >
-                      Usuń
+                      <Button
+                        onClick={() => deleteReadBook(user.email, book.id)}
+                        color="secondary"
+                      >
+                        Usuń
                     </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  )}
               </span>
             </ExpansionPanelDetails>
           </ExpansionPanel>

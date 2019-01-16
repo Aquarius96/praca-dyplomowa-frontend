@@ -31,8 +31,6 @@ const BookPartialView = props => {
       <Grid container>
         <Grid item md={3}>
           <img
-            width="230"
-            height="270"
             src={
               book.photoUrl
                 ? book.photoUrl
@@ -53,13 +51,13 @@ const BookPartialView = props => {
             <Grid item md={12}>
               Autorzy:
               {book.authors.map(author => {
-                return <span key={author.id}>{author.name} </span>;
+                return book.authors[book.authors.length - 1] === author ? <span key={author.id}> {author.name} </span> : <span key={author.id}> {author.name},</span>;
               })}
             </Grid>
             <Grid item md={12}>
               Gatunki:
               {book.genres.map(genre => {
-                return <span key={genre.id}>{genre.name}</span>;
+                return book.genres[book.genres.length - 1] === genre ? <span key={genre.id}> {genre.name}</span> : <span key={genre.id}> {genre.name},</span>;
               })}
             </Grid>
             <Grid item md={12}>
@@ -73,16 +71,10 @@ const BookPartialView = props => {
             </Grid>
           </Typography>
         </Grid>
-        <Grid item md={4}>
-          {user ? (
+        <Grid item md={4}>         
             <RatingView entity={book} user={user} addRate={addBookRate} currentValue={firstOrDefault(library.bookRates, function (element) {
               return element.bookId === book.id
-            }).value} />
-          ) : (
-              <Typography variant="subheading">
-                Zaloguj się, aby móc dodać ocenę
-            </Typography>
-            )}
+            }).value} />         
           {user && library && (
             <ExpansionPanel style={{ width: "95%" }}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

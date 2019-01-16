@@ -1,6 +1,11 @@
-import { actionBuilder, subActionFactory } from "./base";
+import {
+  actionBuilder,
+  subActionFactory
+} from "./base";
 import axios from "axios";
-import { uploadImage } from "../../utils/image-upload";
+import {
+  uploadImage
+} from "../../utils/image-upload";
 import * as config from "../../utils/axios-config";
 
 const bookActions = actionBuilder(
@@ -49,8 +54,7 @@ export const deleteBookComment = id =>
     "COMMENT",
     () => {
       return axios.delete(
-        "https://bazaksiazek.azurewebsites.net/api/book/comment/" + id,
-        {},
+        "https://bazaksiazek.azurewebsites.net/api/book/comment/" + id, {},
         config.headers
       );
     },

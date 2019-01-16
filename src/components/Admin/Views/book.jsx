@@ -35,10 +35,34 @@ const ConfirmBookView = props => {
           </Grid>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Typography variant="body1">
-            <p>Opis: {book.description}</p>
-            <p>Liczba stron: {book.pagesCount}</p>
-          </Typography>
+          <Grid container>
+            <Grid item sm={8} container><Typography variant="body1">
+              <Grid item md={12}>
+                Autorzy:
+              {book.authors.map(author => {
+                  return book.authors[book.authors.length - 1] === author ? <span key={author.id}> {author.name} </span> : <span key={author.id}> {author.name},</span>;
+                })}
+              </Grid>
+              <Grid item md={12}>
+                Gatunki:
+              {book.genres.map(genre => {
+                  return book.genres[book.genres.length - 1] === genre ? <span key={genre.id}> {genre.name}</span> : <span key={genre.id}> {genre.name},</span>;
+                })}
+              </Grid>
+              <Grid item md={12}>
+                Liczba stron: {book.pagesCount}
+              </Grid>
+              <Grid item md={12}>
+                Data wydania: {book.released}
+              </Grid>
+              <Grid item md={12}>
+                {book.description}
+              </Grid>
+            </Typography></Grid>
+            <Grid item sm={4}>
+              <img alt="" src={book.photoUrl}></img>
+            </Grid>
+          </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </Paper>

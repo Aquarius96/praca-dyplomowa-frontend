@@ -1,4 +1,7 @@
-import { actionBuilder, subActionFactory } from "./base";
+import {
+  actionBuilder,
+  subActionFactory
+} from "./base";
 import axios from "axios";
 import * as config from "../../utils/axios-config";
 

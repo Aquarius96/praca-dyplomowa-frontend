@@ -23,6 +23,7 @@ import {
   Typography
 } from "@material-ui/core";
 import LibraryBookView from "./Views/library-book";
+import ReadBookView from './Views/read-book'
 import decode from "jwt-decode";
 import FavoriteAuthorView from "./Views/favorite-author";
 import { changePassword } from "../../redux/actions/user";
@@ -146,7 +147,7 @@ class ProfilePage extends Component {
         {this.state.value === 0 &&
           this.props.library.readBooks.map(book => {
             return (
-              <LibraryBookView
+              <ReadBookView
                 key={book.id}
                 book={book}
                 user={this.props.user}

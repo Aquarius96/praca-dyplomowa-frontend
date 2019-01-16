@@ -5,6 +5,12 @@
   margin-left: auto;
 }
 
+img {
+  max-width: 90%;
+  display: block;
+  height: auto;
+}
+
 @media (min-width: 768px) {
   .container {
     width: 750px;

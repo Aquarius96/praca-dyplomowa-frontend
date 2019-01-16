@@ -21,8 +21,6 @@ class LoginPage extends Component {
     registerModel: {
       username: "",
       emailAddress: "",
-      firstname: "",
-      lastname: "",
       password: ""
     },
     registerVisible: true
@@ -79,8 +77,6 @@ class LoginPage extends Component {
         registerModel: {
           username: "",
           emailAddress: "",
-          firstname: "",
-          lastname: "",
           password: ""
         }
       });

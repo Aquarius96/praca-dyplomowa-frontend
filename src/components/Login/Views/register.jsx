@@ -35,22 +35,6 @@ const RegisterFormView = props => {
           margin="normal"
           className="input"
         />
-        <TextField
-          id="name"
-          label="Imię"
-          name="firstname"
-          value={data.firstname}
-          margin="normal"
-          className="input"
-        />
-        <TextField
-          id="name"
-          label="Nazwisko"
-          name="lastname"
-          value={data.lastname}
-          margin="normal"
-          className="input"
-        />
         <Button variant="outlined" type="submit">
           Zarejestruj się
         </Button>

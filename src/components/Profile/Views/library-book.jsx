@@ -36,8 +36,6 @@ const LibraryBookView = props => {
       <Grid container>
         <Grid item md={2}>
           <img
-            width="180"
-            height="230"
             src={
               book.photoUrl
                 ? book.photoUrl
@@ -49,17 +47,10 @@ const LibraryBookView = props => {
         <Grid item container md={6}>
           <BookInfoView book={book} />
         </Grid>
-        <Grid item md={4}>
-          {user ? (
+        <Grid item md={4}>       
             <RatingView entity={book} user={user} addRate={addBookRate} currentValue={firstOrDefault(library.bookRates, function (element) {
               return element.bookId === book.id
-            }).value} />
-          ) : (
-              <Typography variant="subheading">
-                Zaloguj się, aby móc dodać ocenę
-            </Typography>
-            )}
-
+            }).value} />         
           <ExpansionPanel style={{ width: "95%" }}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <Typography variant="subheading">

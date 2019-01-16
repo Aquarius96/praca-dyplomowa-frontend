@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Grid, Typography, Button } from "@material-ui/core";
+import { Paper, Grid, Button } from "@material-ui/core";
 import AuthorInfoView from "../../Views/author-info";
 import { firstOrDefault } from "../../../utils/array-functions";
 import RatingView from "../../Views/rating";
@@ -11,8 +11,6 @@ const FavoriteAuthorView = props => {
       <Grid container>
         <Grid item md={2}>
           <img
-            width="180"
-            height="230"
             src={
               author.photoUrl
                 ? author.photoUrl
@@ -25,23 +23,16 @@ const FavoriteAuthorView = props => {
           <AuthorInfoView author={author} />
         </Grid>
         <Grid item md={5}>
-          {user ? (
-            <RatingView
-              entity={author}
-              user={user}
-              addRate={addAuthorRate}
-              currentValue={
-                firstOrDefault(library.authorRates, function(element) {
-                  return element.authorId === author.id;
-                }).value
-              }
-            />
-          ) : (
-            <Typography variant="subheading">
-              Zaloguj się, aby móc dodać ocenę
-            </Typography>
-          )}
-
+          <RatingView
+            entity={author}
+            user={user}
+            addRate={addAuthorRate}
+            currentValue={
+              firstOrDefault(library.authorRates, function (element) {
+                return element.authorId === author.id;
+              }).value
+            }
+          />
           <Button
             onClick={() => deleteFavoriteAuthor(user.email, author.id)}
             color="secondary"
