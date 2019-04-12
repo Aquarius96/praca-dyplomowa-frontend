@@ -10,7 +10,7 @@ import * as config from "../../utils/axios-config";
 
 const bookActions = actionBuilder(
   "BOOK",
-  "https://bazaksiazek.azurewebsites.net/api/book/"
+  "http://localhost:8000/api/book/"
 );
 
 export const fetchBooks = params => bookActions.FETCH_ALL(params)();
@@ -25,7 +25,7 @@ export const addBookRate = (id, rate) =>
     "RATE",
     () => {
       return axios.post(
-        "https://bazaksiazek.azurewebsites.net/api/book/" + id + "/rate/",
+        "http://localhost:8000/api/book/" + id + "/rate/",
         rate,
         config.headers
       );
@@ -40,7 +40,7 @@ export const addBookComment = (id, comment) =>
     "COMMENT",
     () => {
       return axios.post(
-        "https://bazaksiazek.azurewebsites.net/api/book/" + id + "/comment/",
+        "http://localhost:8000/api/book/" + id + "/comment/",
         comment,
         config.headers
       );
@@ -54,7 +54,7 @@ export const deleteBookComment = id =>
     "COMMENT",
     () => {
       return axios.delete(
-        "https://bazaksiazek.azurewebsites.net/api/book/comment/" + id, {},
+        "http://localhost:8000/api/book/comment/" + id, {},
         config.headers
       );
     },
@@ -68,7 +68,7 @@ export const addBook = (book, image) => () => {
     });
 
     return axios
-      .post("https://bazaksiazek.azurewebsites.net/api/book", book)
+      .post("http://localhost:8000/api/book", book)
       .then(response => {
         uploadImage("book", response.data.id, image);
         dispatch({

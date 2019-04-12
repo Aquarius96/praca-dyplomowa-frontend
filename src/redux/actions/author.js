@@ -10,7 +10,7 @@ import * as config from "../../utils/axios-config";
 
 const authorActions = actionBuilder(
   "AUTHOR",
-  "https://bazaksiazek.azurewebsites.net/api/author/"
+  "http://localhost:8000/api/author/"
 );
 
 export const fetchAuthors = params => authorActions.FETCH_ALL(params)();
@@ -25,7 +25,7 @@ export const addAuthorRate = (id, rate) =>
     "RATE",
     () => {
       return axios.post(
-        "https://bazaksiazek.azurewebsites.net/api/author/" + id + "/rate/",
+        "http://localhost:8000/api/author/" + id + "/rate/",
         rate,
         config.headers
       );
@@ -40,7 +40,7 @@ export const addAuthorComment = (id, comment) =>
     "COMMENT",
     () => {
       return axios.post(
-        "https://bazaksiazek.azurewebsites.net/api/author/" + id + "/comment/",
+        "http://localhost:8000/api/author/" + id + "/comment/",
         comment,
         config.headers
       );
@@ -54,7 +54,7 @@ export const deleteAuthorComment = id =>
     "COMMENT",
     () => {
       return axios.delete(
-        "https://bazaksiazek.azurewebsites.net/api/author/comment/" + id, {},
+        "http://localhost:8000/api/author/comment/" + id, {},
         config.headers
       );
     },
@@ -69,7 +69,7 @@ export const addAuthor = (author, image) => () => {
 
     return axios
       .post(
-        "https://bazaksiazek.azurewebsites.net/api/author",
+        "http://localhost:8000/api/author",
         author,
         config.headers
       )

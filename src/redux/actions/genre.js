@@ -4,7 +4,7 @@ import {
 
 const genreActions = actionBuilder(
   "GENRE",
-  "https://bazaksiazek.azurewebsites.net/api/genre/"
+  "http://localhost:8000/api/genre/"
 );
 
 export const fetchGenres = genreActions.FETCH_ALL();

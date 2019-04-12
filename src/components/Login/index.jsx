@@ -11,6 +11,7 @@ import {
 import RegisterFormView from "./Views/register";
 import Grid from "@material-ui/core/Grid";
 import { Loader } from "../Loader/loader";
+import LoginComponent from "./facebook";
 
 class LoginPage extends Component {
   state = {
@@ -90,6 +91,7 @@ class LoginPage extends Component {
             handleChange={this.handleLoginFormChange}
             handleSubmit={this.handleLoginFormSubmit}
           />
+          <LoginComponent />
         </Grid>
         <Grid item sm={6} xs={12}>
           <RegisterFormView

@@ -7,7 +7,7 @@ import * as config from "../../utils/axios-config";
 
 const reviewActions = actionBuilder(
   "REVIEW",
-  "https://bazaksiazek.azurewebsites.net/api/review/"
+  "http://localhost:8000/api/review/"
 );
 
 export const fetchReviews = reviewActions.FETCH_ALL();
@@ -23,7 +23,7 @@ export const addReviewRate = (id, rate) =>
     "RATE",
     () => {
       return axios.post(
-        "https://bazaksiazek.azurewebsites.net/api/review/" + id + "/rate/",
+        "http://localhost:8000/api/review/" + id + "/rate/",
         rate,
         config.headers
       );

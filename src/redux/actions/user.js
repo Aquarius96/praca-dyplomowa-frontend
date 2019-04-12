@@ -40,6 +40,36 @@ export const login = (model) => () => {
   }
 }
 
+export const loginViaFacebook = (accessToken) => () => {
+  return dispatch => {
+    dispatch({
+      type: 'LOGIN_FB_BEGIN'
+    });
+
+    console.log('at', accessToken);
+
+    return axios.post(config.URL + 'user/facebook/' + accessToken)
+      .then(response => {
+        localStorage.setItem('token', response.data);
+        dispatch({
+          type: 'LOGIN_FB_SUCCESS',
+          payload: {
+            user: decode(response.data)
+          }
+        })
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch({
+          type: 'LOGIN_FB_ERROR',
+          payload: {
+            error: error.response.data
+          }
+        })
+      })
+  }
+}
+
 export const changePassword = (emailAddress, model) => () => {
   return dispatch => {
     dispatch({

@@ -4,7 +4,7 @@ import {
 
 const roleActions = actionBuilder(
   "ROLE",
-  "https://bazaksiazek.azurewebsites.net/api/role/"
+  "http://localhost:8000/api/role/"
 );
 
 export const fetchRoles = roleActions.FETCH_ALL;
